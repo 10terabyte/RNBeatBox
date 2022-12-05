@@ -250,7 +250,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-
+    
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
@@ -312,3 +312,4 @@ def isNewArchitectureEnabled() {
     return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
 }
 apply plugin: 'com.google.gms.google-services' // <--- this should be the last line
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

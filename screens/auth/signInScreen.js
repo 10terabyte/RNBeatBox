@@ -38,63 +38,39 @@ const SignInScreen = (props) => {
   }
   const [visible, setVisible] = useState(false);
  
-  React.useEffect(() => {
-    // setGoogleMessage(JSON.stringify(response))
-    
-    if (response?.type === 'success') {
-      const { id_token } = response.params;
-      const auth = getAuth();
-      const credential = GoogleAuthProvider.credential(id_token);
-      console.log(credential, "CREDENTIAL");
-      auth().signInWithCredential(auth, credential).then(async()=>{
-          let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me", {
-            headers: { Authorization: `Bearer ${accessToken}`}
-          });
-          userInfoResponse.json().then(data => {
-            
-            const auth1 = getAuth();
-            updateProfile(auth1.currentUser, {
-              displayName: data.name, photoURL: data.picture
-            }).then(() => {
-              // Profile updated!
-              setVisible(false);
-              ToastAndroid.show('Thank you!', ToastAndroid.SHORT);
-              // ...
-            }).catch((error) => {
 
-              setVisible(false);
-              ToastAndroid.show('Error in update profile!', ToastAndroid.SHORT);
-            });
-          });
-      }).catch((error) => {
-        ToastAndroid.show('Error.', ToastAndroid.SHORT);
-        setVisible(false);
-     });
-    }
-    else{
-      setVisible(false);
-    }
-    
-  }, [response]);
   const handleLogin = () => {
     if(textEmail == null || textEmail == ''){
-      ToastAndroid.show('Enter your email address.', ToastAndroid.SHORT);
+      // ToastAndroid.show('Enter your email address.', ToastAndroid.SHORT);
       return;
     }
     if(textPassword == null || textPassword == ''){
-      ToastAndroid.show('Enter your password.', ToastAndroid.SHORT);
+      // ToastAndroid.show('Enter your password.', ToastAndroid.SHORT);
       return;
     }
     setVisible(true);
     try {
-      auth().signInWithEmailAndPassword(auth, textEmail, textPassword).then((userCredential) => {
+      auth()
+        .signInWithEmailAndPassword(textEmail, textPassword)
+        .then((userCredential) => {
+          
+          ToastAndroid.show('Sign in!', ToastAndroid.SHORT);
           setVisible(false);
-          ToastAndroid.show('Enter your password.', ToastAndroid.SHORT);
-       }).catch((error) => {
-          ToastAndroid.show('Invalid email or password.', ToastAndroid.SHORT);
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            ToastAndroid.show('That email address is already in use!', ToastAndroid.SHORT);
+          }
+
+          if (error.code === 'auth/invalid-email') {
+            ToastAndroid.show('That email address is invalid!', ToastAndroid.SHORT);
+          }
+
+          ToastAndroid.show(error);
           setVisible(false);
-       });
+        });
     } catch (error) {
+      // setVisible(false);
       setVisible(false);
       ToastAndroid.show(error.message, ToastAndroid.SHORT);
     }
@@ -111,7 +87,12 @@ const SignInScreen = (props) => {
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
     // Sign-in the user with the credential
-    return auth().signInWithCredential(googleCredential);
+    auth().signInWithCredential(googleCredential).then( async () => {
+       
+    }
+
+    );
+    return 
   }
   const [textNo, onChangeTextNo] = useState();
   const [textEmail, onChangeTextEmail] = useState();

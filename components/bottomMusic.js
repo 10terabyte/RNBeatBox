@@ -9,7 +9,7 @@ const BottomMusic = (props) => {
   const {music} = useAppContext();
   const [isVisible, setVisible] = useState(false);
   const navigation = useNavigation();
-  const sound = React.useRef(new Audio.Sound());
+  // const sound = React.useRef(new Audio.Sound());
   const [Status, SetStatus] = React.useState(false);
 
   React.useEffect(() => {

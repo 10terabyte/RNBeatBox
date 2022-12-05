@@ -48,7 +48,7 @@ const SignUpScreen = (props) => {
       setVisible(true);
 
     
-      auth().createUserWithEmailAndPassword(auth, textEmail, textPassword)
+      auth().createUserWithEmailAndPassword(textEmail, textPassword)
         .then((userCredential) => {
           // Signed in 
           // auth().updateProfile(auth1.currentUser, {
@@ -65,15 +65,22 @@ const SignUpScreen = (props) => {
           //   setVisible(false);
           //   ToastAndroid.show('Error in update profile!', ToastAndroid.SHORT);
           // });
+          auth().currentUser.updateProfile({displayName: textName})
+          setVisible(false);
           //userCredential.user;
           
         })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          ToastAndroid.show(error.message, ToastAndroid.SHORT);
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            ToastAndroid.show('That email address is already in use!', ToastAndroid.SHORT);
+          }
+      
+          if (error.code === 'auth/invalid-email') {
+            ToastAndroid.show('That email address is invalid!', ToastAndroid.SHORT);
+          }
+      
+          ToastAndroid.show(error, ToastAndroid.SHORT);
           setVisible(false);
-          // ..
         });
     }
     else{

@@ -49,7 +49,7 @@ const Stack = createStackNavigator();
 
 export default function MainStack() {
   return (
-    <Stack.Navigator headerMode='none'
+    <Stack.Navigator  headerShown='false' 
         screenOptions={{
         ...TransitionPresets.SlideFromRightIOS,
       }}>

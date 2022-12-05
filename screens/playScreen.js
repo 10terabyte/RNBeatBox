@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 import { Colors, Fonts, Default } from "../constants/style";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
-import { Slider } from "react-native-range-slider-expo";
+// import { Slider } from "react-native-range-slider-expo";
 import MainBottomSheet from "../components/mainBottomSheet";
 import AddToPlayList from "../components/addToPlayList";
 import NewPlayList from "../components/newPlayList";
@@ -78,7 +78,7 @@ const PlayScreen = (props) => {
     });
   };
 
-  const sound = React.useRef(new Audio.Sound());
+  // const sound = React.useRef(new Audio.Sound());
   const [Status, SetStatus] = React.useState(false);
 
   // React.useEffect(() => {
@@ -358,7 +358,7 @@ const PlayScreen = (props) => {
                 </View>
               </View>
 
-              <Slider
+              {/* <Slider
                 min={0}
                 max={100}
                 containerStyle={{
@@ -373,7 +373,7 @@ const PlayScreen = (props) => {
                 styleSize={"small"}
                 showRangeLabels={false}
                 showValueLabels={false}
-              />
+              /> */}
               <View
                 style={{
                   flexDirection: "row",

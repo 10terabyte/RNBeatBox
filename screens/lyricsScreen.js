@@ -12,7 +12,7 @@ import React, { useState, useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Colors, Default, Fonts } from "../constants/style";
 import { useTranslation } from "react-i18next";
-import { Slider } from "react-native-range-slider-expo";
+// import { Slider } from "react-native-range-slider-expo";
 // import { Audio } from "expo-av";
 
 const LyricsScreen = (props) => {
@@ -228,7 +228,7 @@ const LyricsScreen = (props) => {
         </View>
       </ScrollView>
       <View style={{ height: 180 }}>
-        <Slider
+        {/* <Slider
           min={0}
           max={40}
           containerStyle={{
@@ -243,7 +243,7 @@ const LyricsScreen = (props) => {
           styleSize={"small"}
           showRangeLabels={false}
           showValueLabels={false}
-        />
+        /> */}
 
         <View
           style={{

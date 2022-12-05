@@ -1,24 +1,17 @@
 import React,{ createContext, useContext, useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import auth from '@react-native-firebase/auth';
 const AppContext = createContext();
-const auth = getAuth();
+
 export function AppWrapper({ children }) {
     const [user, setUser] = useState({});
     const [music, setMusic] = useState({});
-	
+    function onAuthStateChanged(user){
+      setUser(user);
+    }
     useEffect(() => {
-        const unsubscribeFromAuthStatuChanged = onAuthStateChanged(auth, (_user) => {
-          if (user) {
-            
-            setUser(_user);
-          } else {
-            // User is signed out
-            setUser(undefined);
-          }
-        });
-    
-        return unsubscribeFromAuthStatuChanged;
-      },[])
+      const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+      return subscriber; // unsubscribe on unmount
+    }, []);
     const context = {
 		user, setUser,
         music, setMusic,

@@ -5,13 +5,13 @@ import { Colors, Fonts, Default } from "../constants/style";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { BottomSheet } from "react-native-btr";
 import Toast from "react-native-root-toast";
-import { useAuthentication } from '../utils/hooks/useAuthentication';
+import { useAppContext } from '../context';
 import { getDatabase, ref, query, push, update, onValue, equalTo, get, orderByChild, child } from "firebase/database";
 
 const AddToPlayList = (props) => {
   const DB = getDatabase();
   const { t, i18n } = useTranslation();
-  const { user } = useAuthentication();
+  const { user } = useAppContext();
   const [playList, setPlayList] = useState([]);
   const isRtl = i18n.dir() === "rtl";
 
@@ -19,6 +19,7 @@ const AddToPlayList = (props) => {
     return t(`addToPlayList:${key}`);
   }
   useEffect(() => {
+    console.log(user, "User Data")
     if (user.uid) {
       const playListCollection = query(ref(DB, "playlists"), orderByChild("user"), equalTo(user.uid));
       onValue(playListCollection, snapshot => {

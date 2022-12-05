@@ -6,10 +6,11 @@ import SignupScreen from '../screens/auth/signUpScreen';
 import SplashScreen from '../screens/splashScreen';
 import OnboardingScreen from '../screens/auth/onboardingScreen';
 const Stack = createStackNavigator();
-
+console.log('AuthStacks')
 export default function AuthStack() {
+  
   return (
-    <Stack.Navigator headerMode='none' 
+    <Stack.Navigator headerShown='false' 
         screenOptions={{
         ...TransitionPresets.SlideFromRightIOS,
       }}>

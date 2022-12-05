@@ -1,5 +1,6 @@
-
-export default {
+{
+  "name":"RNBeatBox",
+  "displayName": "RNBeatBox",
   "expo": {
     "name": "beatbox",
     "slug": "beat-box",
@@ -27,7 +28,7 @@ export default {
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.camelcase.rnMusic",
+      "bundleIdentifier": "com.camelcase.rnMusic"
     },
     "android": {
       "adaptiveIcon": {

@@ -14,7 +14,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Colors, Fonts, Default } from "../constants/style";
-import LinearGradient from 'react-native-linear-gradient'
+// import LinearGradient from 'react-native-linear-gradient'
 ;
 import BottomMusic from "../components/bottomMusic";
 // import { useAuthentication } from '../utils/hooks/useAuthentication';
@@ -415,7 +415,7 @@ const HomeScreen = (props) => {
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <LinearGradient
+          {/* <LinearGradient
             start={[0, 1]}
             end={[1, 0]}
             colors={[Colors.lightPrimary, Colors.lightPink]}
@@ -469,7 +469,7 @@ const HomeScreen = (props) => {
             >
               <Image source={require("../assets/image/woman.png")} />
             </View>
-          </LinearGradient>
+          </LinearGradient> */}
         </View>
 
         <View

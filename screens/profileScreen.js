@@ -16,10 +16,9 @@ import Feather from "react-native-vector-icons/Feather";
 import BottomMusic from "../components/bottomMusic";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { BottomSheet } from "react-native-btr";
-import { getAuth, signOut } from "firebase/auth";
+import auth from '@react-native-firebase/auth';
 import { useAppContext } from "../context";
-const auth = getAuth();
-
+ 
 const ProfileScreen = (props) => {
   const {user}= useAppContext();
   const { t, i18n } = useTranslation();
@@ -377,7 +376,10 @@ const ProfileScreen = (props) => {
                 onPress={() => {
                   // setVisible(false);
                   // props.navigation.navigate("signInScreen");
-                  signOut(auth);
+                  // signOut(auth);
+                  auth()
+                    .signOut()
+                    .then(() => console.log('User signed out!'));
                 }}
                 style={{
                   backgroundColor: Colors.primary,

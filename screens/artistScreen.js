@@ -24,7 +24,6 @@ import NewPlayList from "../components/newPlayList";
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { getDatabase, ref, onValue, update, query as d_query, get, child, equalTo, where as db_where, orderByChild, limitToFirst } from "firebase/database";
 import { collection, doc, addDoc, getFirestore, setDoc, query, getDocs, where, getCountFromServer, limit } from "firebase/firestore";
-import { floor } from "react-native-reanimated";
 const DB = getDatabase();
 
 const { width } = Dimensions.get("window");

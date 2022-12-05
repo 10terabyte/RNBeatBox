@@ -1,18 +1,27 @@
 import React from 'react';
-import auth from '@react-native-firebase/auth';
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 
+const auth = getAuth();
 
 export function useAuthentication() {
   const [user, setUser] = React.useState(false);
-  const [initializing, setInitializing] = useState(true);
-  function onAuthStateChanged(user) {
-    setUser(user);
-    if (initializing) setInitializing(false);
-  }
+
   React.useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
+    const unsubscribeFromAuthStatuChanged = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        
+        setUser(user);
+      } else {
+        // User is signed out
+        setUser(undefined);
+      }
+    });
+
+    return unsubscribeFromAuthStatuChanged;
   }, [auth]);
+
   return {
     user,
     setUser

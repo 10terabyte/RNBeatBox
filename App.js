@@ -1,5 +1,5 @@
 import i18n from "./languages/index"; //don't remove this line
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "react-native-gesture-handler";
 // import { useFonts, loadAsync } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
@@ -9,14 +9,25 @@ import {
 } from "@react-navigation/stack";
 import { withTranslation } from "react-i18next";
 import firebaseApp from './config/firebase'
-import { useAuthentication } from './utils/hooks/useAuthentication';
+import auth from '@react-native-firebase/auth';
 import AuthStack from "./stacks/AuthStack";
 import MainStack from "./stacks/MainStack";
-import { AppWrapper } from "./context";
+import { AppWrapper,useAppContext } from "./context";
 const Stack = createStackNavigator();
  
 const MainNavigation = (props) => {
-  const { user } = useAuthentication();
+  const [initializing, setInitializing] = useState(true);
+  const { user, setUser } = useAppContext();
+  // Handle user state changes
+  function onAuthStateChanged(_user) {
+    setUser(_user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
   return (
     <NavigationContainer>
       {user ? <MainStack screenOptions={{

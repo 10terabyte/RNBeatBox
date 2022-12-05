@@ -1,0 +1,29 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/font/ionicons.ttf",
+      "sha1": "0f178b4b286fe6dcbb453d725a81628c472f268d"
+    },
+    {
+      "path": "assets/font/Mulish-Bold.ttf",
+      "sha1": "17352fd4b1929910ad99ec6b9d1e04cb40662147"
+    },
+    {
+      "path": "assets/font/Mulish-ExtraBold.ttf",
+      "sha1": "3aa02045b5b77630a14817e34c4ed94998b3cc48"
+    },
+    {
+      "path": "assets/font/Mulish-Medium.ttf",
+      "sha1": "893bf73546924b8166470b89bad9ef6d1c2d53c0"
+    },
+    {
+      "path": "assets/font/Mulish-Regular.ttf",
+      "sha1": "94df6abb8e414095f6af59d936d7a581fe58d468"
+    },
+    {
+      "path": "assets/font/Mulish-SemiBold.ttf",
+      "sha1": "acaafc30e6e58676eae869901793e156afc22b63"
+    }
+  ]
+}

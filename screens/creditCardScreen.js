@@ -18,7 +18,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Colors, Fonts, Default } from "../constants/style";
 import { useTranslation } from "react-i18next";
-import LinearGradient from 'react-native-linear-gradient';
+// import LinearGradient from 'react-native-linear-gradient';
 const { width, height } = Dimensions.get("window");
 
 const CreditCardScreen = (props) => {
@@ -117,7 +117,7 @@ const CreditCardScreen = (props) => {
         onPress={() => (!!flipRotation ? flipToBack() : flipToFront())}
       >
         <Animated.View style={{ ...style.cardFront, ...flipToFrontStyle }}>
-          <LinearGradient
+          {/* <LinearGradient
             start={[0, 1]}
             end={[1, 0]}
             colors={[Colors.lightPrimary, Colors.lightPink]}
@@ -193,11 +193,11 @@ const CreditCardScreen = (props) => {
                 />
               </View>
             </View>
-          </LinearGradient>
+          </LinearGradient> */}
         </Animated.View>
 
         <Animated.View style={{ ...style.cardBack, ...flipToBackStyle }}>
-          <LinearGradient
+          {/* <LinearGradient
             start={[0, 1]}
             end={[1, 0]}
             colors={[Colors.lightPrimary, Colors.lightPink]}
@@ -235,7 +235,7 @@ const CreditCardScreen = (props) => {
               selectTextOnFocus={false}
               secureTextEntry={true}
             />
-          </LinearGradient>
+          </LinearGradient> */}
         </Animated.View>
       </Pressable>
 
