@@ -1,0 +1,321 @@
+{
+    "onboardingScreen":{
+        "lifeIs":"Life is a song,love is the music",
+        "description":"Lorem ipsum dolor sit amex, consectetur advising elite. Endue facility Enid diam, aliquant at nisi curses incident. Sit sed aliquant Endue sed nisi, ",
+        "getStart":"Get Started"
+    },
+    "signInScreen":{
+        "login":"Login",
+        "hello":"Hello, please login your account",
+        "enterNo":"Enter your mobile number",
+        "verification":"*we sent OTP for verification",
+        "or":"Or",
+        "enterEmail" : "Enter your email address",
+        "enterPassword" : "Enter your password",
+        "singup" : "Signup"
+    },
+    "signUpScreen":{
+        "register":"Register",
+        "hello":"Hello, please create your account",
+        "name":"Enter your name",
+        "number":"Enter your mobile number",
+        "email":"Enter your email address",
+        "enterPassword" : "Enter your password",
+        "confirmPassword" : "Confirm your password"
+    },
+
+    "verificationScreen":{
+        "otp":"OTP verification",
+        "pleaseEnter":"Otp has been sent to you on your mobile number please enter it below",
+        "verify":"Verify"
+    },
+    "loader":{
+        "pleaseWait":"Please wait"
+    },
+    "mainScreen":{
+
+    },
+    "bottomTab":{
+        "home":"Home",
+        "search":"Search",
+        "library":"My library",
+        "profile":"Profile",
+        "exitApp":"Tap back again to exit the App"
+     
+    },
+    "homeScreen":{
+        "hello":"Hello",
+        "hearToday":"What you want to hear today?",
+        "addPremium":"Add free premium experience just $50/",
+        "perMonth":"per month",
+        "subscribe":"Subscribe now",
+        "topArtists":"Top Artists",
+        "seeAll":"See all",
+        "recently":"Recently Played",
+        "playList":"Playlist For You",
+        "freshMusic":"Fresh New Music",
+        "bhakti":"Bhakti",
+        "mood":"What's Your Mood"
+    },
+    "topArtistsScreen":{
+        "topArtists":"Top Artist"
+    },
+    "recentlyPlayScreen":{
+        "recently":"Recently Play"
+    },
+    "playListScreen":{
+        "playList":"Playlist For You"
+    },
+    "freshMusicScreen":{
+        "freshMusic":"Fresh New Music"
+    },
+    "bhaktiScreen":{
+         "bhakti":"Bhakti"    
+    },
+    "moodScreen":{
+        "yourMood":"What’s  Your Mood"
+    },
+    "artistScreen":{
+        "followers":"followers",
+        "follow":"Follow",
+        "playAll":"Play all",
+        "playList":"Playlist",
+        "seeAll":"see all",
+        "topAlbums":"Top Albums",
+        "similar":"Similar Artist"
+    },
+    "playListSeeAllScreen":{
+        "playList":"Playlist"
+    },
+    "playScreen":{
+        "follow":"Follow"
+    },
+    "searchScreen":{
+        "prodcast":"Podcast",
+        "allSongs":"All songs",
+        "albums":"Albums",
+        "search":"Search"
+    },
+    "podcastScreen":{
+        "trending":"Trending Podcasts",
+        "seeAll":"See all",
+        "aroundWorld":"Best From Around The World",
+        "famous":"Famous Personalities",
+        "motivation":"Motivation Podcast"
+    },
+    "trendingPodcastScreen":{
+        "treading":"Trending Podcasts"
+
+    },
+    "aroundWorldScreen":{
+        "aroundWorld":"Best From Around The World "
+
+    },
+    "famousPersonalitiesScreen":{
+        "famous":"Famous Personalities"
+
+    },
+    "motivationPodcastScreen":{
+        "motivation":"Motivation Podcast"
+
+    },
+    "podcastDetailScreen":{
+        "season":"Season - 1(13 episodes)",
+        "follow":"Follow",
+        "play":"Play",
+        "allEpisode":"All episode",
+        "download":"Download",
+        "share":"Share",
+        "playlist":"Add to playlist" 
+    },
+    "searchMusicScreen":{
+        "search":"Search",
+        "listenTo":"What do you want to listen to?",
+        "recentlySearch":"Recently search",
+        "clearAll":"Clear all",
+        "trendingSearch":"Trending search"
+    },
+    "premiumScreen":{
+        "premium":"Premium",
+        "premiumPlans":"Premium plans",
+        "specialOffer":"Special offer(10% off)",
+        "1month":"1 month",
+        "6month":"6 month",
+        "12month":"12 month",
+        "benefits":"Benefits",
+        "hdMusic":"Hd music streaming",
+        "experience":"Add free experience",
+        "unlimited":"Unlimited download",
+        "continue":"Continue"
+    },
+    "addToPlayList":{
+        "playlist":"Add to playlist",
+        "createNew":"Create new playlist",
+        "playList1":"My playlist 1",
+        "playList2":"My playlist 2",
+         "playList3":"My playlist 3",
+         "songs10":"10 songs",
+         "songs20":"20 songs",
+         "addedPlayList":"Added to playList."
+    },
+    "newPlayList":{
+        "newPlaylist":"New playlist",
+        "title":"Title",
+        "description":"Description",
+        "cancel":"Cancel",
+        "create":"Create"
+    },
+    "mainBottomSheet":{
+        "download":"Download",
+        "share":"Share",
+        "playlist":"Add to playlist",
+        "lyrics":"Lyrics",
+        "information":"Song information"
+
+    },
+    "lyricsScreen":{
+        "lyrics":"Lyrics"
+    },
+    "songInformation":{
+        "songInfo":"Song Information",
+        "singer":"Singer",
+        "album":"Album",
+        "lyricist":"Lyricist",
+        "composer":"Composer"
+
+    },
+    "notificationScreen":{
+        "notification":"Notification",
+        "success":"Success",
+        "description":"Your monthly plan active successfully, now enjoy your favorite music",
+        "2min":"2 min ago",
+        "active":"Active plans",
+        "offer":"Offer",
+        "secondDescription":"10% off. Hurry up! Active one month plan at $50 & save $10",
+        "noNotification":"No notification yet"
+
+    },
+    "partySongScreen":{
+        "partySongs":"Party songs",
+        "hitSong":"The biggest party hit  songs",
+        "playAll":"Play all"
+
+    },
+    "libraryScreen":{
+        "library":"My Library",
+        "recentlyPlay":"Recently play",
+        "myLikes":"My likes",
+        "50songs":"50 songs",
+        "artist":"Artist",
+        "10artist":"10 artist",
+        "playlist":"Playlist",
+        "10playlist":"10 playlist",
+        "podcast":"Podcast",
+        "4podcast":"4 podcast"
+    },
+    "libraryMyLikeScreen":{
+        "myLikes":"My Likes",
+        "remove":"Remove",
+        "noLike":"Save song by the tapping the heart icon"
+    },
+    "libraryArtistScreen":{
+        "artist":"Artists",
+        "unfollow":"Unfollow",
+        "noFavorite":"Follow your favorite artist"
+
+    },
+    "libraryPlayListScreen":{
+        "playlist":"Playlist", 
+        "remove":"Remove",  
+        "50songs":"Top 50 songs",
+        "30songs":"Top 30 songs",
+        "90songs":"Top 90 songs",
+        "NoPlayList":"Like your favorite playlist"
+    },
+    "libraryPodcastScreen":{
+        "podcast":"Podcast",
+        "unfollow":"Unfollow",
+        "artist":"Artists",
+        "noFavorite":"Follow your favorite podcast"
+    },
+    "profileScreen":{
+        "profile":"Profile",
+        "editProfile":"Edit Profile",
+        "premium":"Premium",
+        "language":"Language",
+        "appSettings":"App Settings",
+        "aboutUs":"About Us",
+        "helpSupport":"Help & Support",
+        "logout":"Logout",
+        "areYouSure":" Are you sure you want to logout?",
+        "cancel":"Cancel"
+    },
+    "editProfileScreen":{
+      "editProfile":"Edit Profile",
+      "name":"Name",
+      "EnterName":"Enter your name",
+      "email":"Email address",
+      "EnterEmail":"Enter your email address",
+      "mobile":"Phone number",
+      "EnterMobile":"Enter your phone number",
+      "update":"UPDATE",
+      "successfully":"Profile updated successfully!!",
+      "ok":"Ok",
+      "changeProfile":"Change profile Photo",
+      "camera":"Camera",
+      "gallery":"Gallery",
+      "remove":"Remove image",
+      "removeImage":"Profile photo removed."
+
+    },
+    "languageScreen":{
+        "languages":"Languages",
+         "update":"UPDATE"
+    },
+    "aboutUsScreen":{
+        "aboutUs":"About Us",
+        "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus, habitant neque risus nunc, nunc nam mauris. Mijk urna interdum ac nec lacus, cursus varius acongue.Netus egestas sollicitudin sed hendrerit orci scelerisque in amet. Arcu semper id lorem quam arcu. ",
+        "subDescription":"Lorem ipsum dolor sit amet, consectetur adipiscing Tellus, habitant neque risus nunc, nunc nam mauris. Mi urna huo interdum ac nec lacus, cursus varius ac,jjakiox go atlyun congueNetus egestas sollicitudin sed hendrerit orciolour scelerisque in amet. Arcu semper id lorem quam arcu. Id nec vitae, nunc ultrices sit parturient. Felis estconsectetur morbi. Ac donec justo, elementum dolmalesuadaolLorem ipsum dolor sit amet, consecteturbfg adipiscing elitTellus, habitant neque risus nunc, nunc nam mauris. Mi interdum ac nec lacus, cursus varius ac, congue. Netus sollicitudin sed hendrerit orci scelerisque in amet. Arcu semper lorem quam arcu. Id nec vitae, nunc ultrices sit parturient. Felis est velit sed consectetur morbi. "
+    },
+    "helpAndSupportScreen":{
+       "helpSupport":"Help & support",
+       "name":"Name",
+       "enterName":"Enter your name",
+       "email":"Email Address",
+       "enterEmail":"Enter your email address",
+       "message":"Message",
+       "writeMessage":"Write message here",
+       "submit":"Submit"
+    },
+    "appSettingScreen":{
+        "appSettings":"App Settings",
+        "notification":"Notification",
+        "description":"Lorem ipsum dolor sit amet, consectetur adipiscing Tellus, habitant neque risus nuncrem quam arcu. ",
+        "darkMode":"Dark mode",
+        "update":"Application update"
+    },
+    "creditCardScreen":{
+        "creditCard":"Credit card/debit card",
+         "name":"Card holder name",
+         "cardNo":"Card Number",
+         "enterName":"Enter your card holder name",
+         "enterCard":"Enter your card number",
+         "expiryDate":"Expiry date",
+         "enterCvv":"CVV code",
+         "payment":"Payment"
+    },
+    "successScreen":{
+        "congratulation":"Congratulation",
+        "description":"Lorem ipsum dolor sit amet, consectetur adipiscing Tellus, habitant neque risus nuncrem quam arcu. ",
+        "backToHome":"Back to home "
+    },
+    "similarArtistScreen":{
+         "followers":"2.5k followers",
+        "follow":"Follow",
+        "playAll":"Play all",
+        "playList":"Playlist",
+        "seeAll":"see all",
+        "topAlbums":"Top Albums",
+        "similar":"Similar Artist"
+    }
+}

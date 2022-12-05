@@ -1,0 +1,301 @@
+{
+    "onboardingScreen": {
+        "lifeIs": "生活是一首歌，爱是音乐",
+        "description": "Lorem非常胡萝卜是Amex，增强了建议精英。 耐久的设施enid直径，但有点诅咒。 只是有些忍受，但是如果",
+        "getStart": "开始"
+    },
+    "signInScreen": {
+        "login": "登录",
+        "hello": "您好，请登录您的帐户",
+        "enterNo": "输入你的手机号码",
+        "verification": "*我们发送了OTP进行验证",
+        "or": "或者"
+    },
+    "signUpScreen": {
+        "register": "登记",
+        "hello": "您好，请创建您的帐户",
+        "name": "输入你的名字",
+        "number": "输入你的手机号码",
+        "email": "输入你的电子邮箱地址"
+    },
+    "verificationScreen": {
+        "otp": "OTP验证",
+        "pleaseEnter": "OTP已发送给您的手机号码，请在下面输入",
+        "verify": "核实"
+    },
+    "loader": {
+        "pleaseWait": "请稍等"
+    },
+    "bottomTab": {
+        "home": "家",
+        "search": "搜索",
+        "library": "我的图书馆",
+        "profile": "轮廓",
+        "exitApp": "再次点击以退出应用程序"
+    },
+    "homeScreen": {
+        "hello": "你好",
+        "hearToday": "您今天想听什么？",
+        "addPremium": "添加免费的高级体验仅$ 50/",
+        "perMonth": "每月",
+        "subscribe": "现在订阅",
+        "topArtists": "顶级艺术家",
+        "seeAll": "看到所有",
+        "recently": "最近玩过",
+        "playList": "为您提供播放列表",
+        "freshMusic": "新的新音乐",
+        "bhakti": "巴克提",
+        "mood": "你的心情是什么"
+    },
+    "topArtistsScreen": {
+        "topArtists": "顶级艺术家"
+    },
+    "recentlyPlayScreen": {
+        "recently": "最近玩"
+    },
+    "playListScreen": {
+        "playList": "为您提供播放列表"
+    },
+    "freshMusicScreen": {
+        "freshMusic": "新的新音乐"
+    },
+    "bhaktiScreen": {
+        "bhakti": "巴克提"
+    },
+    "moodScreen": {
+        "yourMood": "你的心情是什么"
+    },
+    "artistScreen": {
+        "followers": "关注者",
+        "follow": "跟随",
+        "playAll": "全部播放",
+        "playList": "播放列表",
+        "seeAll": "看到所有",
+        "topAlbums": "顶级专辑",
+        "similar": "类似的艺术家"
+    },
+    "playListSeeAllScreen": {
+        "playList": "播放列表"
+    },
+    "playScreen": {
+        "follow": "跟随"
+    },
+    "searchScreen": {
+        "prodcast": "眉头",
+        "allSongs": "所有歌曲",
+        "albums": "专辑",
+        "search": "搜索"
+    },
+    "podcastScreen": {
+        "trending": "趋势播客",
+        "seeAll": "看到所有",
+        "aroundWorld": "世界上最好的",
+        "famous": "著名人物",
+        "motivation": "动机播客"
+    },
+    "trendingPodcastScreen": {
+        "treading": "趋势播客"
+    },
+    "aroundWorldScreen": {
+        "aroundWorld": "世界上最好的"
+    },
+    "famousPersonalitiesScreen": {
+        "famous": "著名人物"
+    },
+    "motivationPodcastScreen": {
+        "motivation": "动机播客"
+    },
+    "podcastDetailScreen": {
+        "season": "季节-1（13集）",
+        "follow": "跟随",
+        "play": "玩",
+        "allEpisode": "全集",
+        "download": "下载",
+        "share": "分享",
+        "playlist": "添加到播放列表"
+    },
+    "searchMusicScreen": {
+        "search": "搜索",
+        "listenTo": "你想听什么？",
+        "recentlySearch": "最近搜索",
+        "clearAll": "清除全部",
+        "trendingSearch": "趋势搜索"
+    },
+    "premiumScreen": {
+        "premium": "优质的",
+        "premiumPlans": "高级计划",
+        "specialOffer": "特别优惠（10％折扣）",
+        "1month": "1个月",
+        "6month": "6个月",
+        "12month": "12个月",
+        "benefits": "好处",
+        "hdMusic": "高清音乐流",
+        "experience": "增加免费体验",
+        "unlimited": "无限下载",
+        "continue": "继续"
+    },
+    "addToPlayList": {
+        "playlist": "添加到播放列表",
+        "createNew": "创建新的播放列表",
+        "playList1": "我的播放列表1",
+        "playList2": "我的播放列表2",
+        "playList3": "我的播放列表3",
+        "songs10": "10首歌曲",
+        "songs20": "20首歌曲",
+        "addedPlayList": "添加到播放列表。"
+    },
+    "newPlayList": {
+        "newPlaylist": "新播放列表",
+        "title": "标题",
+        "description": "描述",
+        "cancel": "取消",
+        "create": "创造"
+    },
+    "mainBottomSheet": {
+        "download": "下载",
+        "share": "分享",
+        "playlist": "添加到播放列表",
+        "lyrics": "歌词",
+        "information": "歌曲信息"
+    },
+    "lyricsScreen": {
+        "lyrics": "歌词"
+    },
+    "songInformation": {
+        "songInfo": "歌曲信息",
+        "singer": "歌手",
+        "album": "专辑",
+        "lyricist": "作词家",
+        "composer": "作曲家"
+    },
+    "notificationScreen": {
+        "notification": "通知",
+        "success": "成功",
+        "description": "您的月度计划成功，现在享受您最喜欢的音乐",
+        "2min": "2分钟前",
+        "active": "积极的计划",
+        "offer": "提供",
+        "secondDescription": "10％的折扣。 赶快！ 活跃的一个月计划价格为$ 50，并节省$ 10",
+        "noNotification": "尚未通知"
+    },
+    "partySongScreen": {
+        "partySongs": "派对歌曲",
+        "hitSong": "最大的派对热门歌曲",
+        "playAll": "全部播放"
+    },
+    "libraryScreen": {
+        "library": "我的图书馆",
+        "recentlyPlay": "最近玩",
+        "myLikes": "我的喜好",
+        "50songs": "50首歌曲",
+        "artist": "艺术家",
+        "10artist": "10艺术家",
+        "playlist": "播放列表",
+        "10playlist": "10个播放列表",
+        "podcast": "眉头",
+        "4podcast": "4个播客"
+    },
+    "libraryMyLikeScreen": {
+        "myLikes": "我的喜好",
+        "remove": "消除",
+        "noLike": "通过敲击心偶像保存歌曲"
+    },
+    "libraryArtistScreen": {
+        "artist": "艺术家",
+        "unfollow": "取消关注",
+        "noFavorite": "关注您最喜欢的艺术家"
+    },
+    "libraryPlayListScreen": {
+        "playlist": "播放列表",
+        "remove": "消除",
+        "50songs": "前50首歌曲",
+        "30songs": "前30首歌曲",
+        "90songs": "前90首歌曲",
+        "NoPlayList": "喜欢您最喜欢的播放列表"
+    },
+    "libraryPodcastScreen": {
+        "podcast": "眉头",
+        "unfollow": "取消关注",
+        "artist": "艺术家",
+        "noFavorite": "关注您最喜欢的播客"
+    },
+    "profileScreen": {
+        "profile": "轮廓",
+        "editProfile": "编辑个人资料",
+        "premium": "优质的",
+        "language": "语",
+        "appSettings": "应用设置",
+        "aboutUs": "关于我们",
+        "helpSupport": "帮助支持",
+        "logout": "登出",
+        "areYouSure": "您确定要注销吗？",
+        "cancel": "取消"
+    },
+    "editProfileScreen": {
+        "editProfile": "编辑个人资料",
+        "name": "姓名",
+        "EnterName": "输入你的名字",
+        "email": "电子邮件地址",
+        "EnterEmail": "输入你的电子邮箱地址",
+        "mobile": "电话号码",
+        "EnterMobile": "输入你的电话号码",
+        "update": "更新",
+        "successfully": "个人资料成功更新了！",
+        "ok":"好的",
+        "changeProfile": "更改档案照片",
+        "camera": "相机",
+        "gallery": "画廊",
+        "remove": "删除图像",
+        "removeImage": "删除了个人资料照片。"
+    },
+    "languageScreen": {
+        "languages": "语言",
+        "update": "更新"
+    },
+    "aboutUsScreen": {
+        "aboutUs": "关于我们",
+        "description": "Lorem非常胡萝卜，番茄本科开发人员。 Lorem，居民或笑声，现在很有趣。 Mijk Pot有时也没有补丁，运行Varius Aconggue.netus执法护理，但电影中的临床巧克力。 酒精始终比酒精相比。",
+        "subDescription": "Lorem非常胡萝卜，番茄本科生，居民或笑声，现在很有趣。 Mi urna huo有时没有补丁，运行varius ac，jjakiox go anlyun conguenetus执法护理，但主流中的核心巧克力局。 酒精始终比酒精相比。 那不是生活，现在他是篮球。 Felis estconsectetur疾病。 直到Thereto，Dolemalesuadaollorum的元素非常胡萝卜，Consecteturbfg本科生Elittellus，居民或笑声，现在很有趣。 Mi有时和没有池塘，跑步律师和作业。 Netus Care，但电影中的临床巧克力。 酒精总是比酒精。 那不是生活，现在他是篮球。 Felis在户外，但番茄足球。"
+    },
+    "helpAndSupportScreen": {
+        "helpSupport": "帮助支持",
+        "name": "姓名",
+        "enterName": "输入你的名字",
+        "email": "电子邮件地址",
+        "enterEmail": "输入你的电子邮箱地址",
+        "message": "信息",
+        "writeMessage": "在这里写消息",
+        "submit": "提交"
+    },
+    "appSettingScreen": {
+        "appSettings": "应用设置",
+        "notification": "通知",
+        "description": "Lorem非常胡萝卜，增加的本科生，居民或笑声和酒精。",
+        "darkMode": "黑暗模式",
+        "update": "应用程序更新"
+    },
+    "creditCardScreen": {
+        "creditCard": "信用卡/借记卡",
+        "name": "持卡人姓名",
+        "cardNo": "卡号",
+        "enterName": "输入您的卡持有人名称",
+        "enterCard": "输入您的卡号",
+        "expiryDate": "到期日",
+        "enterCvv": "CVV代码",
+        "payment": "支付"
+    },
+    "successScreen": {
+        "congratulation": "恭喜",
+        "description": "Lorem非常胡萝卜，增加的本科生，居民或笑声和酒精。",
+        "backToHome": "回到家"
+    },
+    "similarArtistScreen": {
+        "followers": "2.5k关注者",
+        "follow": "跟随",
+        "playAll": "全部播放",
+        "playList": "播放列表",
+        "seeAll": "看到所有",
+        "topAlbums": "顶级专辑",
+        "similar": "类似的艺术家"
+    }
+}

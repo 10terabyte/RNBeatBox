@@ -1,0 +1,301 @@
+{
+    "onboardingScreen": {
+        "lifeIs": "Hidup adalah sebuah lagu, cinta adalah musiknya",
+        "description": "Lorem sangat wortel adalah amex, meningkatkan nasihat elit. Endure fasilitas enid diam, agak tetapi mengutuk insiden. Tetapi agak bertahan tetapi jika",
+        "getStart": "Memulai"
+    },
+    "signInScreen": {
+        "login": "Gabung",
+        "hello": "Halo, silakan login akun Anda",
+        "enterNo": "Masukkan nomor ponsel Anda",
+        "verification": "*Kami mengirim OTP untuk verifikasi",
+        "or": "Atau"
+    },
+    "signUpScreen": {
+        "register": "Daftar",
+        "hello": "Halo, harap buat akun Anda",
+        "name": "Masukkan nama Anda",
+        "number": "Masukkan nomor ponsel Anda",
+        "email": "Masukkan alamat email Anda"
+    },
+    "verificationScreen": {
+        "otp": "Verifikasi OTP",
+        "pleaseEnter": "OTP telah dikirimkan kepada Anda di nomor ponsel Anda, silakan masukkan di bawah ini",
+        "verify": "Memeriksa"
+    },
+    "loader": {
+        "pleaseWait": "Mohon tunggu"
+    },
+    "bottomTab": {
+        "home": "Rumah",
+        "search": "Mencari",
+        "library": "Perpustakaan saya",
+        "profile": "Profil",
+        "exitApp": "Ketuk Kembali Lagi untuk Keluar dari Aplikasi"
+    },
+    "homeScreen": {
+        "hello": "Halo",
+        "hearToday": "Apa yang ingin Anda dengar hari ini?",
+        "addPremium": "Tambahkan pengalaman premium gratis hanya $ 50/",
+        "perMonth": "per bulan",
+        "subscribe": "Berlangganan sekarang",
+        "topArtists": "Artis Top",
+        "seeAll": "Lihat semua",
+        "recently": "Baru dimainkan",
+        "playList": "Daftar putar untukmu",
+        "freshMusic": "Musik baru yang segar",
+        "bhakti": "Bhakti",
+        "mood": "Apa suasana hati Anda"
+    },
+    "topArtistsScreen": {
+        "topArtists": "Artis Top"
+    },
+    "recentlyPlayScreen": {
+        "recently": "Baru -baru ini bermain"
+    },
+    "playListScreen": {
+        "playList": "Daftar putar untukmu"
+    },
+    "freshMusicScreen": {
+        "freshMusic": "Musik baru yang segar"
+    },
+    "bhaktiScreen": {
+        "bhakti": "Bhakti"
+    },
+    "moodScreen": {
+        "yourMood": "Apa suasana hati Anda"
+    },
+    "artistScreen": {
+        "followers": "pengikut",
+        "follow": "Mengikuti",
+        "playAll": "Mainkan semua",
+        "playList": "Daftar putar",
+        "seeAll": "Lihat semua",
+        "topAlbums": "Album teratas",
+        "similar": "Artis serupa"
+    },
+    "playListSeeAllScreen": {
+        "playList": "Daftar putar"
+    },
+    "playScreen": {
+        "follow": "Mengikuti"
+    },
+    "searchScreen": {
+        "prodcast": "Alis",
+        "allSongs": "Semua lagu",
+        "albums": "Album",
+        "search": "Mencari"
+    },
+    "podcastScreen": {
+        "trending": "Podcast tren",
+        "seeAll": "Lihat semua",
+        "aroundWorld": "Terbaik dari seluruh dunia",
+        "famous": "Kepribadian terkenal",
+        "motivation": "Podcast Motivasi"
+    },
+    "trendingPodcastScreen": {
+        "treading": "Podcast tren"
+    },
+    "aroundWorldScreen": {
+        "aroundWorld": "Terbaik dari seluruh dunia"
+    },
+    "famousPersonalitiesScreen": {
+        "famous": "Kepribadian terkenal"
+    },
+    "motivationPodcastScreen": {
+        "motivation": "Podcast Motivasi"
+    },
+    "podcastDetailScreen": {
+        "season": "Musim - 1 (13 episode)",
+        "follow": "Mengikuti",
+        "play": "Bermain",
+        "allEpisode": "Semua episode",
+        "download": "Unduh",
+        "share": "Membagikan",
+        "playlist": "Tambahkan ke Daftar Putar"
+    },
+    "searchMusicScreen": {
+        "search": "Mencari",
+        "listenTo": "Apa yang ingin Anda dengarkan?",
+        "recentlySearch": "Baru -baru ini pencarian",
+        "clearAll": "Bersihkan semua",
+        "trendingSearch": "Pencarian tren"
+    },
+    "premiumScreen": {
+        "premium": "Premium",
+        "premiumPlans": "Rencana premium",
+        "specialOffer": "Penawaran khusus (diskon 10%)",
+        "1month": "1 bulan",
+        "6month": "6 bulan",
+        "12month": "12 bulan",
+        "benefits": "Manfaat",
+        "hdMusic": "Streaming musik HD",
+        "experience": "Tambahkan pengalaman gratis",
+        "unlimited": "Unduhan tanpa batas",
+        "continue": "Melanjutkan"
+    },
+    "addToPlayList": {
+        "playlist": "Tambahkan ke Daftar Putar",
+        "createNew": "Buat daftar putar baru",
+        "playList1": "Daftar putar saya 1",
+        "playList2": "Daftar putar saya 2",
+        "playList3": "Daftar Putar 3 saya",
+        "songs10": "10 lagu",
+        "songs20": "20 lagu",
+        "addedPlayList": "Ditambahkan ke daftar putar."
+    },
+    "newPlayList": {
+        "newPlaylist": "Daftar putar baru",
+        "title": "Judul",
+        "description": "Keterangan",
+        "cancel": "Membatalkan",
+        "create": "Membuat"
+    },
+    "mainBottomSheet": {
+        "download": "Unduh",
+        "share": "Membagikan",
+        "playlist": "Tambahkan ke Daftar Putar",
+        "lyrics": "Lirik",
+        "information": "Informasi lagu"
+    },
+    "lyricsScreen": {
+        "lyrics": "Lirik"
+    },
+    "songInformation": {
+        "songInfo": "Informasi lagu",
+        "singer": "Penyanyi",
+        "album": "Album",
+        "lyricist": "Penulis lirik",
+        "composer": "Komposer"
+    },
+    "notificationScreen": {
+        "notification": "Pemberitahuan",
+        "success": "Kesuksesan",
+        "description": "Rencana bulanan Anda berhasil aktif, sekarang nikmati musik favorit Anda",
+        "2min": "2 menit yang lalu",
+        "active": "Rencana aktif",
+        "offer": "Menawarkan",
+        "secondDescription": "potongan 10. Ayo cepat! Rencana Aktif Satu Bulan Di $ 50 & Hemat $ 10",
+        "noNotification": "Belum ada pemberitahuan"
+    },
+    "partySongScreen": {
+        "partySongs": "Lagu pesta",
+        "hitSong": "Lagu hit pesta terbesar",
+        "playAll": "Mainkan semua"
+    },
+    "libraryScreen": {
+        "library": "Perpustakaan saya",
+        "recentlyPlay": "Baru -baru ini bermain",
+        "myLikes": "Suka saya",
+        "50songs": "50 lagu",
+        "artist": "Artis",
+        "10artist": "10 artis",
+        "playlist": "Daftar putar",
+        "10playlist": "10 daftar putar",
+        "podcast": "Alis",
+        "4podcast": "4 podcast"
+    },
+    "libraryMyLikeScreen": {
+        "myLikes": "Suka saya",
+        "remove": "Menghapus",
+        "noLike": "Simpan lagu dengan ikon Tapping the Heart"
+    },
+    "libraryArtistScreen": {
+        "artist": "Seniman",
+        "unfollow": "Berhenti mengikuti",
+        "noFavorite": "Ikuti Artis Favorit Anda"
+    },
+    "libraryPlayListScreen": {
+        "playlist": "Daftar putar",
+        "remove": "Menghapus",
+        "50songs": "50 lagu teratas",
+        "30songs": "30 lagu teratas",
+        "90songs": "90 lagu teratas",
+        "NoPlayList": "Seperti daftar putar favorit Anda"
+    },
+    "libraryPodcastScreen": {
+        "podcast": "Alis",
+        "unfollow": "Berhenti mengikuti",
+        "artist": "Seniman",
+        "noFavorite": "Ikuti podcast favorit Anda"
+    },
+    "profileScreen": {
+        "profile": "Profil",
+        "editProfile": "Sunting profil",
+        "premium": "Premium",
+        "language": "Bahasa",
+        "appSettings": "Pengaturan aplikasi",
+        "aboutUs": "Tentang kami",
+        "helpSupport": "Bantuan & Dukungan",
+        "logout": "Keluar",
+        "areYouSure": "Apakah Anda yakin ingin keluar?",
+        "cancel": "Membatalkan"
+    },
+    "editProfileScreen": {
+        "editProfile": "Sunting profil",
+        "name": "Nama",
+        "EnterName": "Masukkan nama Anda",
+        "email": "Alamat email",
+        "EnterEmail": "Masukkan alamat email Anda",
+        "mobile": "Nomor telepon",
+        "EnterMobile": "Masukkan nomor telepon Anda",
+        "update": "MEMPERBARUI",
+        "successfully": "Profil berhasil diperbarui !!",
+         "ok":"Oke",
+        "changeProfile": "Ubah foto profil",
+        "camera": "Kamera",
+        "gallery": "Galeri",
+        "remove": "Hapus gambar",
+        "removeImage": "Foto profil dihapus."
+    },
+    "languageScreen": {
+        "languages": "Bahasa",
+        "update": "MEMPERBARUI"
+    },
+    "aboutUsScreen": {
+        "aboutUs": "Tentang kami",
+        "description": "Lorem sangat wortel, pengembang sarjana tomat. Lorem, warga atau tawa sekarang, sekarang untuk lucu. Kadang -kadang mijk pot dan tidak ada tambalan, menjalankan varius aconggue.netus perawatan penegakan tetapi cokelat klinis biro dalam film. Alkohol selalu lebih dari alkohol.",
+        "subDescription": "Lorem sangat wortel, wilayah sarjana tomat, penduduk atau tawa sekarang, sekarang untuk lucu. Mi urna huo kadang -kadang dan tidak ada tambalan, menjalankan varius ac, jjakiox go atlyun conguenetus perawatan penegakan, tetapi cokelat biro orciolour di arus utama. Alkohol selalu lebih dari alkohol. Itu bukan satu -satunya kehidupan, sekarang dia adalah bola basket. Penyakit Felis estconsectetur. Dan sampai itu, elemen Dolmalesuadaollorum sangat wortel, consecteturbfg sarjana elittellus, penduduk atau tawa sekarang, sekarang untuk lucu. Mi terkadang dan tidak ada kolam, menjalankan varius dan 'pekerjaan rumah. Netus Care tetapi Biro Klinis Cokelat dalam Film. Alkohol selalu lebih dari alkohol. Itu bukan satu -satunya kehidupan, sekarang dia adalah bola basket. Felis adalah di luar ruangan tetapi sepak bola tomat."
+    },
+    "helpAndSupportScreen": {
+        "helpSupport": "Bantuan & Dukungan",
+        "name": "Nama",
+        "enterName": "Masukkan nama Anda",
+        "email": "Alamat email",
+        "enterEmail": "Masukkan alamat email Anda",
+        "message": "Pesan",
+        "writeMessage": "Tulis pesan di sini",
+        "submit": "Kirim"
+    },
+    "appSettingScreen": {
+        "appSettings": "Pengaturan aplikasi",
+        "notification": "Pemberitahuan",
+        "description": "Lorem sangat wortel, wilayah sarjana yang ditingkatkan, penduduk atau navigasi tawa dan alkohol.",
+        "darkMode": "Mode gelap",
+        "update": "Pembaruan Aplikasi"
+    },
+    "creditCardScreen": {
+        "creditCard": "Kartu Kredit/Kartu Debit",
+        "name": "Nama pemegang kartu",
+        "cardNo": "Nomor kartu",
+        "enterName": "Masukkan Nama Pemegang Kartu Anda",
+        "enterCard": "Masukkan Nomor Kartu Anda",
+        "expiryDate": "Tanggal kadaluarsa",
+        "enterCvv": "Kode CVV",
+        "payment": "Pembayaran"
+    },
+    "successScreen": {
+        "congratulation": "Selamat",
+        "description": "Lorem sangat wortel, wilayah sarjana yang ditingkatkan, penduduk atau navigasi tawa dan alkohol.",
+        "backToHome": "Kembali ke rumah"
+    },
+    "similarArtistScreen": {
+        "followers": "2.5K pengikut",
+        "follow": "Mengikuti",
+        "playAll": "Mainkan semua",
+        "playList": "Daftar putar",
+        "seeAll": "Lihat semua",
+        "topAlbums": "Album teratas",
+        "similar": "Artis serupa"
+    }
+}

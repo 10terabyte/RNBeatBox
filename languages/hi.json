@@ -1,0 +1,301 @@
+{
+    "onboardingScreen": {
+        "lifeIs": "जीवन एक गीत है, प्रेम संगीत है",
+        "description": "लोरम वेरी गाजर एमेक्स है, बढ़ाया सलाह एलीट। सहन सुविधा एनीड डायम, कुछ हद तक लेकिन शाप की घटना। लेकिन कुछ हद तक सहन है लेकिन अगर",
+        "getStart": "शुरू हो जाओ"
+    },
+    "signInScreen": {
+        "login": "लॉग इन करें",
+        "hello": "हैलो, कृपया अपना खाता लॉगिन करें",
+        "enterNo": "अपना मोबाइल नंबर दर्ज करें",
+        "verification": "*हमने सत्यापन के लिए ओटीपी भेजा",
+        "or": "या"
+    },
+    "signUpScreen": {
+        "register": "पंजीकरण करवाना",
+        "hello": "हैलो, कृपया अपना खाता बनाएं",
+        "name": "अपना नाम दर्ज करें",
+        "number": "अपना मोबाइल नंबर दर्ज करें",
+        "email": "अपना ईमेल पता दर्ज करें"
+    },
+    "verificationScreen": {
+        "otp": "ओटीपी सत्यापन",
+        "pleaseEnter": "OTP आपको अपने मोबाइल नंबर पर भेजा गया है कृपया इसे नीचे दर्ज करें",
+        "verify": "सत्यापित करना"
+    },
+    "loader": {
+        "pleaseWait": "कृपया प्रतीक्षा करें"
+    },
+    "bottomTab": {
+        "home": "घर",
+        "search": "खोज",
+        "library": "मेरा पुस्तकालय",
+        "profile": "प्रोफ़ाइल",
+        "exitApp": "ऐप से बाहर निकलने के लिए फिर से टैप करें"
+    },
+    "homeScreen": {
+        "hello": "नमस्ते",
+        "hearToday": "आज आप क्या सुनना चाहते हैं?",
+        "addPremium": "मुफ्त प्रीमियम अनुभव जोड़ें सिर्फ $50/",
+        "perMonth": "प्रति महीने",
+        "subscribe": "अभी ग्राहक बनें",
+        "topArtists": "शीर्ष कलाकार",
+        "seeAll": "सभी देखें",
+        "recently": "हाल ही में बजाया",
+        "playList": "आपके लिए प्लेलिस्ट",
+        "freshMusic": "नया संगीत",
+        "bhakti": "भक्ति",
+        "mood": "तुम्हारा मूड कैसा है"
+    },
+    "topArtistsScreen": {
+        "topArtists": "शीर्ष कलाकार"
+    },
+    "recentlyPlayScreen": {
+        "recently": "हाल ही में खेलना"
+    },
+    "playListScreen": {
+        "playList": "आपके लिए प्लेलिस्ट"
+    },
+    "freshMusicScreen": {
+        "freshMusic": "नया संगीत"
+    },
+    "bhaktiScreen": {
+        "bhakti": "भक्ति"
+    },
+    "moodScreen": {
+        "yourMood": "तुम्हारा मूड कैसा है"
+    },
+    "artistScreen": {
+        "followers": "अनुयायी",
+        "follow": "पालन ​​करना",
+        "playAll": "सभी को बजाएं",
+        "playList": "प्लेलिस्ट",
+        "seeAll": "सभी देखें",
+        "topAlbums": "शीर्ष एल्बम",
+        "similar": "समान कलाकार"
+    },
+    "playListSeeAllScreen": {
+        "playList": "प्लेलिस्ट"
+    },
+    "playScreen": {
+        "follow": "पालन ​​करना"
+    },
+    "searchScreen": {
+        "prodcast": "भौंह",
+        "allSongs": "सभी गीत",
+        "albums": "एलबम",
+        "search": "खोज"
+    },
+    "podcastScreen": {
+        "trending": "ट्रेंडिंग पॉडकास्ट",
+        "seeAll": "सभी देखें",
+        "aroundWorld": "दुनिया भर से सर्वश्रेष्ठ",
+        "famous": "प्रसिद्ध व्यक्तित्व",
+        "motivation": "प्रेरणा पॉडकास्ट"
+    },
+    "trendingPodcastScreen": {
+        "treading": "ट्रेंडिंग पॉडकास्ट"
+    },
+    "aroundWorldScreen": {
+        "aroundWorld": "दुनिया भर से सर्वश्रेष्ठ"
+    },
+    "famousPersonalitiesScreen": {
+        "famous": "प्रसिद्ध व्यक्तित्व"
+    },
+    "motivationPodcastScreen": {
+        "motivation": "प्रेरणा पॉडकास्ट"
+    },
+    "podcastDetailScreen": {
+        "season": "सीज़न - 1 (13 एपिसोड)",
+        "follow": "पालन ​​करना",
+        "play": "खेलें",
+        "allEpisode": "सभी प्रकरण",
+        "download": "डाउनलोड",
+        "share": "शेयर करना",
+        "playlist": "प्लेलिस्ट में जोड़ें"
+    },
+    "searchMusicScreen": {
+        "search": "खोज",
+        "listenTo": "आप क्या सुनना चाहते हैं?",
+        "recentlySearch": "हाल ही में खोज",
+        "clearAll": "सभी साफ करें",
+        "trendingSearch": "ट्रेंडिंग सर्च"
+    },
+    "premiumScreen": {
+        "premium": "बीमा किस्त",
+        "premiumPlans": "प्रीमियम योजना",
+        "specialOffer": "विशेष प्रस्ताव (10% की छूट)",
+        "1month": "1 महीना",
+        "6month": "6 माह",
+        "12month": "12 महीने",
+        "benefits": "फ़ायदे",
+        "hdMusic": "एचडी संगीत स्ट्रीमिंग",
+        "experience": "मुक्त अनुभव जोड़ें",
+        "unlimited": "असीमित डाउनलोड",
+        "continue": "जारी रखना"
+    },
+    "addToPlayList": {
+        "playlist": "प्लेलिस्ट में जोड़ें",
+        "createNew": "नई प्लेलिस्ट बनाएं",
+        "playList1": "मेरी प्लेलिस्ट 1",
+        "playList2": "मेरी प्लेलिस्ट 2",
+        "playList3": "मेरी प्लेलिस्ट 3",
+        "songs10": "10 गाने",
+        "songs20": "20 गाने",
+        "addedPlayList": "प्लेलिस्ट में जोड़ा गया।"
+    },
+    "newPlayList": {
+        "newPlaylist": "नई प्लेलिस्ट",
+        "title": "शीर्षक",
+        "description": "विवरण",
+        "cancel": "रद्द करना",
+        "create": "सृजन करना"
+    },
+    "mainBottomSheet": {
+        "download": "डाउनलोड",
+        "share": "शेयर करना",
+        "playlist": "प्लेलिस्ट में जोड़ें",
+        "lyrics": "बोल",
+        "information": "गीत सूचना"
+    },
+    "lyricsScreen": {
+        "lyrics": "बोल"
+    },
+    "songInformation": {
+        "songInfo": "गीत सूचना",
+        "singer": "गायक",
+        "album": "एल्बम",
+        "lyricist": "गीतकार",
+        "composer": "संगीतकार"
+    },
+    "notificationScreen": {
+        "notification": "अधिसूचना",
+        "success": "सफलता",
+        "description": "आपकी मासिक योजना सफलतापूर्वक सक्रिय है, अब अपने पसंदीदा संगीत का आनंद लें",
+        "2min": "2 मिनट पहले",
+        "active": "सक्रिय योजना",
+        "offer": "प्रस्ताव",
+        "secondDescription": "10% की छूट। जल्दी करो! $ 50 पर एक महीने की योजना सक्रिय और $ 10 बचाओ",
+        "noNotification": "अभी तक कोई अधिसूचना नहीं"
+    },
+    "partySongScreen": {
+        "partySongs": "पार्टी गाने",
+        "hitSong": "सबसे बड़ी पार्टी हिट गाने",
+        "playAll": "सभी को बजाएं"
+    },
+    "libraryScreen": {
+        "library": "मेरा पुस्तकालय",
+        "recentlyPlay": "हाल ही में खेलना",
+        "myLikes": "मेरी पसन्द",
+        "50songs": "50 गाने",
+        "artist": "कलाकार",
+        "10artist": "10 कलाकार",
+        "playlist": "प्लेलिस्ट",
+        "10playlist": "10 प्लेलिस्ट",
+        "podcast": "भौंह",
+        "4podcast": "4 पॉडकास्ट"
+    },
+    "libraryMyLikeScreen": {
+        "myLikes": "मेरी पसन्द",
+        "remove": "हटाना",
+        "noLike": "टैपिंग द हार्ट आइकन द्वारा गाना बचाएं"
+    },
+    "libraryArtistScreen": {
+        "artist": "कलाकार की",
+        "unfollow": "करें",
+        "noFavorite": "अपने पसंदीदा कलाकार का पालन करें"
+    },
+    "libraryPlayListScreen": {
+        "playlist": "प्लेलिस्ट",
+        "remove": "हटाना",
+        "50songs": "शीर्ष 50 गाने",
+        "30songs": "शीर्ष 30 गाने",
+        "90songs": "शीर्ष 90 गाने",
+        "NoPlayList": "अपनी पसंदीदा प्लेलिस्ट की तरह"
+    },
+    "libraryPodcastScreen": {
+        "podcast": "भौंह",
+        "unfollow": "करें",
+        "artist": "कलाकार की",
+        "noFavorite": "अपने पसंदीदा पॉडकास्ट का पालन करें"
+    },
+    "profileScreen": {
+        "profile": "प्रोफ़ाइल",
+        "editProfile": "प्रोफ़ाइल संपादित करें",
+        "premium": "बीमा किस्त",
+        "language": "भाषा",
+        "appSettings": "एप्लिकेशन सेटिंग",
+        "aboutUs": "हमारे बारे में",
+        "helpSupport": "मदद समर्थन",
+        "logout": "लॉग आउट",
+        "areYouSure": "क्या आप लॉग आउट करना चाहते हैं?",
+        "cancel": "रद्द करना"
+    },
+    "editProfileScreen": {
+        "editProfile": "प्रोफ़ाइल संपादित करें",
+        "name": "नाम",
+        "EnterName": "अपना नाम दर्ज करें",
+        "email": "ईमेल पता",
+        "EnterEmail": "अपना ईमेल पता दर्ज करें",
+        "mobile": "फ़ोन नंबर",
+        "EnterMobile": "अपना दूरभाष क्रमांक दर्ज करें",
+        "update": "अपडेट करें",
+        "successfully": "प्रोफाइल को सफलतापूर्वक अपडेट किया गया!!",
+         "ok":"ठीक",
+        "changeProfile": "प्रोफ़ाइल फोटो बदलें",
+        "camera": "कैमरा",
+        "gallery": "गेलरी",
+        "remove": "छवि निकालें",
+        "removeImage": "प्रोफ़ाइल फोटो हटा दिया गया।"
+    },
+    "languageScreen": {
+        "languages": "बोली",
+        "update": "अपडेट करें"
+    },
+    "aboutUsScreen": {
+        "aboutUs": "हमारे बारे में",
+        "description": "लोरम बहुत गाजर, टमाटर स्नातक डेवलपर। लोरम, निवासियों या हँसी अब, अब मजाकिया के लिए। MIJK पॉट कभी -कभी और कोई पैच नहीं, फिल्म में varius aconggue.netus प्रवर्तन देखभाल लेकिन ब्यूरो क्लिनिकल चॉकलेट चला रहा है। शराब हमेशा शराब की तुलना में आईडी-लोरम होती है।",
+        "subDescription": "लोरम बहुत गाजर, टमाटर स्नातक क्षेत्र, निवासियों या हँसी अब, अब मजाकिया के लिए। Mi urna huo कभी -कभी और कोई पैच नहीं, varius ac, jjakiox चल रहा है, atlyun conguenetus प्रवर्तन देखभाल, लेकिन मुख्यधारा में ब्यूरो orciolour चॉकलेट। शराब हमेशा शराब की तुलना में आईडी-लोरम होती है। यह न तो जीवन का है, अब वह एक बास्केटबॉल है। फेलिस एस्टाकेसेक्टुर रोग। और तक, डोलमलेसुएडोलोरम का तत्व बहुत गाजर, कंसेक्टर्बफग अंडरग्रेजुएट एलिटेलस, निवासियों या हँसी अब, अब मजाकिया के लिए। एमआई कभी -कभी और कोई तालाब नहीं, वेरियस और 'होमवर्क' चल रहा है। Netus Care लेकिन Bure Buar Clinical Chochoct \"फिल्म में। शराब हमेशा शराब की तुलना में लोरम होती है। यह न तो जीवन का है, अब वह एक बास्केटबॉल है। फेलिस आउटडोर लेकिन टमाटर फुटबॉल है।"
+    },
+    "helpAndSupportScreen": {
+        "helpSupport": "मदद समर्थन",
+        "name": "नाम",
+        "enterName": "अपना नाम दर्ज करें",
+        "email": "ईमेल पता",
+        "enterEmail": "अपना ईमेल पता दर्ज करें",
+        "message": "संदेश",
+        "writeMessage": "यहाँ संदेश लिखें",
+        "submit": "प्रस्तुत करना"
+    },
+    "appSettingScreen": {
+        "appSettings": "एप्लिकेशन सेटिंग",
+        "notification": "अधिसूचना",
+        "description": "लोरम बहुत गाजर, बढ़ाया स्नातक क्षेत्र, निवासियों या हँसी नेविगेशन और शराब।",
+        "darkMode": "डार्क मोड",
+        "update": "अनुप्रयोग अद्यतन"
+    },
+    "creditCardScreen": {
+        "creditCard": "क्रेडिट कार्ड/डेबिट कार्ड",
+        "name": "कार्डधारक का नाम",
+        "cardNo": "कार्ड नंबर",
+        "enterName": "अपना कार्ड धारक नाम दर्ज करें",
+        "enterCard": "अपना कार्ड नंबर दर्ज करें",
+        "expiryDate": "समाप्ति तिथि",
+        "enterCvv": "सी वी वी कोड",
+        "payment": "भुगतान"
+    },
+    "successScreen": {
+        "congratulation": "बधाई",
+        "description": "लोरम बहुत गाजर, बढ़ाया स्नातक क्षेत्र, निवासियों या हँसी नेविगेशन और शराब।",
+        "backToHome": "घर वापिस जा रहा हूँ"
+    },
+    "similarArtistScreen": {
+        "followers": "2.5k अनुयायी",
+        "follow": "पालन ​​करना",
+        "playAll": "सभी को बजाएं",
+        "playList": "प्लेलिस्ट",
+        "seeAll": "सभी देखें",
+        "topAlbums": "शीर्ष एल्बम",
+        "similar": "समान कलाकार"
+    }
+}

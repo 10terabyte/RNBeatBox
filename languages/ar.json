@@ -1,0 +1,302 @@
+{
+    "onboardingScreen": {
+        "lifeIs": "الحياة أغنية ، الحب هو الموسيقى",
+        "description": "لوريم جدا الجزر هو amex ، تعزيز المشورة النخبة. تحمل مرفق قطر enid ، إلى حد ما ولكن الحادث لعن. لا تتحمل إلى حد ما ولكن إذا",
+        "getStart": "البدء"
+    },
+    "signInScreen": {
+        "login": "تسجيل الدخول",
+        "hello": "مرحبًا ، يرجى تسجيل الدخول إلى حسابك",
+        "enterNo": "أدخل رقم هاتفك المحمول",
+        "verification": "*أرسلنا OTP للتحقق",
+        "or": "أو"
+    },
+    "signUpScreen": {
+        "register": "يسجل",
+        "hello": "مرحبًا ، يرجى إنشاء حسابك",
+        "name": "أدخل أسمك",
+        "number": "أدخل رقم هاتفك المحمول",
+        "email": "أدخل عنوان بريدك الالكتروني"
+    },
+    "verificationScreen": {
+        "otp": "التحقق من OTP",
+        "pleaseEnter": "تم إرسال OTP إليك على رقم هاتفك المحمول ، الرجاء إدخاله أدناه",
+        "verify": "يؤكد"
+    },
+    "loader": {
+        "pleaseWait": "أرجو الإنتظار"
+    },
+    "bottomTab": {
+        "home": "مسكن",
+        "search": "يبحث",
+        "library": "مكتبتي",
+        "profile": "الملف الشخصي",
+        "exitApp": "اضغط مرة أخرى للخروج من التطبيق"
+    },
+    "homeScreen": {
+        "hello": "مرحبًا",
+        "hearToday": "ماذا تريد أن تسمع اليوم؟",
+        "addPremium": "أضف تجربة قسط مجانية فقط 50 دولارًا/",
+        "perMonth": "كل شهر",
+        "subscribe": "إشترك الآن",
+        "topArtists": "كبار الفنانين",
+        "seeAll": "اظهار الكل",
+        "recently": "لعبت مؤخرا",
+        "playList": "قائمة التشغيل لك",
+        "freshMusic": "موسيقى جديدة جديدة",
+        "bhakti": "بهاكتي",
+        "mood": "ما هو مزاجك"
+    },
+    "topArtistsScreen": {
+        "topArtists": "أفضل فنان"
+    },
+    "recentlyPlayScreen": {
+        "recently": "لعب مؤخرا"
+    },
+    "playListScreen": {
+        "playList": "قائمة التشغيل لك"
+    },
+    "freshMusicScreen": {
+        "freshMusic": "موسيقى جديدة جديدة"
+    },
+    "bhaktiScreen": {
+        "bhakti": "بهاكتي"
+    },
+    "moodScreen": {
+        "yourMood": "ما هو مزاجك"
+    },
+    "artistScreen": {
+        "followers": "أتباع ",
+        "follow": "يتبع",
+        "playAll": "لعب كل",
+        "playList": "قائمة التشغيل",
+        "seeAll": "اظهار الكل",
+        "topAlbums": "ألبومات أفضل",
+        "similar": "فنان مماثل"
+    },
+    "playListSeeAllScreen": {
+        "playList": "قائمة التشغيل"
+    },
+    "playScreen": {
+        "follow": "يتبع"
+    },
+    "searchScreen": {
+        "prodcast": "جبين",
+        "allSongs": "جميع الأغاني",
+        "albums": "ألبومات",
+        "search": "يبحث"
+    },
+    "podcastScreen": {
+        "trending": "توجه البودكاست",
+        "seeAll": "اظهار الكل",
+        "aroundWorld": "أفضل من جميع أنحاء العالم",
+        "famous": "الشخصيات الشهيرة",
+        "motivation": "الدافع البودكاست"
+    },
+    "trendingPodcastScreen": {
+        "treading": "توجه البودكاست"
+    },
+    "aroundWorldScreen": {
+        "aroundWorld": "أفضل من جميع أنحاء العالم"
+    },
+    "famousPersonalitiesScreen": {
+        "famous": "الشخصيات الشهيرة"
+    },
+    "motivationPodcastScreen": {
+        "motivation": "الدافع البودكاست"
+    },
+    "podcastDetailScreen": {
+        "season": "الموسم - 1 (13 حلقة)",
+        "follow": "يتبع",
+        "play": "لعب",
+        "allEpisode": "كل الحلقة",
+        "download": "تحميل",
+        "share": "يشارك",
+        "playlist": "أضف إلى قائمة التشغيل"
+    },
+    "searchMusicScreen": {
+        "search": "يبحث",
+        "listenTo": "ماذا تريد أن تستمع؟",
+        "recentlySearch": "البحث مؤخرا",
+        "clearAll": "امسح الكل",
+        "trendingSearch": "بحث تتجه"
+    },
+    "premiumScreen": {
+        "premium": "الممتازة",
+        "premiumPlans": "خطط متميزة",
+        "specialOffer": "عرض خاص (10 ٪ خصم)",
+        "1month": "1 شهر",
+        "6month": "6 أشهر",
+        "12month": "12 شهرا",
+        "benefits": "فوائد",
+        "hdMusic": "دفق الموسيقى HD",
+        "experience": "أضف تجربة مجانية",
+        "unlimited": "تنزيل غير محدود",
+        "continue": "يكمل"
+    },
+    "addToPlayList": {
+        "playlist": "أضف إلى قائمة التشغيل",
+        "createNew": "إنشاء قائمة تشغيل جديدة",
+        "playList1": "قائمة التشغيل الخاصة بي 1",
+        "playList2": "قائمة التشغيل 2",
+        "playList3": "قائمة التشغيل الخاصة بي 3",
+        "songs10": "10 أغاني",
+        "songs20": "20 أغنية",
+        "addedPlayList": "تمت إضافة إلى قائمة التشغيل."
+    },
+    "newPlayList": {
+        "newPlaylist": "قائمة تشغيل جديدة",
+        "title": "عنوان",
+        "description": "وصف",
+        "cancel": "يلغي",
+        "create": "خلق"
+    },
+    "mainBottomSheet": {
+        "download": "تحميل",
+        "share": "يشارك",
+        "playlist": "أضف إلى قائمة التشغيل",
+        "lyrics": "كلمات الاغنية",
+        "information": "معلومات الأغنية"
+    },
+    "lyricsScreen": {
+        "lyrics": "كلمات الاغنية"
+
+    },
+    "songInformation": {
+        "songInfo": "معلومات الأغنية",
+        "singer": "مغني",
+        "album": "الألبوم",
+        "lyricist": "شاعر غنائي",
+        "composer": "ملحن"
+    },
+    "notificationScreen": {
+        "notification": "تنبيه",
+        "success": "النجاح",
+        "description": "خطتك الشهرية النشطة بنجاح ، استمتع الآن بموسيقاك المفضلة",
+        "2min": "قبل 2 دقيقة",
+        "active": "خطط نشطة",
+        "offer": "عرض",
+        "secondDescription": "خصم 10. عجلوا! خطة نشطة لمدة شهر واحد بسعر 50 دولارًا وتوفير 10 دولارات",
+        "noNotification": "لا إشعار بعد"
+    },
+    "partySongScreen": {
+        "partySongs": "أغاني الحفلات",
+        "hitSong": "أكبر أغاني حزبية",
+        "playAll": "لعب كل"
+    },
+    "libraryScreen": {
+        "library": "مكتبتي",
+        "recentlyPlay": "لعب مؤخرا",
+        "myLikes": "أعجبني",
+        "50songs": "50 أغنية",
+        "artist": "فنان",
+        "10artist": "10 فنان",
+        "playlist": "قائمة التشغيل",
+        "10playlist": "10 قائمة تشغيل",
+        "podcast": "جبين",
+        "4podcast": "4 بودكاست"
+    },
+    "libraryMyLikeScreen": {
+        "myLikes": "أعجبني",
+        "remove": "إزالة",
+        "noLike": "حفظ أغنية من قبل النقر على أيقونة القلب"
+    },
+    "libraryArtistScreen": {
+        "artist": "الفنانين",
+        "unfollow": "الغاء المتابعة",
+        "noFavorite": "اتبع الفنان المفضل لديك"
+    },
+    "libraryPlayListScreen": {
+        "playlist": "قائمة التشغيل",
+        "remove": "إزالة",
+        "50songs": "أفضل 50 أغنية",
+        "30songs": "أفضل 30 أغنية",
+        "90songs": "أعلى 90 أغنية",
+        "NoPlayList": "مثل قائمة التشغيل المفضلة لديك"
+    },
+    "libraryPodcastScreen": {
+        "podcast": "جبين",
+        "unfollow": "الغاء المتابعة",
+        "artist": "الفنانين",
+        "noFavorite": "اتبع البودكاست المفضل لديك"
+    },
+    "profileScreen": {
+        "profile": "الملف الشخصي",
+        "editProfile": "تعديل الملف الشخصي",
+        "premium": "الممتازة",
+        "language": "لغة",
+        "appSettings": "إعدادات التطبيقات",
+        "aboutUs": "معلومات عنا",
+        "helpSupport": "ساعد لدعم",
+        "logout": "تسجيل خروج",
+        "areYouSure": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+        "cancel": "يلغي"
+    },
+    "editProfileScreen": {
+        "editProfile": "تعديل الملف الشخصي",
+        "name": "اسم",
+        "EnterName": "أدخل أسمك",
+        "email": "عنوان البريد الالكترونى",
+        "EnterEmail": "أدخل عنوان بريدك الالكتروني",
+        "mobile": "رقم الهاتف",
+        "EnterMobile": "أدخل رقم هاتفك",
+        "update": "تحديث",
+        "successfully": "تم تحديث الملف الشخصي بنجاح!!",
+        "ok":"موافق",
+        "changeProfile": "تغيير صورة الملف الشخصي",
+        "camera": "آلة تصوير",
+        "gallery": "صالة عرض",
+        "remove": "إزالة الصورة",
+        "removeImage": "تمت إزالة صورة الملف الشخصي."
+    },
+    "languageScreen": {
+        "languages": "اللغات",
+        "update": "تحديث"
+    },
+    "aboutUsScreen": {
+        "aboutUs": "معلومات عنا",
+        "description": "لوريم الجزر جدا ، مطور طماطم البكالوريوس. لوريم ، السكان أو الضحك الآن ، الآن من أجل مضحك. MIJK POT في بعض الأحيان ولا تصحيح ، يركض Varius aconggue.netus Care Enforcement ولكن Bureau Clinical Chocolate في الفيلم. الكحول دائما معرف من الكحول.",
+        "subDescription": "لوريم الجزر للغاية ، منطقة الطماطم الجامعية ، السكان أو الضحك الآن ، الآن من أجل مضحك. Mi Urna Huo في بعض الأحيان ولا تصحيح ، يركض Varius AC ، Jjakiox يذهب atyun conguenetus إنفاذ رعاية ، ولكن المكتب شوكولاتة orciolour في التيار الرئيسي. الكحول دائما معرف من الكحول. هذا ليس من الحياة ، والآن هو كرة سلة. مرض فيليس estconsectetur. وحتى ذلك ، فإن عنصر Dolmalesuadaollorum للغاية ، أو Costeturbfg الجامعي Elittellus ، أو السكان أو الضحك الآن ، الآن من أجل مضحك. MI في بعض الأحيان ولا بركة ، يركض المتغير و \"الواجب المنزلي. Netus Care ولكن مكتب الشوكولاتة السريرية في الفيلم. الكحول دائما لوريم من الكحول. هذا ليس من الحياة ، والآن هو كرة سلة. فيليس في الهواء الطلق ولكن كرة القدم الطماطم."
+    },
+    "helpAndSupportScreen": {
+        "helpSupport": "ساعد لدعم",
+        "name": "اسم",
+        "enterName": "أدخل أسمك",
+        "email": "عنوان البريد الالكترونى",
+        "enterEmail": "أدخل عنوان بريدك الالكتروني",
+        "message": "رسالة",
+        "writeMessage": "اكتب رسالة هنا",
+        "submit": "يُقدِّم"
+    },
+    "appSettingScreen": {
+        "appSettings": "إعدادات التطبيقات",
+        "notification": "تنبيه",
+        "description": "لوريم الجزر للغاية ، والمنطقة الجامعية المعززة ، والسكان أو الملاحة الضحك والكحول.",
+        "darkMode": "الوضع المظلم",
+        "update": "تحديث التطبيق"
+    },
+    "creditCardScreen": {
+        "creditCard": "بطاقة الائتمان بطاقة الخصم",
+        "name": "إسم صاحب البطاقة",
+        "cardNo": "رقم البطاقة",
+        "enterName": "أدخل اسم حامل البطاقة الخاص بك",
+        "enterCard": "أدخل رقم بطاقتك",
+        "expiryDate": "تاريخ انتهاء الصلاحية",
+        "enterCvv": "رقم الكود الموجود على بطاقات الاتمان",
+        "payment": "دفع"
+    },
+    "successScreen": {
+        "congratulation": "تهنئة",
+        "description": "لوريم الجزر للغاية ، والمنطقة الجامعية المعززة ، والسكان أو الملاحة الضحك والكحول.",
+        "backToHome": "العودة إلى المنزل"
+    },
+    "similarArtistScreen": {
+        "followers": "أتباع 2.5k",
+        "follow": "يتبع",
+        "playAll": "لعب كل",
+        "playList": "قائمة التشغيل",
+        "seeAll": "اظهار الكل",
+        "topAlbums": "ألبومات أفضل",
+        "similar": "فنان مماثل"
+    }
+}
