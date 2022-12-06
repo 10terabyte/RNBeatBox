@@ -5,59 +5,25 @@ import { Colors, Fonts, Default } from "../constants/style";
 // import { Audio } from "expo-av";
 import { useAppContext } from "../context";
 import { useNavigation } from '@react-navigation/native';
+import { useOnTogglePlayback, useCurrentTrack } from '../hooks';
+import { useDebouncedValue } from '../hooks/useDebouncedValue';
+import TrackPlayer, { State, usePlaybackState , useProgress} from 'react-native-track-player';
 const BottomMusic = (props) => {
   const {music} = useAppContext();
   const [isVisible, setVisible] = useState(false);
   const navigation = useNavigation();
   // const sound = React.useRef(new Audio.Sound());
   const [Status, SetStatus] = React.useState(false);
-
-  React.useEffect(() => {
-    // LoadAudio();
-    return () => sound.current.unloadAsync();
-  }, []);
-  const LoadAudio = async () => {
-    // const result = await sound.current.loadAsync(
-    //   require("../assets/music/cuteSmile.mp3"),
-
-    //   true
-    // );
-    // if (result.isLoaded === true) {
-    // } else {
-    //   PlayAudio();
-    // }
-  };
-
-  const PlayAudio = async () => {
-    // try {
-    //   const result = await sound.current.getStatusAsync();
-    //   if (result.isLoaded) {
-    //     if (result.isPlaying === false) {
-    //       sound.current.playAsync();
-    //       SetStatus(true);
-    //     }
-    //   } else {
-    //     LoadAudio();
-    //   }
-    // } catch (error) {
-    //   SetStatus(false);
-    // }
-  };
-
-  const PauseAudio = async () => {
-    // try {
-    //   const result = await sound.current.getStatusAsync();
-    //   if (result.isLoaded) {
-    //     if (result.isPlaying === true) {
-    //       sound.current.pauseAsync();
-    //       SetStatus(false);
-    //     }
-    //   }
-    // } catch (error) {
-    //   SetStatus(false);
-    // }
-  };
-
+  const onTogglePlayback = useOnTogglePlayback();
+  const progress = useProgress();
+  const state = usePlaybackState();
+  const isPlaying = state === State.Playing;
+  const isLoading = useDebouncedValue(
+    state === State.Connecting || state === State.Buffering,
+    250
+  );
+  const currentTrack = useCurrentTrack();
+   
   return (
     <TouchableOpacity
       onPress={()=>{
@@ -78,7 +44,7 @@ const BottomMusic = (props) => {
         }}
       >
         <Image
-          source={music.track_thumbnail?{uri:music.track_thumbnail}:require("../assets/image/photo1.png")}
+          source={{uri:currentTrack?.artwork}}
           style={{ alignSelf: "center",width:50, height: 50 }}
         />
         <View
@@ -87,8 +53,8 @@ const BottomMusic = (props) => {
             justifyContent: "center",
           }}
         >
-          <Text style={{ ...Fonts.Bold16White }}> {music.track_name?music.track_name:""}</Text>
-          <Text style={{ ...Fonts.SemiBold14White }}> {music.singer?music.singer:""}</Text>
+          <Text style={{ ...Fonts.Bold16White }}> {currentTrack?.title}</Text>
+          <Text style={{ ...Fonts.SemiBold14White }}> {currentTrack?.artist}</Text>
         </View>
       </View>
       <View
@@ -113,11 +79,11 @@ const BottomMusic = (props) => {
           <Ionicons name="play-skip-back" size={24} color={Colors.white} />
         </View>
         <TouchableOpacity
-          onPress={Status === false ? PlayAudio : PauseAudio}
+          onPress={onTogglePlayback}
           style={{ marginHorizontal: Default.fixPadding * 0.5 }}
         >
           <Ionicons
-            name={Status === false ? "play-circle" : "pause-circle"}
+            name={isPlaying === false ? "play-circle" : "pause-circle"}
             size={28}
             color={Colors.white}
           />

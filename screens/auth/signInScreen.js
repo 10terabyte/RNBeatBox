@@ -204,7 +204,7 @@ const SignInScreen = (props) => {
             >
               {tr("or")}
             </Text>
-
+{/* 
             <TouchableOpacity
                 style={{
                   ...Default.shadow,
@@ -260,7 +260,7 @@ const SignInScreen = (props) => {
                   color={Colors.white}
                   style={{ marginHorizontal: Default.fixPadding }}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             <Loader visible={visible} />
 
             <View

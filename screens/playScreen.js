@@ -7,19 +7,22 @@ import {
   BackHandler,
   ImageBackground,
   Share,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Colors, Fonts, Default } from "../constants/style";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
-// import { Slider } from "react-native-range-slider-expo";
+import Slider from '@react-native-community/slider';
 import MainBottomSheet from "../components/mainBottomSheet";
 import AddToPlayList from "../components/addToPlayList";
 import NewPlayList from "../components/newPlayList";
 // import { Audio } from "expo-av";
 import { useAppContext } from "../context";
-
+import { useOnTogglePlayback, useCurrentTrack } from '../hooks';
+import { useDebouncedValue } from '../hooks/useDebouncedValue';
+import TrackPlayer, { State, usePlaybackState , useProgress} from 'react-native-track-player';
 const PlayScreen = (props) => {
   const {setMusic, music} = useAppContext();
   const { t, i18n } = useTranslation();
@@ -35,21 +38,23 @@ const PlayScreen = (props) => {
     props.navigation.goBack();
     return true;
   };
+  const onTogglePlayback = useOnTogglePlayback();
+  const progress = useProgress();
+  const state = usePlaybackState();
+  const isPlaying = state === State.Playing;
+  const isLoading = useDebouncedValue(
+    state === State.Connecting || state === State.Buffering,
+    250
+  );
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", backAction);
 
     return () =>
       BackHandler.removeEventListener("hardwareBackPress", backAction);
   }, []);
-  useEffect(()=>{
-    if(props.route.params.item){
-      setMusic(props.route.params.item);
-      // LoadAudio();
-    }else{
-      setMusic({});
-    }
-  },[props])
 
+ 
+  const currentTrack = useCurrentTrack();
   const [isVisible, setIsVisible] = useState(false);
   const [value, setValue] = useState(0);
 
@@ -78,55 +83,7 @@ const PlayScreen = (props) => {
     });
   };
 
-  // const sound = React.useRef(new Audio.Sound());
-  const [Status, SetStatus] = React.useState(false);
-
-  // React.useEffect(() => {
-  //   LoadAudio();
-  //   return () => sound.current.unloadAsync();
-  // }, []);
-
-  const LoadAudio = async () => {
-    // console.log(result, "------------------")
-    // const result = await sound.current.loadAsync(
-    //  { uri:music.track_file,}
-    // );
-    // console.log(result, "Load Audio Result")
-    // if (result.isLoaded === true) {
-    // } else {
-    //   PlayAudio();
-    // }
-  };
-
-  const PlayAudio = async () => {
-    // try {
-    //   const result = await sound.current.getStatusAsync();
-    //   if (result.isLoaded) {
-    //     if (result.isPlaying === false) {
-    //       sound.current.playAsync();
-    //       SetStatus(true);
-    //     }
-    //   } else {
-    //     LoadAudio();
-    //   }
-    // } catch (error) {
-    //   SetStatus(false);
-    // }
-  };
-
-  const PauseAudio = async () => {
-    // try {
-    //   const result = await sound.current.getStatusAsync();
-    //   if (result.isLoaded) {
-    //     if (result.isPlaying === true) {
-    //       sound.current.pauseAsync();
-    //       SetStatus(false);
-    //     }
-    //   }
-    // } catch (error) {
-    //   SetStatus(false);
-    // }
-  };
+ 
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.boldBlack }}>
@@ -136,7 +93,7 @@ const PlayScreen = (props) => {
       >
 
         <ImageBackground
-          source={props.route.params && props.route.params.item.track_thumbnail?{uri:props.route.params.item.track_thumbnail}:require("../assets/image/music.png")}
+          source={currentTrack && currentTrack.artwork?{uri:currentTrack.artwork}:require("../assets/image/music.png")}
           style={{ flex: 1 }}
         >
           <View style={{ justifyContent: "space-between", flex: 1 }}>
@@ -312,7 +269,7 @@ const PlayScreen = (props) => {
                     alignItems: isRtl ? "flex-end" : "flex-start",
                   }}
                 >
-                  <Text style={{ ...Fonts.Bold24White }}>{music.track_name}</Text>
+                  <Text style={{ ...Fonts.Bold24White }}>{currentTrack?.title}</Text>
                   <View
                     style={{
                       flexDirection: isRtl ? "row-reverse" : "row",
@@ -326,7 +283,7 @@ const PlayScreen = (props) => {
                         ...Fonts.Bold14Grey,
                       }}
                     >
-                      {music.track_genre}
+                      {currentTrack?.artist}
                     </Text>
                     <View
                       style={{
@@ -357,7 +314,19 @@ const PlayScreen = (props) => {
                   <Feather name="download" size={30} color={Colors.white} />
                 </View>
               </View>
-
+              <Slider
+                style={{height: 40,
+                  width: 380,
+                  marginTop: 25,
+                  flexDirection: 'row',}}
+                value={progress.position}
+                minimumValue={0}
+                maximumValue={progress.duration}
+                thumbTintColor="#FFD479"
+                minimumTrackTintColor="#FFD479"
+                maximumTrackTintColor="#FFFFFF"
+                onSlidingComplete={TrackPlayer.seekTo}
+              />
               {/* <Slider
                 min={0}
                 max={100}
@@ -381,14 +350,16 @@ const PlayScreen = (props) => {
                   marginHorizontal: Default.fixPadding * 3,
                 }}
               >
-                <Text style={{ ...Fonts.SemiBold12Grey }}>15 : 20</Text>
+                <Text style={{ ...Fonts.SemiBold12Grey }}>{new Date(progress.position * 1000).toISOString().slice(14, 19)}</Text>
                 <Text
                   style={{
                     ...Fonts.SemiBold12Grey,
                     marginRight: Default.fixPadding,
                   }}
                 >
-                  22 : 45
+                 {new Date((progress.duration - progress.position) * 1000)
+            .toISOString()
+            .slice(14, 19)}
                 </Text>
               </View>
 
@@ -401,14 +372,18 @@ const PlayScreen = (props) => {
                 }}
               >
                 <Feather name="shuffle" size={20} color={Colors.darkGrey} />
+
                 <Ionicons
                   name="play-skip-back"
                   size={30}
                   color={Colors.white}
                   style={{ marginHorizontal: Default.fixPadding * 2 }}
                 />
-                <TouchableOpacity
-                  onPress={Status === false ? PlayAudio : PauseAudio}
+                {
+                  isLoading ? <View style={{ height: 40,width: 40}}>
+                  {isLoading && <ActivityIndicator />}
+                </View> : <TouchableOpacity
+                  onPress={onTogglePlayback}
                   style={{
                     height: 66,
                     width: 66,
@@ -419,11 +394,13 @@ const PlayScreen = (props) => {
                   }}
                 >
                   <Ionicons
-                    name={Status === false ? "play" : "pause"}
+                    name={isPlaying ? "pause" : "play" }
                     size={25}
                     color={Colors.white}
                   />
                 </TouchableOpacity>
+                }
+                
                 <Ionicons
                   name="play-skip-forward"
                   size={30}

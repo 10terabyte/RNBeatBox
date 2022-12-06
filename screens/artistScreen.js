@@ -24,6 +24,7 @@ import NewPlayList from "../components/newPlayList";
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { getDatabase, ref, onValue, update, query as d_query, get, child, equalTo, where as db_where, orderByChild, limitToFirst } from "firebase/database";
 import { collection, doc, addDoc, getFirestore, setDoc, query, getDocs, where, getCountFromServer, limit } from "firebase/firestore";
+import TrackPlayer, { State, usePlaybackState , useProgress} from 'react-native-track-player';
 const DB = getDatabase();
 
 const { width } = Dimensions.get("window");
@@ -38,7 +39,22 @@ const ArtistScreen = (props) => {
   function tr(key) {
     return t(`artistScreen:${key}`);
   }
-
+  async function loadSoundAndPlay(musicItem){
+    console.log('MusicItem,', musicItem)
+      var track = {
+        url: musicItem.track_file, // Load media from the network
+        title: musicItem.track_name,
+        artist: musicItem.singer,
+        album: musicItem.genre,
+        genre: musicItem.genre,
+        artwork: musicItem.track_thumbnail, // Load artwork from the network
+    };
+    await TrackPlayer.add([track]);
+    // console.log(music, "MUSIC")
+    TrackPlayer.skipToNext()
+    TrackPlayer.play()
+    props.navigation.navigate("playScreen");
+  }
   const backAction = () => {
     props.navigation.goBack();
     return true;
@@ -397,7 +413,7 @@ const ArtistScreen = (props) => {
                   flex: 9,
                   flexDirection: isRtl ? "row-reverse" : "row",
                 }}
-                onPress={() => props.navigation.navigate("playScreen", { item:{...item, singer:props.route.params.item.name} })}
+                onPress={() => loadSoundAndPlay( {...item, singer:props.route.params.item.name} )}
               >
                 <Image source={{ uri: item.track_thumbnail }} style={{ width: 50, height: 50, borderRadius: 5 }} />
                 <View

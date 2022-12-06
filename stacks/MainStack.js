@@ -44,10 +44,12 @@ import SuccessScreen from "../screens/successScreen";
 import SimilarArtistScreen from "../screens/similarArtistScreen";
 
 
+import TrackPlayer, { State } from 'react-native-track-player';
 
 const Stack = createStackNavigator();
 
 export default function MainStack() {
+
   return (
     <Stack.Navigator  headerShown='false' 
         screenOptions={{

@@ -14,7 +14,8 @@ import AuthStack from "./stacks/AuthStack";
 import MainStack from "./stacks/MainStack";
 import { AppWrapper,useAppContext } from "./context";
 const Stack = createStackNavigator();
- 
+import TrackPlayer, { State } from 'react-native-track-player';
+import { QueueInitialTracksService, SetupService } from './services';
 const MainNavigation = (props) => {
   const [initializing, setInitializing] = useState(true);
   const { user, setUser } = useAppContext();
@@ -26,6 +27,7 @@ const MainNavigation = (props) => {
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    
     return subscriber; // unsubscribe on unmount
   }, []);
   return (
@@ -44,7 +46,7 @@ const ReloadAppOnLanguageChange = withTranslation("translation", {
   bindStore: false,
 })(MainNavigation);
 
-export default function App() {
+export default  function App() {
   // const [loaded] = useFonts({
     
   //   Regular: require("./assets/font/Mulish-Regular.ttf"),
@@ -57,6 +59,7 @@ export default function App() {
   // if (!loaded) {
   //   return null;
   // }
+  
 
   return <AppWrapper><ReloadAppOnLanguageChange /></AppWrapper>;
 }
