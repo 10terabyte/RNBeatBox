@@ -121,15 +121,15 @@ const LibraryScreen = (props) => {
   ];
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.boldBlack }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
       <StatusBar
-        backgroundColor={Colors.boldBlack}
+        backgroundColor={Colors.darkBlue}
         barStyle={Platform.OS === "android" ? "light-content" : "default"}
       />
       <View
         style={{
           paddingVertical: Default.fixPadding,
-          backgroundColor: Colors.boldBlack,
+          backgroundColor: Colors.darkBlue,
           alignItems: "center",
         }}
       >
@@ -143,7 +143,7 @@ const LibraryScreen = (props) => {
             marginVertical: Default.fixPadding,
           }}
         >
-          {tr("recentlyPlay")}
+          Favourite Beat
         </Text>
 
         <FlatList

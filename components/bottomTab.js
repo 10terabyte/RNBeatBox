@@ -66,11 +66,12 @@ const BottomTab = (props) => {
   }
   const title1 = isRtl ? tr("profile") : tr("home");
   const title2 = isRtl ? tr("home") : tr("profile");
-  const title3 = isRtl ? "Playlist" : tr("search");
-  const title4 = isRtl ? tr("search") : "Playlist";
+  const title3 = isRtl ? "My Library" : tr("search");
+  const title4 = isRtl ? tr("search") : "My Library";
 
   return (
     <>
+    
       <Tab.Navigator
         initialRouteName="homeScreen"
         screenOptions={{
@@ -106,7 +107,7 @@ const BottomTab = (props) => {
         />
         <Tab.Screen
           name={isRtl ? "libraryScreen" : "searchScreen"}
-          component={isRtl ? HomeScreen : SearchScreen}
+          component={isRtl ? LibraryScreen : SearchScreen}
           options={{
             title: title3,
             tabBarActiveTintColor: Colors.primary,
@@ -122,7 +123,7 @@ const BottomTab = (props) => {
         />
         <Tab.Screen
           name={isRtl ? "searchScreen" : "libraryScreen"}
-          component={isRtl ? SearchScreen : HomeScreen}
+          component={isRtl ? SearchScreen : LibraryScreen}
           options={{
             title: title4,
             tabBarActiveTintColor: Colors.primary,

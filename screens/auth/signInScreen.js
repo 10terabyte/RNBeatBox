@@ -184,7 +184,6 @@ const SignInScreen = (props) => {
                 selectionColor={Colors.primary}
                 value={textPassword}
                 secureTextEntry = {true}
-                keyboardType={"number-pad"}
                 style={{
                   ...Fonts.Medium15White,
                   flex: 9.3,

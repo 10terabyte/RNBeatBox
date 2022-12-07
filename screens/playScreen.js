@@ -86,14 +86,14 @@ const PlayScreen = (props) => {
  
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.boldBlack }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1 }}
       >
 
         <ImageBackground
-          source={currentTrack && currentTrack.artwork?{uri:currentTrack.artwork}:require("../assets/image/music.png")}
+          source={currentTrack && currentTrack.artwork? {uri:currentTrack.artwork}:require("../assets/image/music.png")}
           style={{ flex: 1 }}
         >
           <View style={{ justifyContent: "space-between", flex: 1 }}>

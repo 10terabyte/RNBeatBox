@@ -7,6 +7,7 @@ import {
   BackHandler,
   StatusBar,
   Platform,
+  Image
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -43,7 +44,6 @@ const PremiumScreen = (props) => {
     onValue(orderCollection, snapshot=>{
       const data = snapshot.val();
       let premiumData = [];
-      // console.log(data,"subscription")
       if(data == null){
         setOptionCategory([]);
       }
@@ -67,15 +67,15 @@ const PremiumScreen = (props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.boldBlack }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
       <StatusBar
-        backgroundColor={Colors.boldBlack}
+        backgroundColor={Colors.darkBlue}
         barStyle={Platform.OS === "android" ? "light-content" : "default"}
       />
       <View
         style={{
           paddingVertical: Default.fixPadding,
-          backgroundColor: Colors.boldBlack,
+          backgroundColor: Colors.darkBlue,
           flexDirection: isRtl ? "row-reverse" : "row",
           alignItems: "center",
         }}
@@ -113,7 +113,7 @@ const PremiumScreen = (props) => {
                   justifyContent: "center",
                   borderRadius: 10,
                   paddingVertical: Default.fixPadding * 1.5,
-                  paddingHorizontal: Default.fixPadding * 1.5,
+                  paddingHorizontal: Default.fixPadding,
                   backgroundColor: item.color,
                   marginVertical: Default.fixPadding,
                   borderColor:
@@ -126,11 +126,19 @@ const PremiumScreen = (props) => {
               >
                 <View
                   style={{
-                    marginHorizontal: Default.fixPadding,
                     flexDirection: isRtl ? "row-reverse" : "row",
                   }}
                 >
-                  <View style={{ flex: 8 }}>
+                   <View
+                    style={{
+                      
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image source={{uri: item.icon_path}} style={{width: 50, height: 50}}/>
+                  </View>
+                  <View style={{ flex: 8, marginLeft: 10 }}>
                     <Text
                       style={
                         selectedCategory === item.text

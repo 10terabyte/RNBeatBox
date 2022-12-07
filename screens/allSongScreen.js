@@ -177,7 +177,7 @@ const AllSongScreen = (props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.boldBlack }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
       <FlatList
         data={artistData}
         renderItem={renderItemArtist}

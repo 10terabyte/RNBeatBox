@@ -137,15 +137,15 @@ const NotificationScreen = (props) => {
   };
 
   const renderHiddenItem = () => (
-    <View style={{ backgroundColor: Colors.boldBlack, flex: 1 }}></View>
+    <View style={{ backgroundColor: Colors.darkBlue, flex: 1 }}></View>
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.boldBlack }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
       <View
         style={{
           paddingVertical: Default.fixPadding,
-          backgroundColor: Colors.boldBlack,
+          backgroundColor: Colors.darkBlue,
           flexDirection: isRtl ? "row-reverse" : "row",
           alignItems: "center",
         }}

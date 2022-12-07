@@ -87,7 +87,7 @@ const LibraryPlayListScreen = (props) => {
     return (
       <View
         style={{
-          backgroundColor: Colors.boldBlack,
+          backgroundColor: Colors.darkBlue,
           borderBottomColor: Colors.lightBlack,
           borderBottomWidth: 1,
           paddingHorizontal: Default.fixPadding * 1.5,
@@ -136,15 +136,15 @@ const LibraryPlayListScreen = (props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.boldBlack }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
       <StatusBar
-        backgroundColor={Colors.boldBlack}
+        backgroundColor={Colors.darkBlue}
         barStyle={Platform.OS === "android" ? "light-content" : "default"}
       />
       <View
         style={{
           paddingVertical: Default.fixPadding,
-          backgroundColor: Colors.boldBlack,
+          backgroundColor: Colors.darkBlue,
           flexDirection: isRtl ? "row-reverse" : "row",
           alignItems: "center",
         }}

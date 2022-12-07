@@ -116,7 +116,7 @@ const AlbumsScreen = (props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.boldBlack }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
       <FlatList
         numColumns={2}
         data={albumData}

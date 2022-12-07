@@ -34,7 +34,7 @@ const SuccessScreen = (props) => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: Colors.boldBlack,
+        backgroundColor: Colors.darkBlue,
       }}
     >
       <StatusBar

@@ -95,26 +95,7 @@ const MainBottomSheet = (props) => {
             {tr("playlist")}
           </Text>
         </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={props.onLyrics}
-          style={{
-            flexDirection: isRtl ? "row-reverse" : "row",
-            paddingBottom: Default.fixPadding * 2,
-            paddingHorizontal: Default.fixPadding * 2,
-          }}
-        >
-          <MaterialIcons name="queue-music" size={20} color={Colors.black} />
-          <Text
-            style={{
-              ...Fonts.SemiBold15Black,
-              marginHorizontal: Default.fixPadding,
-            }}
-          >
-            {tr("lyrics")}
-          </Text>
-        </TouchableOpacity>
-
+ 
         <TouchableOpacity
           onPress={props.onInformation}
           style={{

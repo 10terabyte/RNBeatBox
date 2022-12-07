@@ -61,7 +61,7 @@ const TopArtistsScreen = (props) => {
       index === artistsData.length - 3;
     return (
       <TouchableOpacity
-        onPress={() => props.navigation.navigate("artistScreen")}
+        onPress={() => props.navigation.navigate("artistScreen", { item })}
         style={{
           marginTop: Default.fixPadding * 1.5,
           marginBottom: isEnd ? Default.fixPadding * 1.5 : 0,
@@ -86,15 +86,15 @@ const TopArtistsScreen = (props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.boldBlack }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
       <StatusBar
-        backgroundColor={Colors.boldBlack}
+        backgroundColor={Colors.darkBlue}
         barStyle={Platform.OS === "android" ? "light-content" : "default"}
       />
       <View
         style={{
           paddingVertical: Default.fixPadding,
-          backgroundColor: Colors.boldBlack,
+          backgroundColor: Colors.darkBlue,
           flexDirection: isRtl ? "row-reverse" : "row",
           alignItems: "center",
         }}

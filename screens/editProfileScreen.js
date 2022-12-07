@@ -164,15 +164,15 @@ const EditProfileScreen = (props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.boldBlack }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
       <StatusBar
-        backgroundColor={Colors.boldBlack}
+        backgroundColor={Colors.darkBlue}
         barStyle={Platform.OS === "android" ? "light-content" : "default"}
       />
       <View
         style={{
           paddingVertical: Default.fixPadding,
-          backgroundColor: Colors.boldBlack,
+          backgroundColor: Colors.darkBlue,
           flexDirection: isRtl ? "row-reverse" : "row",
           alignItems: "center",
         }}
@@ -299,7 +299,7 @@ const EditProfileScreen = (props) => {
             height: 38,
             width: 38,
             borderRadius: 19,
-            backgroundColor: Colors.boldBlack,
+            backgroundColor: Colors.darkBlue,
             top: "25%",
             left: "55%",
             position: "absolute",

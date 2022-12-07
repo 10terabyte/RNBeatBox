@@ -115,13 +115,13 @@ const SearchMusicScreen = (props) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
       <StatusBar
-        backgroundColor={Colors.boldBlack}
+        backgroundColor={Colors.darkBlue}
         barStyle={Platform.OS === "android" ? "light-content" : "default"}
       />
       <View
         style={{
           paddingVertical: Default.fixPadding,
-          backgroundColor: Colors.boldBlack,
+          backgroundColor: Colors.darkBlue,
         }}
       >
         <View style={{ flexDirection: isRtl ? "row-reverse" : "row" }}>

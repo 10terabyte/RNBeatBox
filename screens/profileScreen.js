@@ -35,15 +35,15 @@ const ProfileScreen = (props) => {
   };
   let userAvatar = user.photoURL == null || user.photoURL == '' ? `https://ui-avatars.com/api/?name=${user.displayName}` : user.photoURL;
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.boldBlack }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
       <StatusBar
-        backgroundColor={Colors.boldBlack}
+        backgroundColor={Colors.darkBlue}
         barStyle={Platform.OS === "android" ? "light-content" : "default"}
       />
       <View
         style={{
           paddingVertical: Default.fixPadding,
-          backgroundColor: Colors.boldBlack,
+          backgroundColor: Colors.darkBlue,
           alignItems: "center",
         }}
       >
@@ -150,7 +150,7 @@ const ProfileScreen = (props) => {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => props.navigation.navigate("languageScreen")}
           style={{
             flexDirection: isRtl ? "row-reverse" : "row",
@@ -183,7 +183,7 @@ const ProfileScreen = (props) => {
               justifyContent: "flex-end",
             }}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity
           onPress={() => props.navigation.navigate("appSettingScreen")}

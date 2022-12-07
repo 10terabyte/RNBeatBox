@@ -37,7 +37,6 @@ const ArtistSearchScreen = (props) => {
             if(snapshot.val()){
                 
                 let data = snapshot.val();
-                console.log("data",data)
                 let artists = [];
                 let promises = [];
                 let index = 0;
