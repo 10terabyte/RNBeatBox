@@ -24,7 +24,7 @@ const MainNavigation = (props) => {
     setUser(_user);
     if (initializing) setInitializing(false);
   }
-
+  
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     

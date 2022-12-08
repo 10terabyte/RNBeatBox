@@ -289,6 +289,7 @@ const HomeScreen = (props) => {
                         loop
                         index={0}
                         pageSize={Dimensions.get('window').width}
+                        useNativeDriver = {false}
                     >
                         {bannerList.map((image, index) => renderBannerImage(image, index))}
                 </Carousel>
