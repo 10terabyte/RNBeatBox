@@ -283,7 +283,7 @@ const HomeScreen = (props) => {
                 </TouchableOpacity>
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Carousel
+                {/* <Carousel
                         autoplay
                         autoplayTimeout={5000}
                         loop
@@ -292,7 +292,7 @@ const HomeScreen = (props) => {
                         useNativeDriver = {false}
                     >
                         {bannerList.map((image, index) => renderBannerImage(image, index))}
-                </Carousel>
+                </Carousel> */}
 
                 <View
                     style={{
