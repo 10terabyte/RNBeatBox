@@ -29,15 +29,16 @@ import { useOnTogglePlayback, useCurrentTrack } from '../hooks';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
 import TrackPlayer, { State, usePlaybackState, useProgress } from 'react-native-track-player';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
-import AudioRecorderPlayer , {AudioEncoderAndroidType, AudioSourceAndroidType, AVEncoderAudioQualityIOSType, AVEncodingOption} from 'react-native-audio-recorder-player';
-import * as ScopedStorage from "react-native-scoped-storage"
+import AudioRecorderPlayer, { AudioEncoderAndroidType, AudioSourceAndroidType, AVEncoderAudioQualityIOSType, AVEncodingOption } from 'react-native-audio-recorder-player';
+import {FFmpegKit} from 'ffmpeg-kit-react-native'
 import RNFS from "react-native-fs"
+import uuid from 'react-native-uuid';
 const audioRecorderPlayer = new AudioRecorderPlayer();
 const PlayScreen = (props) => {
     const { setMusic, music } = useAppContext();
     const { t, i18n } = useTranslation();
     const [isLoaded, setIsLoaded] = useState(false);
-    
+
     const isRtl = i18n.dir() === "rtl";
 
     function tr(key) {
@@ -60,41 +61,58 @@ const PlayScreen = (props) => {
         250
     );
     useEffect(() => {
+        // console.log(props)
         BackHandler.addEventListener("hardwareBackPress", backAction);
 
         return () =>
             BackHandler.removeEventListener("hardwareBackPress", backAction);
     }, []);
+    useEffect(()=>{
+        if(isPlaying == false){
+            if(isRecording){
+                console.log("Music play has been stoped")
+                stopRecord()
+            }
+        }
+    }, [isPlaying])
     useEffect(
         () =>
-          props.navigation.addListener('beforeRemove', (e) => {
-            
-            // Prevent default behavior of leaving the screen
-            e.preventDefault();
-    
-            // Prompt the user before leaving the screen
-            Alert.alert(
-              'Discard recording?',
-              'Are you sure to stop recordings?',
-              [
-                { text: "Don't leave", style: 'cancel', onPress: () => {} },
-                {
-                  text: 'Discard',
-                  style: 'destructive',
-                  // If the user confirmed, then we dispatch the action we blocked earlier
-                  // This will continue the action that had triggered the removal of the screen
-                  onPress: () => props.navigation.dispatch(e.data.action),
-                },
-              ]
-            );
-          }),
+            props.navigation.addListener('beforeRemove', (e) => {
+
+                if (isRecording) {
+                    e.preventDefault();
+
+                    // Prompt the user before leaving the screen
+                    Alert.alert(
+                        'Discard recording?',
+                        'Are you sure to stop recordings?',
+                        [
+                            { text: "Don't leave", style: 'cancel', onPress: () => { } },
+                            {
+                                text: 'Discard',
+                                style: 'destructive',
+                                // If the user confirmed, then we dispatch the action we blocked earlier
+                                // This will continue the action that had triggered the removal of the screen
+                                onPress: () => props.navigation.dispatch(e.data.action),
+                            },
+                        ]
+                    );
+                }
+
+                else {
+                    TrackPlayer.reset()
+                    props.navigation.dispatch(e.data.action)
+                }
+                // Prevent default behavior of leaving the screen
+
+            }),
         [props.navigate]
-      );
+    );
 
     const currentTrack = useCurrentTrack();
     const [isVisible, setIsVisible] = useState(false);
     const [value, setValue] = useState(0);
-
+    const [recordStartTime, setRecordStartTime] = useState(0);
     const [visible, setVisible] = useState(false);
 
     const toggleClose = () => {
@@ -151,20 +169,27 @@ const PlayScreen = (props) => {
         }
     }
 
-    stopRecord = async() => {
+    stopRecord = async () => {
         const result = await audioRecorderPlayer.stopRecorder();
         audioRecorderPlayer.removeRecordBackListener();
-        TrackPlayer.reset();
-        
-        console.log("Stop Record",result);
+        console.log(currentTrack.url, "Current Track URL")
+        TrackPlayer.pause();
+        FFmpegKit.execute(
+                `-i ${currentTrack.url} -i ${result} -filter_complex "[0]asplit[a][b]; [a]atrim=duration=${recordStartTime},volume='1-max(0.25*(t-${recordStartTime}),0)':eval=frame[pre]; [b]atrim=start=${recordStartTime},asetpts=PTS-STARTPTS[song]; [song][1]amix=inputs=2:duration=first:dropout_transition=2[post];  [pre][post]concat=n=2:v=0:a=1[mixed]"  -map "[mixed]" ${RNFS.DownloadDirectoryPath}/${uuid.v4()}.mp4`
+            )
+            .then((result) => {
+                setVisible(false)
+                setIsRecording(false)
+                props.navigation.goBack()
+                console.log("Stop Record", result);
+                console.log(`FFmpeg process exited with rc=${result.getAllLogs()}.`)
+            }
+        );
     }
-    
-    startRecord = async() => {
-        
-       
+
+    startRecord = async () => {
         setIsCounting(false)
         setIsRecording(true)
-        
         const path = Platform.select({
             ios: 'hello.m4a',
             android: `${RNFS.DownloadDirectoryPath}/hello.mp4`,
@@ -177,11 +202,10 @@ const PlayScreen = (props) => {
             AVFormatIDKeyIOS: AVEncodingOption.aac,
         };
         const result = await audioRecorderPlayer.startRecorder(path, audioSet);
+        setRecordStartTime(parseInt(progress.position, 10));
         audioRecorderPlayer.addRecordBackListener((e) => {
-          console.log("RecordingEvent", e)
-          return;
+            return;
         });
-        console.log("Recording Result",result);
     }
     function startCountDown() {
         setIsCounting(true)
@@ -311,53 +335,7 @@ const PlayScreen = (props) => {
                         </View>
 
                         <View>
-                            {/* <View style={{ margin: Default.fixPadding * 2 }}>
-                <Text
-                  style={{
-                    ...Fonts.Bold14Grey,
-                    textAlign: "center",
-                    marginTop: Default.fixPadding * 0.5,
-                  }}
-                >
-                  Oh, oh-oh, when you love somebody
-                </Text>
-                <Text
-                  style={{
-                    ...Fonts.Bold14White,
-                    textAlign: "center",
-                    marginTop: Default.fixPadding * 0.5,
-                  }}
-                >
-                  When you love somebody
-                </Text>
-                <Text
-                  style={{
-                    ...Fonts.Bold14Grey,
-                    textAlign: "center",
-                    marginTop: Default.fixPadding * 0.5,
-                  }}
-                >
-                  Got to let somebody know
-                </Text>
-                <Text
-                  style={{
-                    ...Fonts.Bold14Grey,
-                    textAlign: "center",
-                    marginTop: Default.fixPadding * 0.5,
-                  }}
-                >
-                  Oh, oh-oh, when you love somebody
-                </Text>
-                <Text
-                  style={{
-                    ...Fonts.Bold14Greyy,
-                    textAlign: "center",
-                    marginTop: Default.fixPadding * 0.5,
-                  }}
-                >
-                  When you love somebody
-                </Text>
-              </View> */}
+                    
                             <View
                                 style={{
                                     flexDirection: isRtl ? "row-reverse" : "row",
@@ -483,23 +461,30 @@ const PlayScreen = (props) => {
                                     style={{ marginHorizontal: Default.fixPadding * 2 }}
                                 />
                                 {
-                                    isLoading ? <View style={{ height: 40, width: 40 , marginVertical: Default.fixPadding * 1.5,}}>
-                                        {isLoading && <ActivityIndicator />}
+                                    isLoading ? <View style={{ height: 70, width: 70 }}>
+                                        {isLoading && <ActivityIndicator size={70} />}
                                     </View> :
 
                                         isCounting ? <CountdownCircleTimer
                                             isPlaying
-                                            duration={7}
+                                            duration={3}
                                             colors={['#004777', '#F7B801', '#A30000', '#A30000']}
-                                            colorsTime={[7, 5, 2, 0]}
+                                            colorsTime={[3, 2, 1, 0]}
                                             strokeWidth={5}
-                                            size={40}
-                                            onComplete = {startRecord}
+                                            size={70}
+                                            onComplete={startRecord}
                                         >
-                                            {({ remainingTime }) => <Text style={{
+                                            {({ remainingTime }) => <View style={{
+                                                height: 66,
+                                                width: 66,
+                                                borderRadius: 33,
+                                                backgroundColor: Colors.primary,
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                            }}><Text style={{
                                                 ...Fonts.SemiBold12Grey,
-                                                marginRight: Default.fixPadding,
-                                            }}>{remainingTime}</Text>}
+                                                marginRight: Default.fixPadding, fontSize: 25, textAlign: "center"
+                                            }}>{remainingTime}</Text></View>}
                                         </CountdownCircleTimer> : <TouchableOpacity
                                             onPress={isPlaying ? (
                                                 isRecording ? stopRecord : startCountDown
