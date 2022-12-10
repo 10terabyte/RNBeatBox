@@ -23,10 +23,10 @@ const BottomMusic = (props) => {
         250
     );
     const currentTrack = useCurrentTrack();
-
+    
     return (
 
-        currentTrack ? <TouchableOpacity
+        currentTrack?.url ? <TouchableOpacity
             onPress={() => {
                 currentTrack ? navigation.navigate("playScreen") : ""
             }}

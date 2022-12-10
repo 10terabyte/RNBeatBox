@@ -93,7 +93,10 @@ const PlayScreen = (props) => {
                                 style: 'destructive',
                                 // If the user confirmed, then we dispatch the action we blocked earlier
                                 // This will continue the action that had triggered the removal of the screen
-                                onPress: () => props.navigation.dispatch(e.data.action),
+                                onPress: () => {
+                                    TrackPlayer.reset()
+                                    props.navigation.dispatch(e.data.action)
+                                },
                             },
                         ]
                     );
@@ -408,22 +411,7 @@ const PlayScreen = (props) => {
                                 maximumTrackTintColor="#FFFFFF"
                                 onSlidingComplete={TrackPlayer.seekTo}
                             />
-                            {/* <Slider
-                min={0}
-                max={100}
-                containerStyle={{
-                  height: 20,
-                }}
-                valueOnChange={(value) => setValue(value)}
-                initialValue={12}
-                knobColor={Colors.primary}
-                valueLabelsBackgroundColor="black"
-                inRangeBarColor={Colors.extraBlack}
-                outOfRangeBarColor={Colors.primary}
-                styleSize={"small"}
-                showRangeLabels={false}
-                showValueLabels={false}
-              /> */}
+                           
                             <View
                                 style={{
                                     flexDirection: "row",

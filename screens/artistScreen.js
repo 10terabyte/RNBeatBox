@@ -21,21 +21,43 @@ import BottomMusic from "../components/bottomMusic";
 import MainBottomSheet from "../components/mainBottomSheet";
 import AddToPlayList from "../components/addToPlayList";
 import NewPlayList from "../components/newPlayList";
-import { useAuthentication } from '../utils/hooks/useAuthentication';
-import { getDatabase, ref, onValue, update, query as d_query, get, child, equalTo, where as db_where, orderByChild, limitToFirst } from "firebase/database";
-import { collection, doc, addDoc, getFirestore, setDoc, query, getDocs, where, getCountFromServer, limit } from "firebase/firestore";
+import { AppWrapper, useAppContext } from "../context";
+import Loader from "../components/loader";
+// import { useAuthentication } from '../utils/hooks/useAuthentication';
+import firestore from '@react-native-firebase/firestore';
+import database from '@react-native-firebase/database';
 import TrackPlayer, { State, usePlaybackState, useProgress } from 'react-native-track-player';
-const DB = getDatabase();
-
+import {handleFollow as handleArtistFollow} from '../controllers/artist'
 const { width } = Dimensions.get("window");
 
 const ArtistScreen = (props) => {
-    const { user } = useAuthentication();
-    const [followers, setFollowers] = useState("");
+    const followsCollection = firestore().collection('follows');
+    const beatCollection = database().ref('/beats');
+    const { user, setUser } = useAppContext();
+    const [followers, setFollowers] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isFollowed, setIsFollowed] = useState(false);
     const { t, i18n } = useTranslation();
     const [beatList, setBeatList] = useState([]);
     const isRtl = i18n.dir() === "rtl";
+    followsCollection.onSnapshot(
+        querySnapshot => {
+            var followCount = 0
+            var checkIsFollowed = false
+            querySnapshot.forEach(result =>{
+                if(result.data().target == props.route.params.item.key){
+                    followCount ++
+                    if(result.data().follower == user.uid){
+                        checkIsFollowed = true
+                    }
+                }
+            })
+            setIsFollowed(checkIsFollowed)
+            setFollowers(followCount)
+        },
+        error => {
 
+        });
     function tr(key) {
         return t(`artistScreen:${key}`);
     }
@@ -65,12 +87,9 @@ const ArtistScreen = (props) => {
         return () =>
             BackHandler.removeEventListener("hardwareBackPress", backAction);
     }, []);
-
     useEffect(() => {
-        const beatCollection = d_query(ref(DB, "beats"), orderByChild("track_artist"), equalTo(props.route.params.item.key));
-        console.log(beatCollection, "beatCollection")
-        onValue(beatCollection, (snapshot) => {
-            let data = snapshot.val();
+        beatCollection.orderByChild("track_artist").equalTo(props.route.params.item.key).on("value", snapshot =>{
+            let data = snapshot.val()
             let _beatData = [];
             if (snapshot.val() == null) {
                 setBeatList([]);
@@ -84,27 +103,37 @@ const ArtistScreen = (props) => {
             });
             setBeatList(_beatData);
         })
+        // const beatCollection = d_query(ref(DB, "beats"), orderByChild("track_artist"), equalTo(props.route.params.item.key));
+        // console.log(beatCollection, "beatCollection")
+        // onValue(beatCollection, (snapshot) => {
+        //     let data = snapshot.val();
+        //     let _beatData = [];
+        //     if (snapshot.val() == null) {
+        //         setBeatList([]);
+        //         return;
+        //     }
+        //     Object.keys(data).map(beatKey => {
+        //         _beatData.push({
+        //             ...data[beatKey],
+        //             key: beatKey
+        //         })
+        //     });
+        //     setBeatList(_beatData);
+        // })
     }, [props.route.params.item.key])
-
     const [visible, setVisible] = useState(false);
-
     const toggleClose = () => {
         setVisible(!visible);
     };
     const [selectedBeat, setSelectedBeat] = useState({});
-
     const [addPlayList, setAddPlayList] = useState(false);
-
     const toggleCloseAddPlayList = () => {
         setAddPlayList(!addPlayList);
     };
-
     const [newPlayList, setNewPlayList] = useState(false);
-
     const toggleCloseNewPlayList = () => {
         setNewPlayList(!newPlayList);
     };
-
     const shareMessage = () => {
         setVisible(false);
         Share.share({
@@ -113,41 +142,35 @@ const ArtistScreen = (props) => {
     };
     useEffect(() => {
         const getFollowers = async () => {
-
-            const StoreDB = getFirestore();
-            const q = query(collection(StoreDB, "follows"), where("target", "==", props.route.params.item.key))
-            const followNum = await getCountFromServer(q);
-            // console.log(followNum, "follownum")
-            setFollowers(followNum.data().count)
+            
+            followsCollection.where("target", "==", props.route.params.item.key).get().then(querySnapshot => {
+                setFollowers(querySnapshot.size)
+            })
+        }
+        const checkIsFollowed = async () =>{
+            followsCollection.where("target", "==", props.route.params.item.key).where('follower' , '==', user.uid).get().then(querySnapshot =>{
+                if(querySnapshot.size){
+                    setIsFollowed(true)
+                }
+                else{
+                    setIsFollowed(false)
+                }
+            });
         }
         getFollowers();
+        checkIsFollowed();
     }, [props.route.params.item.key])
-
     const handleFollow = async () => {
-        const StoreDB = getFirestore();
-        const q = query(collection(StoreDB, "follows"), where("follower", "==", user.uid), where("target", "==", props.route.params.item.key), where("target_item", "==", "artist"))
-        const querySnapshot = await getDocs(q);
-        let data = [];
-        if (querySnapshot)
-            querySnapshot.forEach(doc => {
-                // console.log(doc.id, "=>", doc.data())
-                data.push(doc);
-
-            })
-        if (data.length > 0) {
-            ToastAndroid.show("You are following now", ToastAndroid.SHORT)
-            return;
-        }
-        addDoc(collection(StoreDB, "follows"), {
-            target: props.route.params.item.key,
-            target_item: "artist",
-            follower: user.uid
-        });
-        update(ref(DB), {
-            [`/artists/${props.route.params.item.key}/follows`]: followers * 1 + 1
+        setIsLoading(true)
+        handleArtistFollow(props.route.params.item.key, user.uid).then(result =>{
+            console.log(result)
+            setIsLoading(false)
         })
-        // console.log("add")
-        // const followCollection = query(ref(DB, "follows"), equalTo("artist", "target"), equalTo(props.route.params.item.key, "target_key"), equalTo(user.uid, "user"))
+        .catch(error =>{
+            console.log("Error =>" , error)
+            setIsLoading(false)
+        })
+
     }
     const renderItemAlbums = ({ item, index }) => {
         const isFirst = index === 0;
@@ -302,7 +325,7 @@ const ArtistScreen = (props) => {
                                         padding: Default.fixPadding * 0.5,
                                     }}
                                 >
-                                    {tr("follow")}
+                                    {isFollowed ?  "Unfollow" : tr("follow") }
                                 </Text>
                             </View>
                         </TouchableOpacity>
@@ -500,6 +523,7 @@ const ArtistScreen = (props) => {
         /> */}
             </ScrollView>
             <BottomMusic onSelect={() => props.navigation.navigate("playScreen")} />
+            <Loader visible={isLoading} />
         </SafeAreaView>
     );
 };
