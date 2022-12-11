@@ -21,59 +21,49 @@ import BottomMusic from "../components/bottomMusic";
 // import { useAuthentication } from '../utils/hooks/useAuthentication';
 // import Firebase from "firebase";
 import { useAppContext } from "../context";
-import { getDatabase, ref, onValue, query, orderByChild, limitToFirst, equalTo } from "firebase/database";
-import { ref as s_ref, } from "firebase/storage";
+// import { getDatabase, ref, onValue, query, orderByChild, limitToFirst, equalTo } from "firebase/database";
+// import { ref as s_ref, } from "firebase/storage";
+import firestore from '@react-native-firebase/firestore';
 const { width } = Dimensions.get("window");
-const DB = getDatabase();
+// const DB = getDatabase();
+const FIRESTORE = firestore()
 const HomeScreen = (props) => {
+    const artistCollection = FIRESTORE.collection('artists')
+    const followsCollection = FIRESTORE.collection('follows');
+    // followsCollection.orderBy()
     const { t, i18n } = useTranslation();
     const { user } = useAppContext();
     console.log(user, "homeUser")
     const [userData, setUserData] = useState({});
     const isRtl = i18n.dir() === "rtl";
-
+    const [followChangeEvent, setFollowChangeEvent] = useState(0)
+    const [followDocChanges, setFollowDocChanges] = useState([])
+    
     function tr(key) {
         return t(`homeScreen:${key}`);
     }
     useEffect(() => {
         setUserData(user);
     }, [user])
-    useEffect(() => {
-        const collection = ref(DB, "artists/");
-        const topArtistsRef = query(collection, orderByChild("follows"), limitToFirst(5))
-        const bannerListRef    = query(ref(DB, "banners/"), orderByChild("follows"), limitToFirst(5))
-        onValue(topArtistsRef, (snapshot) => {
-            const data = snapshot.val();
-            console.log(data, "topdata")
-            let artData = [];
-            if (data == null) {
-                setArtistsData([]);
-                return;
-            }
-            Object.keys(data).map(key => {
-                artData.push({
-                    ...data[key],
-                    key: key
-                })
-            })
-            setArtistsData(artData)
-
-        })
-        onValue(bannerListRef, (snapshot) => {
-            const data = snapshot.val();
-            let bannerData = [];
-             
-            Object.keys(data).map(key => {
-                bannerData.push({
-                    ...data[key],
-                    key: key
-                })
-            })
-            setBannerList(bannerData)
-
-        })
-    }, [])
+     
     const [artistsData, setArtistsData] = useState([]);
+    useEffect(() =>{
+        const unsubscribe = artistCollection.onSnapshot(snpShot =>{
+            artistCollection.orderBy('follows', "desc").limit(5).get().then(snapshot =>{
+                let artData = [];
+                snapshot.forEach(result =>{
+                    console.log("ARTIST", result.data().follows)
+                    artData.push({...result.data(), key: result.id})
+                })
+                setArtistsData(artData)
+            }) 
+        })
+        return () =>{
+            unsubscribe()
+        }
+    }, [FIRESTORE])
+    // refreshTopArtist()
+    
     const [bannerList, setBannerList] = useState([]);
     const renderItemArtists = ({ item, index }) => {
         const isFirst = index === 0;
@@ -187,23 +177,23 @@ const HomeScreen = (props) => {
     useEffect(() => {
         if (!user || !user.uid)
             return;
-        console.log(user, "user")
-        onValue(query(ref(DB, "playlists"), orderByChild("user"), equalTo(user.uid)), snapshot => {
-            let data = snapshot.val();
-            if (data == null) {
-                setPlayListForYou([]);
-                return;
-            }
-            let _playListForYou = [];
-            Object.keys(data).map(key => {
-                _playListForYou.push({
-                    ...data[key],
-                    key
+        // console.log(user, "user")
+        // onValue(query(ref(DB, "playlists"), orderByChild("user"), equalTo(user.uid)), snapshot => {
+        //     let data = snapshot.val();
+        //     if (data == null) {
+        //         setPlayListForYou([]);
+        //         return;
+        //     }
+        //     let _playListForYou = [];
+        //     Object.keys(data).map(key => {
+        //         _playListForYou.push({
+        //             ...data[key],
+        //             key
 
-                })
-            });
-            setPlayListForYou(_playListForYou);
-        })
+        //         })
+        //     });
+        //     setPlayListForYou(_playListForYou);
+        // })
     }, [user])
     const renderItemPlaylistForYou = ({ item, index }) => {
         const isFirst = index === 0;

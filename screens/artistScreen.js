@@ -29,10 +29,11 @@ import database from '@react-native-firebase/database';
 import TrackPlayer, { State, usePlaybackState, useProgress } from 'react-native-track-player';
 import {handleFollow as handleArtistFollow} from '../controllers/artist'
 const { width } = Dimensions.get("window");
-
+const FIRESTORE = firestore()
 const ArtistScreen = (props) => {
-    const followsCollection = firestore().collection('follows');
-    const beatCollection = database().ref('/beats');
+    const followsCollection = FIRESTORE.collection('follows');
+    const artistCollection = FIRESTORE.collection('artists')
+    const beatCollection = FIRESTORE.collection('beats');
     const { user, setUser } = useAppContext();
     const [followers, setFollowers] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
@@ -40,24 +41,7 @@ const ArtistScreen = (props) => {
     const { t, i18n } = useTranslation();
     const [beatList, setBeatList] = useState([]);
     const isRtl = i18n.dir() === "rtl";
-    followsCollection.onSnapshot(
-        querySnapshot => {
-            var followCount = 0
-            var checkIsFollowed = false
-            querySnapshot.forEach(result =>{
-                if(result.data().target == props.route.params.item.key){
-                    followCount ++
-                    if(result.data().follower == user.uid){
-                        checkIsFollowed = true
-                    }
-                }
-            })
-            setIsFollowed(checkIsFollowed)
-            setFollowers(followCount)
-        },
-        error => {
 
-        });
     function tr(key) {
         return t(`artistScreen:${key}`);
     }
@@ -88,21 +72,21 @@ const ArtistScreen = (props) => {
             BackHandler.removeEventListener("hardwareBackPress", backAction);
     }, []);
     useEffect(() => {
-        beatCollection.orderByChild("track_artist").equalTo(props.route.params.item.key).on("value", snapshot =>{
-            let data = snapshot.val()
-            let _beatData = [];
-            if (snapshot.val() == null) {
-                setBeatList([]);
-                return;
-            }
-            Object.keys(data).map(beatKey => {
-                _beatData.push({
-                    ...data[beatKey],
-                    key: beatKey
-                })
-            });
-            setBeatList(_beatData);
-        })
+        // beatCollection.orderByChild("track_artist").equalTo(props.route.params.item.key).on("value", snapshot =>{
+        //     let data = snapshot.val()
+        //     let _beatData = [];
+        //     if (snapshot.val() == null) {
+        //         setBeatList([]);
+        //         return;
+        //     }
+        //     Object.keys(data).map(beatKey => {
+        //         _beatData.push({
+        //             ...data[beatKey],
+        //             key: beatKey
+        //         })
+        //     });
+        //     setBeatList(_beatData);
+        // })
         // const beatCollection = d_query(ref(DB, "beats"), orderByChild("track_artist"), equalTo(props.route.params.item.key));
         // console.log(beatCollection, "beatCollection")
         // onValue(beatCollection, (snapshot) => {
@@ -121,6 +105,7 @@ const ArtistScreen = (props) => {
         //     setBeatList(_beatData);
         // })
     }, [props.route.params.item.key])
+    
     const [visible, setVisible] = useState(false);
     const toggleClose = () => {
         setVisible(!visible);
@@ -140,14 +125,19 @@ const ArtistScreen = (props) => {
             message: toString(),
         });
     };
-    useEffect(() => {
-        const getFollowers = async () => {
-            
-            followsCollection.where("target", "==", props.route.params.item.key).get().then(querySnapshot => {
-                setFollowers(querySnapshot.size)
-            })
+    useEffect(() =>{
+        const unsubscribe = artistCollection.onSnapshot(snpShot =>{
+            artistCollection.doc(props.route.params.item.key).get().then(snapshot=>{
+                setFollowers(snapshot.data().follows)
+            }) 
+        })
+        return () =>{
+            unsubscribe()
         }
-        const checkIsFollowed = async () =>{
+    }, [FIRESTORE])
+
+    useEffect(() => {
+        const unsubscribe = followsCollection.onSnapshot(snapshot =>{
             followsCollection.where("target", "==", props.route.params.item.key).where('follower' , '==', user.uid).get().then(querySnapshot =>{
                 if(querySnapshot.size){
                     setIsFollowed(true)
@@ -156,11 +146,13 @@ const ArtistScreen = (props) => {
                     setIsFollowed(false)
                 }
             });
+        })
+        
+        return () =>{
+            unsubscribe()
         }
-        getFollowers();
-        checkIsFollowed();
-    }, [props.route.params.item.key])
-    const handleFollow = async () => {
+    }, [FIRESTORE])
+    const handleFollow =  () => {
         setIsLoading(true)
         handleArtistFollow(props.route.params.item.key, user.uid).then(result =>{
             console.log(result)

@@ -1,0 +1,415 @@
+{
+  "artists": {
+
+    "-NISX8AuTnv8KDMuXt4V": {
+      "ImageURL": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fartists%2F1670163994477.jpg?alt=media&token=df7cd1e5-2906-477a-bcdc-16ce09459de2",
+      "description": "Dj Premiere",
+      "imageNm": "/files/artists/1670163994477.jpg",
+      "name": "Dj Premiere"
+    },
+    "-NISXIcKG3etzDcIxGxD": {
+      "ImageURL": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fartists%2F1670164038014.jpg?alt=media&token=b45dea3b-94df-475f-b22d-5ade430bb729",
+      "description": "Dr. Dre",
+      "imageNm": "/files/artists/1670164038014.jpg",
+      "name": "Dr. Dre"
+    },
+    "-NISXU8D-uplu4_q0KV_": {
+      "ImageURL": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fartists%2F1670164085454.jpg?alt=media&token=d502e064-cafc-4dfe-b535-75819af0d545",
+      "description": "Harry Fraud",
+      "imageNm": "/files/artists/1670164085454.jpg",
+      "name": "Harry Fraud"
+    },
+    "-NISXYQXJza5UF8s6JvO": {
+      "ImageURL": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fartists%2F1670164103318.jfif?alt=media&token=3766c78d-8448-4a54-8166-a5700814f2bf",
+      "description": "Just Blaze",
+      "imageNm": "/files/artists/1670164103318.jfif",
+      "name": "Just Blaze"
+    },
+    "-NISXayaMjk4icQ-DMNa": {
+      "ImageURL": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fartists%2F1670164117893.jpg?alt=media&token=a60a3c4d-ea9e-4b02-8d19-0481f2d05f5c",
+      "description": "Kanye west",
+      "imageNm": "/files/artists/1670164117893.jpg",
+      "name": "Kanye west"
+    },
+    "-NISXeNB6CAfn4trYkEA": {
+      "ImageURL": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fartists%2F1670164131892.jpg?alt=media&token=1f1977aa-5535-4193-8510-a96b8c06c3d1",
+      "description": "Mustard",
+      "imageNm": "/files/artists/1670164131892.jpg",
+      "name": "Mustard"
+    },
+    "-NISXiIF9iv789xxosvg": {
+      "ImageURL": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fartists%2F1670211815217.jpg?alt=media&token=d54af17e-cbd9-4b8c-a272-6936efbf6eed",
+      "description": "RZA",
+      "imageNm": "/files/artists/1670211815217.jpg",
+      "name": "RZA"
+    },
+    "-NISXo1FtfO5UN07Yjv5": {
+      "ImageURL": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fartists%2F1670164169806.jpg?alt=media&token=2e17bd68-2987-4607-8d4d-7066a7e65cfb",
+      "description": "Swizz Beatz",
+      "imageNm": "/files/artists/1670164169806.jpg",
+      "name": "Swizz Beatz"
+    },
+    "-NISXsJiG9LyKSEPR9vl": {
+      "ImageURL": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fartists%2F1670164188902.jfif?alt=media&token=4b399022-9a45-4051-aa39-f710475b29f1",
+      "description": "T minus",
+      "imageNm": "/files/artists/1670164188902.jfif",
+      "name": "T minus"
+    },
+    "-NISXwC0RLNy5Xg54CGA": {
+      "ImageURL": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fartists%2F1670164203622.jpg?alt=media&token=942ea1fc-0cdb-4754-b4d8-62734813711e",
+      "description": "The Alchemist",
+      "imageNm": "/files/artists/1670164203622.jpg",
+      "name": "The Alchemist"
+    },
+    "-NISXyuyovXlgyhYkmWl": {
+      "ImageURL": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fartists%2F1670164216102.jfif?alt=media&token=2fcb8729-98df-4d99-a180-62adc7968fa3",
+      "description": "Timbaland",
+      "imageNm": "/files/artists/1670164216102.jfif",
+      "name": "Timbaland"
+    }
+  },
+
+  "beats": {
+    "-NISYsdZYtdMFI_i9byW": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670164390950.mp3",
+      "imageNm": "/files/images/1670164390950.png",
+      "track_artist": "-NISX3GkL6entEgp8JBK",
+      "track_bpm": "50",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670164390950.mp3?alt=media&token=a74aac7d-bda8-41a9-bbbb-248a9c3467ec",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Juice-WRLD-From-My-Window",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670164390950.png?alt=media&token=8be49ee7-7099-4fb5-bc13-030890be0e2d"
+    },
+    "-NISZC8YDjq3WdUUVUk6": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670164507758.mp3",
+      "imageNm": "/files/images/1670164507758.jfif",
+      "track_artist": "-NISX3GkL6entEgp8JBK",
+      "track_bpm": "10",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670164507758.mp3?alt=media&token=ecd48c85-b46d-4fd7-a008-223748e171d8",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Khalid-Free-Spirit",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670164507758.jfif?alt=media&token=d88090bb-b13b-42af-a465-a87f02470c4e"
+    },
+    "-NISZWk4LTOjNc7-HNe8": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670164565589.mp3",
+      "imageNm": "/files/images/1670164565589.png",
+      "track_artist": "-NISX3GkL6entEgp8JBK",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670164565589.mp3?alt=media&token=16dbc074-69be-488c-97df-ca7650cc6d7f",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Ty-Dollaign-Polo-G-Doors-Unlocked",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670164565589.png?alt=media&token=99616c31-a871-4e5c-9738-156389395948"
+    },
+    "-NISZy9CGGojaDsIRnXL": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670164674670.mp3",
+      "imageNm": "/files/images/1670164674670.jfif",
+      "track_artist": "-NISX3GkL6entEgp8JBK",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670164674670.mp3?alt=media&token=e6927bc6-6b3b-4045-80a8-4798381c5fb7",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Gunna-Chains-Choking-Me",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670164674670.jfif?alt=media&token=c03f406e-f719-4a32-b00e-9a206f0eee71"
+    },
+    "-NIS__QREiAFvsTnY8u1": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670164810972.mp3",
+      "imageNm": "/files/images/1670164810972.png",
+      "track_artist": "-NISX3GkL6entEgp8JBK",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670164810972.mp3?alt=media&token=6748d389-79f5-4b2f-9df9-2a6672b56e5c",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Nicki-Minaj-Anybody",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670164810972.png?alt=media&token=d60c7d8f-10c4-4cf5-9686-32a2a836b68f"
+    },
+    "-NISaaNKswYV-i-jNcmC": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670165114295.mp3",
+      "imageNm": "/files/images/1670165114295.jpg",
+      "track_artist": "-NISX8AuTnv8KDMuXt4V",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670165114295.mp3?alt=media&token=d63ab67e-7f6d-4ee2-82f8-3c2087affa53",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Lil-Cess-True-Honey-Buns",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670165114295.jpg?alt=media&token=0bf129c1-e938-4188-a01d-083b84f217fc"
+    },
+    "-NISaoT8ofMlII5yQ2U9": {
+      "amount_of_credits": "2",
+      "beatFileNm": "/files/beatfile/1670165124776.mp3",
+      "imageNm": "/files/images/1670165124776.jpg",
+      "track_artist": "-NISXayaMjk4icQ-DMNa",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670165124776.mp3?alt=media&token=37700a9c-df24-45f6-bb06-ea9a445426fb",
+      "track_genre": "Kanye-West-Andre-3000-Party",
+      "track_name": "Kanye-West-Andre-3000-Party",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670165124776.jpg?alt=media&token=035bec01-5639-48a1-a6fc-3ad6e5f7f109"
+    },
+    "-NISaz-b8ro2cIgT2edy": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670165191909.mp3",
+      "imageNm": "/files/images/1670165191909.jfif",
+      "track_artist": "-NISX8AuTnv8KDMuXt4V",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670165191909.mp3?alt=media&token=553ffb9c-4288-4a8a-b87c-6a77ae05a4f1",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Bahamadia-Uknowhowwedu",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670165191909.jfif?alt=media&token=496cb569-33a3-42b9-b3e5-0b75b30368bd"
+    },
+    "-NISbgE5tWGPvbmwCP5E": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670165398646.mp3",
+      "imageNm": "/files/images/1670165398646.jpg",
+      "track_artist": "-NISX8AuTnv8KDMuXt4V",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670165398646.mp3?alt=media&token=05a9a05a-9baa-4290-bfcf-8c6412744f54",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Comethazine-Piped-Up-2",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670165398646.jpg?alt=media&token=436d3a60-54a7-49ff-b6b6-88461bb01193"
+    },
+    "-NIScLsxzb-wnrX2c72M": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670165576557.mp3",
+      "imageNm": "/files/images/1670165576557.jpg",
+      "track_artist": "-NISXIcKG3etzDcIxGxD",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670165576557.mp3?alt=media&token=40e8f735-baec-4e7d-a2bd-a0fe99265eff",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Finesse2tymes-–-Get-Even",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670165576557.jpg?alt=media&token=80cbe4a2-1268-4b33-bc5e-bc4c2d7106ae"
+    },
+    "-NISciELTy6bbOCqyxet": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670165651669.mp3",
+      "imageNm": "/files/images/1670165651669.jpg",
+      "track_artist": "-NISXIcKG3etzDcIxGxD",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670165651669.mp3?alt=media&token=ebfe09a0-ef5b-4f49-afcb-b8a4af0dcee7",
+      "track_genre": "Hipstrumentals",
+      "track_name": "BEAM-Selfish",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670165651669.jpg?alt=media&token=7e394231-4e24-4da7-878e-7f1571ee4af1"
+    },
+    "-NISd3_6nmXuQsAfOCp3": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670165742701.mp3",
+      "imageNm": "/files/images/1670165742701.jpg",
+      "track_artist": "-NISXIcKG3etzDcIxGxD",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670165742701.mp3?alt=media&token=c9ad4a31-8215-48da-b811-079c7b4b1e70",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Stat-Quo-Get-Low",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670165742701.jpg?alt=media&token=62826f53-c8b7-41d2-8b78-20494e59975a"
+    },
+    "-NISdbc7GyCMdHfwhOLS": {
+      "amount_of_credits": "12",
+      "beatFileNm": "/files/beatfile/1670165869480.mp3",
+      "imageNm": "/files/images/1670165869480.jpg",
+      "track_artist": "-NISXayaMjk4icQ-DMNa",
+      "track_bpm": "12",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670165869480.mp3?alt=media&token=0ca21f25-5a62-4ff6-9340-c841c0520012",
+      "track_genre": "Jay-Z-Encore",
+      "track_name": "Jay-Z-Encore",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670165869480.jpg?alt=media&token=078493fd-edc7-4232-a555-7d12b490f553"
+    },
+    "-NISdjoqsw4iK_bY09V2": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670165928845.mp3",
+      "imageNm": "/files/images/1670165928845.jpg",
+      "track_artist": "-NISXIcKG3etzDcIxGxD",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670165928845.mp3?alt=media&token=98cc04ae-0dcd-4a13-b2a6-24b806942c73",
+      "track_genre": "Hipstrumentals",
+      "track_name": "The-Weeknd-Heartless",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670165928845.jpg?alt=media&token=2a775b46-08e7-4dab-90f1-912be062ff7d"
+    },
+    "-NISeM1Irq88P37kExVH": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670166081989.mp3",
+      "imageNm": "/files/images/1670166081989.jpg",
+      "track_artist": "-NISXU8D-uplu4_q0KV_",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670166081989.mp3?alt=media&token=c4931cc4-1d95-4e1d-85af-2b71bbceaa5b",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Chainz-Plug-Talk-Instrumental",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670166081989.jpg?alt=media&token=eddb018c-c098-4c4a-b78e-c0ca6d15b13c"
+    },
+    "-NISez3EELeiwPiAr6FV": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670166233685.mp3",
+      "imageNm": "/files/images/1670166233685.jpg",
+      "track_artist": "-NISXU8D-uplu4_q0KV_",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670166233685.mp3?alt=media&token=d5135722-cf2f-473d-9ddb-cc1852b0b380",
+      "track_genre": "Hipstrumentals",
+      "track_name": "French-Montana-Jim-Jones-Longevity",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670166233685.jpg?alt=media&token=8a6b3d8a-5aba-445f-8484-8875abaabdcd"
+    },
+    "-NISf-AlFloi5W6BxhoG": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670166222511.mp3",
+      "imageNm": "/files/images/1670166222511.jpg",
+      "track_artist": "-NISXayaMjk4icQ-DMNa",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670166222511.mp3?alt=media&token=9e08392d-c10a-4c5f-9912-8e6127aef473",
+      "track_genre": "Rick-Ross-Hard-Piano",
+      "track_name": "Rick-Ross-Hard-Piano",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670166222511.jpg?alt=media&token=299f7147-e953-4f41-ad93-fc67faf2ceac"
+    },
+    "-NISfP7tlGJNZwvJ85Q3": {
+      "amount_of_credits": "5",
+      "beatFileNm": "/files/beatfile/1670166352431.mp3",
+      "imageNm": "/files/images/1670166352431.jpg",
+      "track_artist": "-NISXayaMjk4icQ-DMNa",
+      "track_bpm": "5",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670166352431.mp3?alt=media&token=d8b028f4-b727-4a56-97aa-d4bcbb3dd416",
+      "track_genre": "Pusha-T-Santeria",
+      "track_name": "Pusha-T-Santeria",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670166352431.jpg?alt=media&token=9fa9fa8c-b2ac-4b61-95a5-3c5884c9c730"
+    },
+    "-NISfb4I6LbTkeWgSNUW": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670166427454.mp3",
+      "imageNm": "/files/images/1670166427454.jpg",
+      "track_artist": "-NISXU8D-uplu4_q0KV_",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670166427454.mp3?alt=media&token=8a1e242b-2e13-41c8-8586-c861d341fac9",
+      "track_genre": "Hipstrumentals",
+      "track_name": "When-Tony-Met-Sosa",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670166427454.jpg?alt=media&token=75ab00f3-beaf-404d-8c74-24ec47433c0a"
+    },
+    "-NISfle5i96Y5l4jfZ28": {
+      "amount_of_credits": "10",
+      "beatFileNm": "/files/beatfile/1670166450320.mp3",
+      "imageNm": "/files/images/1670166450320.jpg",
+      "track_artist": "-NISXayaMjk4icQ-DMNa",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670166450320.mp3?alt=media&token=fb751ed0-9182-44a6-bb83-e395f357ec2c",
+      "track_genre": "Kanye-West-Wouldnt-Get-Far",
+      "track_name": "Wouldnt-Get-Far",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670166450320.jpg?alt=media&token=128ab352-b183-481e-94ab-6c757a294c28"
+    },
+    "-NISgJAYC958X-45n8Aj": {
+      "amount_of_credits": "10",
+      "beatFileNm": "/files/beatfile/1670166572816.mp3",
+      "imageNm": "/files/images/1670166572816.jpg",
+      "track_artist": "-NISXeNB6CAfn4trYkEA",
+      "track_bpm": "8",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670166572816.mp3?alt=media&token=e2be2709-211c-4e37-9fdd-10df1a0e802f",
+      "track_genre": "2-Chainz-Im-Different",
+      "track_name": "2-Chainz-Im-Different",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670166572816.jpg?alt=media&token=de0f7432-d005-4427-aaff-6a2dac2a3641"
+    },
+    "-NISgJ_PwKszkTMUuHlT": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670166601222.mp3",
+      "imageNm": "/files/images/1670166601222.jpg",
+      "track_artist": "-NISXYQXJza5UF8s6JvO",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670166601222.mp3?alt=media&token=d1c16806-551b-4f9c-a064-92897b27c94c",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Beanie-Sigel-Freeway-Roc-The-Mic",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670166601222.jpg?alt=media&token=e6ff1843-5b4d-46a5-b1d6-796a7597f362"
+    },
+    "-NISghNUP3iSpzDSlihM": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670166687182.mp3",
+      "imageNm": "/files/images/1670166687182.jfif",
+      "track_artist": "-NISXYQXJza5UF8s6JvO",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670166687182.mp3?alt=media&token=be79ba7f-ebe2-48a0-a6fe-8095ee23e5d4",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Memphis-Bleek-Beanie-Sigel-The-Roc",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670166687182.jfif?alt=media&token=a29445d0-4acf-41f6-9b24-3e54d31559a7"
+    },
+    "-NISgm345Uskmb_obtnF": {
+      "amount_of_credits": "12",
+      "beatFileNm": "/files/beatfile/1670166720040.mp3",
+      "imageNm": "/files/images/1670166720040.jpg",
+      "track_artist": "-NISXeNB6CAfn4trYkEA",
+      "track_bpm": "12",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670166720040.mp3?alt=media&token=dbd82d9a-1cb1-43b2-9113-5d658149acc8",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Jayson-Cash-Top-Down",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670166720040.jpg?alt=media&token=d030f6e9-f94c-47f8-810a-6da287fb140d"
+    },
+    "-NISh8FhJYuYoRbHlwUO": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670166788054.mp3",
+      "imageNm": "/files/images/1670166788054.jpg",
+      "track_artist": "-NISXYQXJza5UF8s6JvO",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670166788054.mp3?alt=media&token=12328ef1-0f6e-4303-bb9f-3a5e525539d5",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Joe-Budden-Pump-It-Up",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670166788054.jpg?alt=media&token=9ce32076-d61c-4601-905a-c2a2f2e2e7e3"
+    },
+    "-NIShBjPjQFfE0_RCXbO": {
+      "amount_of_credits": "12",
+      "beatFileNm": "/files/beatfile/1670166812399.mp3",
+      "imageNm": "/files/images/1670166812399.jpg",
+      "track_artist": "-NISXYQXJza5UF8s6JvO",
+      "track_bpm": "12",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670166812399.mp3?alt=media&token=6fab058e-26a8-4d51-8d69-d985e9eeea35",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Quavo-Takeoff-Mustard-See-Bout",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670166812399.jpg?alt=media&token=42280e15-0638-4aa8-a32c-e009fe1b68dd"
+    },
+    "-NISh_8QjKOx663KcTbR": {
+      "amount_of_credits": "15",
+      "beatFileNm": "/files/beatfile/1670166920230.mp3",
+      "imageNm": "/files/images/1670166920230.jfif",
+      "track_artist": "-NISXYQXJza5UF8s6JvO",
+      "track_bpm": "15",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670166920230.mp3?alt=media&token=455f9a15-9daa-4ac8-a1c3-e0a52305340e",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Armani-Caesar-Conway-the-Machine-Benny",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670166920230.jfif?alt=media&token=e9d4045c-95b2-48ab-925d-c5b3fdb35193"
+    },
+    "-NIShd-i0Cp9YHf0FkCF": {
+      "amount_of_credits": "12",
+      "beatFileNm": "/files/beatfile/1670166918831.mp3",
+      "imageNm": "/files/images/1670166918831.jpg",
+      "track_artist": "-NISXeNB6CAfn4trYkEA",
+      "track_bpm": "12",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670166918831.mp3?alt=media&token=7180ddb8-4487-46c4-a070-7b505656d874",
+      "track_genre": "Hipstrumentals",
+      "track_name": "RiFF-RaFF-How-To-Be-A-Man",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670166918831.jpg?alt=media&token=936d0964-6fdc-44cb-a0ff-6239d53f59c7"
+    },
+    "-NISob6j2y88qfRC3Sa3": {
+      "amount_of_credits": "12",
+      "beatFileNm": "/files/beatfile/1670168765559.mp3",
+      "imageNm": "/files/images/1670168765559.jpg",
+      "track_artist": "-NISXeNB6CAfn4trYkEA",
+      "track_bpm": "12",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670168765559.mp3?alt=media&token=3e0140ae-a956-4bd2-a84e-d6ff1a45ae87",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Roddy-Ricch-Real-Talk",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670168765559.jpg?alt=media&token=4aa32e14-fd45-45e9-9442-b4df77004fe3"
+    },
+    "-NISvUi2ye_kXcFMVT6C": {
+      "amount_of_credits": "12",
+      "beatFileNm": "/files/beatfile/1670211440370.mp3",
+      "imageNm": "/files/images/1670170522070.jpg",
+      "track_artist": "-NISXiIF9iv789xxosvg",
+      "track_bpm": "12",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670211440370.mp3?alt=media&token=7057492d-99d8-4aaa-91b2-d462846df54c",
+      "track_genre": "Hipstrumentals",
+      "track_name": "Ghostface-Killah-All-That-I-Got-is-You",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670170522070.jpg?alt=media&token=4d16eef8-4b05-4e54-a8ac-d84926ab72f7"
+    },
+    "-NIVEnKQgk10ceFaO15K": {
+      "amount_of_credits": "12",
+      "beatFileNm": "/files/beatfile/1670211174800.mp3",
+      "imageNm": "/files/images/1670209431249.jpg",
+      "track_artist": "-NISXiIF9iv789xxosvg",
+      "track_bpm": "112",
+      "track_file": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fbeatfile%2F1670211174800.mp3?alt=media&token=7eefba7e-09fa-40fa-86bc-ee627760590b",
+      "track_genre": "Hipstrumentals",
+      "track_name": "GZA-Liquid-Swords",
+      "track_thumbnail": "https://firebasestorage.googleapis.com/v0/b/beatbox-fed3f.appspot.com/o/files%2Fimages%2F1670209431249.jpg?alt=media&token=bca1f676-8bae-4a93-986d-53136d96e06e"
+    }
+  }
+}

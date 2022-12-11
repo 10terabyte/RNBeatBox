@@ -13,11 +13,11 @@ import React, { useEffect,useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Colors, Fonts, Default } from "../constants/style";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import {ref , getDatabase, onValue, query, orderByChild, limitToFirst} from "firebase/database";
-const DB = getDatabase();
+import firestore from '@react-native-firebase/firestore';
+const FIRESTORE = firestore()
 const TopArtistsScreen = (props) => {
   const { t, i18n } = useTranslation();
-
+  const artistCollection = FIRESTORE.collection('artists')
   const isRtl = i18n.dir() === "rtl";
 
   function tr(key) {
@@ -35,25 +35,39 @@ const TopArtistsScreen = (props) => {
       BackHandler.removeEventListener("hardwareBackPress", backAction);
   }, []);
   useEffect(()=>{
-    const collection = ref(DB, "artists/");
-    const topArtistsRef = query(collection, orderByChild("follows"), limitToFirst(20))
-    onValue(topArtistsRef, (snapshot)=>{
-      const data = snapshot.val();
-      let artData = [];
-      if(data == null) {
-        setArtistsdata([]);
+    // const collection = ref(DB, "artists/");
+    // const topArtistsRef = query(collection, orderByChild("follows"), limitToFirst(20))
+    // onValue(topArtistsRef, (snapshot)=>{
+    //   const data = snapshot.val();
+    //   let artData = [];
+    //   if(data == null) {
+    //     setArtistsdata([]);
 
-      }
-      Object.keys(data).map(key=>{
-        artData.push({
-          ...data[key],
-          key:key
-        })
-      });
-      setArtistsdata(artData);
-    })
+    //   }
+    //   Object.keys(data).map(key=>{
+    //     artData.push({
+    //       ...data[key],
+    //       key:key
+    //     })
+    //   });
+    //   setArtistsdata(artData);
+    // })
   },[]);
   const [artistsData, setArtistsdata] = useState([]);
+  useEffect(() =>{
+    const unsubscribe = artistCollection.onSnapshot(snpShot =>{
+      let artData = [];
+      snpShot.forEach(result =>{
+          console.log("ARTIST")
+          artData.push({...result.data(), key: result.id})
+      })
+      setArtistsdata(artData)
+    })
+    return () =>{
+        unsubscribe()
+    }
+}, [FIRESTORE])
+  
   const renderItemArtists = ({ item, index }) => {
     const isEnd =
       index === artistsData.length - 1 ||
