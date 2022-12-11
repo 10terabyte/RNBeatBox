@@ -1,4 +1,4 @@
-package com.camelcase.rnMusic.newarchitecture.modules;
+package com.beatbox.music.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

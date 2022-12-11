@@ -68,7 +68,7 @@ const BottomTab = (props) => {
   const title2 = isRtl ? tr("home") : tr("profile");
   const title3 = isRtl ? "My Library" : tr("search");
   const title4 = isRtl ? tr("search") : "My Library";
-
+  
   return (
     <>
     

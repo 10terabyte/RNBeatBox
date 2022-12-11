@@ -1,4 +1,4 @@
-package com.camelcase.rnMusic.newarchitecture.components;
+package com.beatbox.music.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

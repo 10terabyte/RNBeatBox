@@ -1,47 +1,40 @@
 {
-    "project_info": {
-      "project_number": "484962252809",
-      "firebase_url": "https://beatbox-fed3f-default-rtdb.firebaseio.com",
-      "project_id": "beatbox-fed3f",
-      "storage_bucket": "beatbox-fed3f.appspot.com"
-    },
-    "client": [
-      {
-        "client_info": {
-          "mobilesdk_app_id": "1:484962252809:android:7c21a610c4a38f4100a0d8",
-          "android_client_info": {
-            "package_name": "com.camelcase.rnMusic"
-          }
-        },
-        "oauth_client": [
-          {
-            "client_id": "484962252809-7fdanfi8ah56697jqk1t67d1beo806fu.apps.googleusercontent.com",
-            "client_type": 3
-          }
-        ],
-        "api_key": [
-          {
-            "current_key": "AIzaSyBKwHVEZewnXnu06BE8dXQWyuonIJ4QeVA"
-          }
-        ],
-        "services": {
-          "appinvite_service": {
-            "other_platform_oauth_client": [
-              {
-                "client_id": "484962252809-7fdanfi8ah56697jqk1t67d1beo806fu.apps.googleusercontent.com",
-                "client_type": 3
-              },
-              {
-                "client_id": "484962252809-9c778gm74lsg60trfkiv65jdie1bqdvl.apps.googleusercontent.com",
-                "client_type": 2,
-                "ios_info": {
-                  "bundle_id": "com.yaroslavd.rnMusic"
-                }
-              }
-            ]
-          }
+  "project_info": {
+    "project_number": "821225767067",
+    "firebase_url": "https://beatbox-eb2b7-default-rtdb.firebaseio.com",
+    "project_id": "beatbox-eb2b7",
+    "storage_bucket": "beatbox-eb2b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:821225767067:android:cc11e538aaab019cfac63e",
+        "android_client_info": {
+          "package_name": "com.beatbox.music"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "821225767067-rtgv8iigtvbrj3qn6033dt71u0najl97.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8Au8jBhgIFHcYp0XSkUtPQ_c6Q-ucUlI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "821225767067-rtgv8iigtvbrj3qn6033dt71u0najl97.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
-    ],
-    "configuration_version": "1"
-  }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -21,7 +21,7 @@ import { FIREBASE_MEASUREMENT_ID, FIREBASE_API_KEY, FIREBASE_AUTH_DOMAIN,
         measurementId: FIREBASE_MEASUREMENT_ID
     };
 // Initialize Firebase
-console.log("Firebase Initialize.............")
+console.log("Firebase Initialize.............", firebaseConfig)
 const app = initializeApp(firebaseConfig);
 console.log("Hello, App")
 export default app;

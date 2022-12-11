@@ -17,7 +17,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useTranslation } from "react-i18next";
 import Loader from "../../components/loader";
-  import auth from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
  
@@ -25,9 +25,7 @@ const { width } = Dimensions.get("window");
 
 
 
-GoogleSignin.configure({
-  webClientId: '484962252809-ngg4cdug2r66976bono7qbg5kee9gril.apps.googleusercontent.com',
-});
+
 const SignInScreen = (props) => {
   const { t, i18n } = useTranslation();
 
@@ -65,34 +63,26 @@ const SignInScreen = (props) => {
           if (error.code === 'auth/invalid-email') {
             ToastAndroid.show('That email address is invalid!', ToastAndroid.SHORT);
           }
-
-          ToastAndroid.show(error);
+          if (error.code === 'auth/user-not-found') {
+            ToastAndroid.show('There is no user record corresponding to this identifier. The user may have been deleted', ToastAndroid.SHORT);
+          }
+          ToastAndroid.show("Error", ToastAndroid.SHORT);
+          console.log(error)
+          // ToastAndroid.show(error);
           setVisible(false);
         });
     } catch (error) {
       // setVisible(false);
+      console.log(error)
       setVisible(false);
-      ToastAndroid.show(error.message, ToastAndroid.SHORT);
+      ToastAndroid.show("Error", ToastAndroid.SHORT);
     }
   };
   const handleSignup = () => {
     props.navigation.navigate("signUpScreen");
   };
   const googleLogin = async() => {
-    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-    // Get the users ID token
-    const { idToken } = await GoogleSignin.signIn();
-
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-    // Sign-in the user with the credential
-    auth().signInWithCredential(googleCredential).then( async () => {
-       
-    }
-
-    );
-    return 
+    
   }
   const [textNo, onChangeTextNo] = useState();
   const [textEmail, onChangeTextEmail] = useState();

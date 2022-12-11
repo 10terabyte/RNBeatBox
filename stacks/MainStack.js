@@ -43,7 +43,6 @@ import CreditCardScreen from "../screens/creditCardScreen";
 import SuccessScreen from "../screens/successScreen";
 import SimilarArtistScreen from "../screens/similarArtistScreen";
 
-
 import TrackPlayer, { State } from 'react-native-track-player';
 
 const Stack = createStackNavigator();
@@ -62,6 +61,13 @@ export default function MainStack() {
           component={BottomTab}
           options={{
             ...TransitionPresets.DefaultTransition,
+            headerShown: false,
+          }}
+        />
+         <Stack.Screen
+          name="verification"
+          component={VerificationScreen}
+          options={{
             headerShown: false,
           }}
         />

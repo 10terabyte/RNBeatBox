@@ -5,6 +5,8 @@ export const Colors = {
   lightBlack: "#222222",
   extraBlack: "#434343",
   darkBlue: "#0C110D",
+  darkBlueOpacity50: "#7F0C110D",
+  darkBlueOpacity: "#0C110D00",
   white: "#FFFFFF",
   lightWhite: "#D7D7D7",
   extraWhite: "#E5E3E3",

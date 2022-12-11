@@ -28,14 +28,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.camelcase.rnMusic"
+      "bundleIdentifier": "com.beatbox.music"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.camelcase.rnMusic",
+      "package": "com.beatbox.music",
       "googleServicesFile": "./google-services.json"
     },
     "web": {

@@ -30,9 +30,10 @@ import { useDebouncedValue } from '../hooks/useDebouncedValue';
 import TrackPlayer, { State, usePlaybackState, useProgress } from 'react-native-track-player';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import AudioRecorderPlayer, { AudioEncoderAndroidType, AudioSourceAndroidType, AVEncoderAudioQualityIOSType, AVEncodingOption } from 'react-native-audio-recorder-player';
-import {FFmpegKit} from 'ffmpeg-kit-react-native'
+import { FFmpegKit } from 'ffmpeg-kit-react-native'
 import RNFS from "react-native-fs"
 import uuid from 'react-native-uuid';
+import LinearGradient from 'react-native-linear-gradient';
 const audioRecorderPlayer = new AudioRecorderPlayer();
 const PlayScreen = (props) => {
     const { setMusic, music } = useAppContext();
@@ -67,9 +68,9 @@ const PlayScreen = (props) => {
         return () =>
             BackHandler.removeEventListener("hardwareBackPress", backAction);
     }, []);
-    useEffect(()=>{
-        if(isPlaying == false){
-            if(isRecording){
+    useEffect(() => {
+        if (isPlaying == false) {
+            if (isRecording) {
                 console.log("Music play has been stoped")
                 stopRecord()
             }
@@ -178,8 +179,8 @@ const PlayScreen = (props) => {
         console.log(currentTrack.url, "Current Track URL")
         TrackPlayer.pause();
         FFmpegKit.execute(
-                `-i ${currentTrack.url} -i ${result} -filter_complex "[0]asplit[a][b]; [a]atrim=duration=${recordStartTime},volume='1-max(0.25*(t-${recordStartTime}),0)':eval=frame[pre]; [b]atrim=start=${recordStartTime},asetpts=PTS-STARTPTS[song]; [song][1]amix=inputs=2:duration=first:dropout_transition=2[post];  [pre][post]concat=n=2:v=0:a=1[mixed]"  -map "[mixed]" ${RNFS.DownloadDirectoryPath}/${uuid.v4()}.mp4`
-            )
+            `-i ${currentTrack.url} -i ${result} -filter_complex "[0]asplit[a][b]; [a]atrim=duration=${recordStartTime},volume='1-max(0.25*(t-${recordStartTime}),0)':eval=frame[pre]; [b]atrim=start=${recordStartTime},asetpts=PTS-STARTPTS[song]; [song][1]amix=inputs=2:duration=first:dropout_transition=2[post];  [pre][post]concat=n=2:v=0:a=1[mixed]"  -map "[mixed]" ${RNFS.DownloadDirectoryPath}/${uuid.v4()}.mp4`
+        )
             .then((result) => {
                 setVisible(false)
                 setIsRecording(false)
@@ -187,7 +188,7 @@ const PlayScreen = (props) => {
                 console.log("Stop Record", result);
                 console.log(`FFmpeg process exited with rc=${result.getAllLogs()}.`)
             }
-        );
+            );
     }
 
     startRecord = async () => {
@@ -225,120 +226,124 @@ const PlayScreen = (props) => {
                     style={{ flex: 1 }}
                 >
                     <View style={{ justifyContent: "space-between", flex: 1 }}>
-                        <View
-                            style={{
-                                flexDirection: isRtl ? "row-reverse" : "row",
-                            }}
-                        >
+                        <LinearGradient colors={[Colors.darkBlue,  Colors.darkBlueOpacity]} >
                             <View
                                 style={{
-                                    flex: 1,
-                                    marginHorizontal: Default.fixPadding * 1.5,
-                                    marginVertical: Default.fixPadding,
-                                    paddingVertical: Default.fixPadding * 0.5,
+                                    flexDirection: isRtl ? "row-reverse" : "row",
                                 }}
                             >
-                                <TouchableOpacity onPress={() => props.navigation.goBack()}>
-                                    <Ionicons
-                                        name={isRtl ? "arrow-forward" : "arrow-back"}
-                                        size={25}
-                                        color={Colors.white}
-                                        style={{
-                                            alignSelf: isRtl ? "flex-end" : "flex-start",
-                                            color: Colors.white,
-                                        }}
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                            <View
-                                style={{
-                                    flex: 8,
-                                    flexDirection: "row",
-                                    justifyContent: isRtl ? "flex-start" : "flex-end",
-                                    marginHorizontal: Default.fixPadding * 1.5,
-                                    marginVertical: Default.fixPadding,
-                                }}
-                            >
-                                <TouchableOpacity
+                                <View
                                     style={{
-                                        paddingVertical: Default.fixPadding * 0.5,
-                                    }}
-                                    onPress={() => setIsVisible((preState) => !preState)}
-                                >
-                                    <Ionicons
-                                        name={isVisible ? "heart-outline" : "heart"}
-                                        size={24}
-                                        color={Colors.white}
-                                        style={{
-                                            color: Colors.white,
-                                            marginHorizontal: Default.fixPadding,
-                                        }}
-                                    />
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => setVisible(true)}
-                                    style={{
+                                        flex: 1,
+                                        marginHorizontal: Default.fixPadding * 1.5,
+                                        marginVertical: Default.fixPadding,
                                         paddingVertical: Default.fixPadding * 0.5,
                                     }}
                                 >
-                                    <Ionicons
-                                        name="ellipsis-vertical"
-                                        size={24}
-                                        color={Colors.white}
+
+                                    <TouchableOpacity onPress={() => props.navigation.goBack()}>
+                                        <Ionicons
+                                            name={isRtl ? "arrow-forward" : "arrow-back"}
+                                            size={25}
+                                            color={Colors.white}
+                                            style={{
+                                                alignSelf: isRtl ? "flex-end" : "flex-start",
+                                                color: Colors.white,
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                                <View
+                                    style={{
+                                        flex: 8,
+                                        flexDirection: "row",
+                                        justifyContent: isRtl ? "flex-start" : "flex-end",
+                                        marginHorizontal: Default.fixPadding * 1.5,
+                                        marginVertical: Default.fixPadding,
+                                    }}
+                                >
+                                    <TouchableOpacity
                                         style={{
-                                            color: Colors.white,
+                                            paddingVertical: Default.fixPadding * 0.5,
+                                        }}
+                                        onPress={() => setIsVisible((preState) => !preState)}
+                                    >
+                                        <Ionicons
+                                            name={isVisible ? "heart-outline" : "heart"}
+                                            size={24}
+                                            color={Colors.white}
+                                            style={{
+                                                color: Colors.white,
+                                                marginHorizontal: Default.fixPadding,
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => setVisible(true)}
+                                        style={{
+                                            paddingVertical: Default.fixPadding * 0.5,
+                                        }}
+                                    >
+                                        <Ionicons
+                                            name="ellipsis-vertical"
+                                            size={24}
+                                            color={Colors.white}
+                                            style={{
+                                                color: Colors.white,
+                                            }}
+                                        />
+                                    </TouchableOpacity>
+
+                                    <MainBottomSheet
+                                        visible={visible}
+                                        onBackButtonPress={toggleClose}
+                                        onBackdropPress={toggleClose}
+                                        close={toggleClose}
+                                        onDownload={() => {
+                                            toggleClose();
+                                            props.navigation.navigate("premiumScreen");
+                                        }}
+                                        shareMessage={() => {
+                                            shareMessage();
+                                        }}
+                                        onPlaylist={() => {
+                                            toggleClose();
+                                            setAddPlayList(true);
+                                        }}
+                                        onLyrics={() => {
+                                            toggleClose();
+                                            props.navigation.navigate("lyricsScreen");
+                                        }}
+                                        onInformation={() => {
+                                            toggleClose();
+                                            props.navigation.navigate("songInformation");
                                         }}
                                     />
-                                </TouchableOpacity>
 
-                                <MainBottomSheet
-                                    visible={visible}
-                                    onBackButtonPress={toggleClose}
-                                    onBackdropPress={toggleClose}
-                                    close={toggleClose}
-                                    onDownload={() => {
-                                        toggleClose();
-                                        props.navigation.navigate("premiumScreen");
-                                    }}
-                                    shareMessage={() => {
-                                        shareMessage();
-                                    }}
-                                    onPlaylist={() => {
-                                        toggleClose();
-                                        setAddPlayList(true);
-                                    }}
-                                    onLyrics={() => {
-                                        toggleClose();
-                                        props.navigation.navigate("lyricsScreen");
-                                    }}
-                                    onInformation={() => {
-                                        toggleClose();
-                                        props.navigation.navigate("songInformation");
-                                    }}
-                                />
-
-                                <AddToPlayList
-                                    visible={addPlayList}
-                                    onBackButtonPress={toggleCloseAddPlayList}
-                                    onBackdropPress={toggleCloseAddPlayList}
-                                    close={toggleCloseAddPlayList}
-                                    onSelect={() => {
-                                        setAddPlayList(false);
-                                        setNewPlayList(true);
-                                    }}
-                                    isClose={toggleCloseAddPlayList}
-                                />
-                                <NewPlayList
-                                    visible={newPlayList}
-                                    onBackButtonPress={toggleCloseNewPlayList}
-                                    onBackdropPress={toggleCloseNewPlayList}
-                                    cancel={toggleCloseNewPlayList}
-                                />
+                                    <AddToPlayList
+                                        visible={addPlayList}
+                                        onBackButtonPress={toggleCloseAddPlayList}
+                                        onBackdropPress={toggleCloseAddPlayList}
+                                        close={toggleCloseAddPlayList}
+                                        onSelect={() => {
+                                            setAddPlayList(false);
+                                            setNewPlayList(true);
+                                        }}
+                                        isClose={toggleCloseAddPlayList}
+                                    />
+                                    <NewPlayList
+                                        visible={newPlayList}
+                                        onBackButtonPress={toggleCloseNewPlayList}
+                                        onBackdropPress={toggleCloseNewPlayList}
+                                        cancel={toggleCloseNewPlayList}
+                                    />
+                                </View>
                             </View>
-                        </View>
+                        </LinearGradient>
 
+                        <LinearGradient colors={[Colors.darkBlueOpacity, Colors.darkBlue]} >
                         <View>
-                    
+
                             <View
                                 style={{
                                     flexDirection: isRtl ? "row-reverse" : "row",
@@ -411,7 +416,7 @@ const PlayScreen = (props) => {
                                 maximumTrackTintColor="#FFFFFF"
                                 onSlidingComplete={TrackPlayer.seekTo}
                             />
-                           
+
                             <View
                                 style={{
                                     flexDirection: "row",
@@ -507,6 +512,7 @@ const PlayScreen = (props) => {
                                 <Feather name="repeat" size={20} color={Colors.darkGrey} />
                             </View>
                         </View>
+                        </LinearGradient>
                     </View>
                 </ImageBackground>
             </ScrollView>

@@ -55,7 +55,8 @@
         "playList":"Playlist For You",
         "freshMusic":"Fresh New Music",
         "bhakti":"Bhakti",
-        "mood":"What's Your Mood"
+        "mood":"What's Your Mood",
+        "mostly_played" : "Most Played"
     },
     "topArtistsScreen":{
         "topArtists":"Top Artist"

@@ -34,6 +34,9 @@ const VerificationScreen = (props) => {
       props.navigation.navigate("bottomTab");
     }, 1500);
   };
+  const handleRecent = () =>{
+    
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.black }}>
@@ -41,21 +44,7 @@ const VerificationScreen = (props) => {
         backgroundColor={Colors.black}
         barStyle={Platform.OS === "android" ? "light-content" : "default"}
       />
-      <TouchableOpacity
-        style={{
-          marginHorizontal: Default.fixPadding * 1.5,
-          marginBottom: Default.fixPadding * 3,
-          marginTop: Default.fixPadding * 0.5,
-          alignItems: isRtl ? "flex-end" : "flex-start",
-        }}
-        onPress={() => props.navigation.navigate("signUpScreen")}
-      >
-        <Ionicons
-          name={isRtl ? "arrow-forward" : "arrow-back"}
-          size={30}
-          color={Colors.white}
-        />
-      </TouchableOpacity>
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
@@ -97,7 +86,12 @@ const VerificationScreen = (props) => {
           keyboardType="numeric"
         />
         <Loader visible={visible} />
-
+        <TouchableOpacity
+          onPress={handleRecent}
+         
+        >
+          <Text style={{ ...Fonts.ExtraBold20White }}>Recend?</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={handleVerify}
           style={{

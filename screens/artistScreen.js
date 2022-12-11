@@ -26,8 +26,9 @@ import Loader from "../components/loader";
 // import { useAuthentication } from '../utils/hooks/useAuthentication';
 import firestore from '@react-native-firebase/firestore';
 import database from '@react-native-firebase/database';
-import TrackPlayer, { State, usePlaybackState, useProgress } from 'react-native-track-player';
+
 import {handleFollow as handleArtistFollow} from '../controllers/artist'
+import { playBeat} from '../controllers/beat'
 const { width } = Dimensions.get("window");
 const FIRESTORE = firestore()
 const ArtistScreen = (props) => {
@@ -46,20 +47,13 @@ const ArtistScreen = (props) => {
         return t(`artistScreen:${key}`);
     }
     async function loadSoundAndPlay(musicItem) {
-        console.log('MusicItem,', musicItem)
-        var track = {
-            url: musicItem.track_file, // Load media from the network
-            title: musicItem.track_name,
-            artist: musicItem.singer,
-            album: musicItem.genre,
-            genre: musicItem.genre,
-            artwork: musicItem.track_thumbnail, // Load artwork from the network
-        };
-        await TrackPlayer.add([track]);
-        // console.log(music, "MUSIC")
-        TrackPlayer.skipToNext()
-        TrackPlayer.play()
-        props.navigation.navigate("playScreen");
+        setIsLoading(true)
+        playBeat(musicItem, user.uid).then(result =>{
+            props.navigation.navigate("playScreen");
+            setIsLoading(false)
+        }).catch(error =>{
+            setIsLoading(false)
+        })
     }
     const backAction = () => {
         props.navigation.goBack();
@@ -146,6 +140,23 @@ const ArtistScreen = (props) => {
                     setIsFollowed(false)
                 }
             });
+        })
+        
+        return () =>{
+            unsubscribe()
+        }
+    }, [FIRESTORE])
+    useEffect(() => {
+        const unsubscribe = beatCollection.onSnapshot(qSnapshot =>{
+            beatCollection.where("track_artist", '==', props.route.params.item.key).get().then(snapshot =>{
+                let _beatData = [];
+                snapshot.forEach(result =>{
+                    console.log("BEAT")
+                    _beatData.push({...result.data(), key: result.id})
+                })
+                setBeatList(_beatData)
+            })
+            
         })
         
         return () =>{

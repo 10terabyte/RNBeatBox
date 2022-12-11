@@ -15,21 +15,21 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Colors, Fonts, Default } from "../constants/style";
-// import LinearGradient from 'react-native-linear-gradient'
-;
+import Loader from "../components/loader";
 import BottomMusic from "../components/bottomMusic";
 // import { useAuthentication } from '../utils/hooks/useAuthentication';
 // import Firebase from "firebase";
 import { useAppContext } from "../context";
-// import { getDatabase, ref, onValue, query, orderByChild, limitToFirst, equalTo } from "firebase/database";
-// import { ref as s_ref, } from "firebase/storage";
+import { playBeat} from '../controllers/beat'
 import firestore from '@react-native-firebase/firestore';
 const { width } = Dimensions.get("window");
 // const DB = getDatabase();
 const FIRESTORE = firestore()
 const HomeScreen = (props) => {
     const artistCollection = FIRESTORE.collection('artists')
+    const beatCollection = FIRESTORE.collection('beats')
     const followsCollection = FIRESTORE.collection('follows');
+    const playLogCollection = FIRESTORE.collection('beatPlayLog')
     // followsCollection.orderBy()
     const { t, i18n } = useTranslation();
     const { user } = useAppContext();
@@ -38,14 +38,17 @@ const HomeScreen = (props) => {
     const isRtl = i18n.dir() === "rtl";
     const [followChangeEvent, setFollowChangeEvent] = useState(0)
     const [followDocChanges, setFollowDocChanges] = useState([])
-    
+    const [isLoading, setIsLoading] = useState(false);
     function tr(key) {
         return t(`homeScreen:${key}`);
     }
     useEffect(() => {
         setUserData(user);
+        if(!user.emailVerified ){
+            // props.navigation.navigate("verification");
+        }
+
     }, [user])
-     
     const [artistsData, setArtistsData] = useState([]);
     useEffect(() =>{
         const unsubscribe = artistCollection.onSnapshot(snpShot =>{
@@ -56,6 +59,21 @@ const HomeScreen = (props) => {
                     artData.push({...result.data(), key: result.id})
                 })
                 setArtistsData(artData)
+            }) 
+        })
+        return () =>{
+            unsubscribe()
+        }
+    }, [FIRESTORE])
+    useEffect(() =>{
+        const unsubscribe = beatCollection.onSnapshot(snpShot =>{
+            beatCollection.orderBy('playCount', "desc").limit(5).get().then(snapshot =>{
+                let artData = [];
+                snapshot.forEach(result =>{
+                    console.log("ARTIST", result.data().follows)
+                    artData.push({...result.data(), key: result.id})
+                })
+                setMostlyPlayed(artData)
             }) 
         })
         return () =>{
@@ -95,44 +113,23 @@ const HomeScreen = (props) => {
             </TouchableOpacity>
         );
     };
-
-    const recentlyPlayed = [
-      {
-        key: "1",
-        name: "Ek tarafa",
-        image: require("../assets/image/pic1.png"),
-        singer: "Dhvni Bhanushali",
-      },
-      {
-        key: "2",
-        name: "Kesariya",
-        image: require("../assets/image/pic2.png"),
-        singer: "Arijit Singh",
-      },
-      {
-        key: "3",
-        name: "Raataan lambiyan ",
-        image: require("../assets/image/pic3.png"),
-        singer: "Dhvni Bhanushali",
-      },
-      {
-        key: "4",
-        name: "Halki Si Barsaat",
-        image: require("../assets/image/pic4.png"),
-        singer: "Saaj Bhatt",
-      },
-      {
-        key: "5",
-        name: "Ek Tu Hi Toh Hai",
-        image: require("../assets/image/pic5.png"),
-        singer: "Stebin Ben",
-      },
-    ];
-    const renderItemRecentlyPlayed = ({ item, index }) => {
+    const [mostlyPlayed, setMostlyPlayed] = useState([]);
+    async function loadSoundAndPlay(musicItem) {
+        setIsLoading(true)
+        playBeat(musicItem, user.uid).then(result =>{
+            props.navigation.navigate("playScreen");
+            setIsLoading(false)
+        }).catch(error =>{
+            setIsLoading(false)
+        })
+        
+    }
+     
+    const renderItemMostlyPlayed = ({ item, index }) => {
         const isFirst = index === 0;
         return (
             <TouchableOpacity
-                onPress={() => props.navigation.navigate("playScreen")}
+                onPress={() => loadSoundAndPlay(item)}
                 style={{
                     marginLeft: isFirst ? Default.fixPadding  : 0,
                     marginRight: Default.fixPadding ,
@@ -145,7 +142,7 @@ const HomeScreen = (props) => {
                     // height: Dimensions.get("window").width / 4
                 }}
                 >
-                <Image source={item.image} style={{
+                <Image source={{uri: item.track_thumbnail}} style={{
                         width: Dimensions.get("window").width / 4 - Default.fixPadding,
                         height: Dimensions.get("window").width / 4
                     }} />
@@ -156,17 +153,9 @@ const HomeScreen = (props) => {
                         textAlign:   "center",
                     }}
                 >
-                    {item.name}
+                    {item.track_name}
                 </Text>
-                <Text
-                    style={{
-                        ...Fonts.SemiBold12Grey,
-                        marginTop: Default.fixPadding * 0.3,
-                        textAlign:  "center",
-                    }}
-                >
-                    {item.singer}
-                </Text>
+               
                 </View>
                 
             </TouchableOpacity>
@@ -318,7 +307,7 @@ const HomeScreen = (props) => {
             marginTop: Default.fixPadding,
           }}
         >
-          <Text style={{ ...Fonts.Bold18White }}>{tr("recently")}</Text>
+          <Text style={{ ...Fonts.Bold18White }}>{tr("mostly_played")}</Text>
           <TouchableOpacity
             onPress={() => props.navigation.navigate("recentlyPlayScreen")}
           >
@@ -328,8 +317,8 @@ const HomeScreen = (props) => {
                   <FlatList
           horizontal
           nestedScrollEnabled
-          data={recentlyPlayed}
-          renderItem={renderItemRecentlyPlayed}
+          data={mostlyPlayed}
+          renderItem={renderItemMostlyPlayed}
           keyExtractor={(item) => item.key}
           showsHorizontalScrollIndicator={false}
         />  
@@ -431,6 +420,7 @@ const HomeScreen = (props) => {
         /> */}
             </ScrollView>
             <BottomMusic onSelect={() => props.navigation.navigate("playScreen")} />
+            <Loader visible={isLoading} />
         </SafeAreaView>
     );
 };

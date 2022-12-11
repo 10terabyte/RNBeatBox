@@ -1,4 +1,4 @@
-package com.camelcase.rnMusic;
+package com.beatbox.music;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

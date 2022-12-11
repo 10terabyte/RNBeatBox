@@ -29,6 +29,10 @@ export function AppWrapper({ children }) {
       run();
       return subscriber; // unsubscribe on unmount
     }, []);
+    useEffect(() => {
+      const subscriber = auth().onUserChanged(onAuthStateChanged);
+      return subscriber; // unsubscribe on unmount
+    }, []);
     const context = {
 		user, setUser,
         music, setMusic,
