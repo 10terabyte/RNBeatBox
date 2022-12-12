@@ -7,54 +7,58 @@ import {
   Image,
   TouchableOpacity,
   StatusBar,
+
+  Dimensions,
   Platform,
 } from "react-native";
-import React from "react";
+import React, { useState , useEffect} from "react";
 import { useTranslation } from "react-i18next";
 import { Colors, Fonts, Default } from "../constants/style";
 import BottomMusic from "../components/bottomMusic";
+import functions from '@react-native-firebase/functions';
+import { useAppContext } from "../context";
+import firestore from "@react-native-firebase/firestore";
+import { playBeat} from '../controllers/beat'
+import Loader from "../components/loader";
+const FIRESTORE = firestore()
 
 const LibraryScreen = (props) => {
+  const favoritesCollection = FIRESTORE.collection('beatFavorites')
   const { t, i18n } = useTranslation();
 
   const isRtl = i18n.dir() === "rtl";
-
+  const { user } = useAppContext();
   function tr(key) {
     return t(`libraryScreen:${key}`);
   }
-
-  const recentlyPlayed = [
-    {
-      key: "1",
-      name: "Ek tarafa",
-      image: require("../assets/image/pic1.png"),
-      singer: "Dhvni Bhanushali",
-    },
-    {
-      key: "2",
-      name: "Kesariya",
-      image: require("../assets/image/pic2.png"),
-      singer: "Arijit Singh",
-    },
-    {
-      key: "3",
-      name: "Raataan lambiyan ",
-      image: require("../assets/image/pic3.png"),
-      singer: "Dhvni Bhanushali",
-    },
-    {
-      key: "4",
-      name: "Halki Si Barsaat",
-      image: require("../assets/image/pic4.png"),
-      singer: "Saaj Bhatt",
-    },
-    {
-      key: "5",
-      name: "Ek Tu Hi Toh Hai",
-      image: require("../assets/image/pic5.png"),
-      singer: "Stebin Ben",
-    },
-  ];
+  const [isLoading, setIsLoading] = useState(false);
+  async function loadSoundAndPlay(musicItem) {
+    console.log("Play Beat-----------", musicItem)
+    setIsLoading(true)
+    console.log("Play Beat-----------")
+    playBeat(musicItem, user.uid).then(result =>{
+        console.log('--------------------------------------------')
+        props.navigation.navigate("playScreen", { item: musicItem });
+        setIsLoading(false)
+    }).catch(error =>{
+        setIsLoading(false)
+    })
+}
+  useEffect(() => {
+    
+    const unsubscribe = favoritesCollection.onSnapshot(snapshot =>{
+      functions()
+      .httpsCallable(`getFavoriteBeats?userid=${user.uid}`)()
+      .then(response => {
+        setMyFavorites(response.data)
+      });
+    })
+    
+    return () =>{
+        unsubscribe()
+    }
+}, [FIRESTORE])
+  const [myFavorites, setMyFavorites] = useState([])
   const renderItemRecentlyPlayed = ({ item, index }) => {
     const isFirst = index === 0;
     return (
@@ -119,7 +123,42 @@ const LibraryScreen = (props) => {
       navigateTo: "libraryPodcastScreen",
     },
   ];
-
+  const renderBeatItem = ({ item, index }) => {
+    const isFirst = index === 0;
+    return (
+        <TouchableOpacity
+            onPress={() => loadSoundAndPlay(item)}
+            style={{
+                marginLeft: isFirst ? Default.fixPadding  : 0,
+                marginRight: Default.fixPadding ,
+                marginBottom: Default.fixPadding * 2,
+            }}
+        >
+            <View
+              style={{
+                width: Dimensions.get("window").width / 4 ,
+                // height: Dimensions.get("window").width / 4
+            }}
+            >
+            <Image source={{uri: item.track_thumbnail}} style={{
+                    width: Dimensions.get("window").width / 4 - Default.fixPadding,
+                    height: Dimensions.get("window").width / 4
+                }} />
+            <Text
+                style={{
+                    ...Fonts.SemiBold14White,
+                    marginTop: Default.fixPadding * 0.3,
+                    textAlign:   "center",
+                }}
+            >
+                {item.track_name}
+            </Text>
+           
+            </View>
+            
+        </TouchableOpacity>
+    );
+};
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
       <StatusBar
@@ -149,8 +188,8 @@ const LibraryScreen = (props) => {
         <FlatList
           horizontal
           nestedScrollEnabled
-          data={recentlyPlayed}
-          renderItem={renderItemRecentlyPlayed}
+          data={myFavorites}
+          renderItem={renderBeatItem}
           keyExtractor={(item) => item.key}
           showsHorizontalScrollIndicator={false}
         />
@@ -190,7 +229,9 @@ const LibraryScreen = (props) => {
           );
         })}
       </ScrollView>
+      <Loader visible={isLoading} />
       <BottomMusic onSelect={() => props.navigation.navigate("playScreen")} />
+      
     </SafeAreaView>
   );
 };

@@ -2,10 +2,10 @@ import React from "react";
 import { Modal, Text, View, ActivityIndicator, Dimensions } from "react-native";
 import { Colors, Default, Fonts } from "../constants/style";
 import { useTranslation } from "react-i18next";
-
+import * as Progress from 'react-native-progress';
 const { width } = Dimensions.get("window");
 
-const Loader = (props) => {
+const ProgressBarLoader = (props) => {
   const { t } = useTranslation();
 
   function tr(key) {
@@ -33,18 +33,18 @@ const Loader = (props) => {
             paddingVertical: Default.fixPadding * 2,
           }}
         >
-          <ActivityIndicator size="large" color={Colors.primary} />
+          <Progress.Bar progress={props.progress} width={width / 1.8} />
           <Text
             style={{
               ...Fonts.SemiBold16Primary,
               marginTop: Default.fixPadding,
             }}
           >
-            { props.textMessage ?? tr("pleaseWait")}
+            Uploading
           </Text>
         </View>
       </View>
     </Modal>
   );
 };
-export default Loader;
+export default ProgressBarLoader;

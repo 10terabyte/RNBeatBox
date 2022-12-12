@@ -25,6 +25,7 @@ import AddToPlayList from "../components/addToPlayList";
 import NewPlayList from "../components/newPlayList";
 // import { Audio } from "expo-av";
 import { useAppContext } from "../context";
+import Loader from "../components/loader";
 import { useOnTogglePlayback, useCurrentTrack } from '../hooks';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
 import TrackPlayer, { State, usePlaybackState, useProgress } from 'react-native-track-player';
@@ -34,15 +35,20 @@ import { FFmpegKit } from 'ffmpeg-kit-react-native'
 import RNFS from "react-native-fs"
 import uuid from 'react-native-uuid';
 import LinearGradient from 'react-native-linear-gradient';
-import { favoriteBeat} from '../controllers/beat'
+import { favoriteBeat } from '../controllers/beat'
 import firestore from "@react-native-firebase/firestore";
+
+import database from '@react-native-firebase/database';
+import storage from '@react-native-firebase/storage'
+import ProgressBarLoader from "../components/progressbarloader";
 const audioRecorderPlayer = new AudioRecorderPlayer();
 const FIRESTORE = firestore()
 const favoritesCollection = FIRESTORE.collection('beatFavorites')
+const recordedCollection = FIRESTORE.collection('records')
 const PlayScreen = (props) => {
     const { setMusic, music } = useAppContext();
     const { t, i18n } = useTranslation();
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
     const { user } = useAppContext();
     const isRtl = i18n.dir() === "rtl";
 
@@ -59,8 +65,11 @@ const PlayScreen = (props) => {
     const state = usePlaybackState();
     const isPlaying = state === State.Playing;
     const [isRecording, setIsRecording] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0.00)
     const [isCounting, setIsCounting] = useState(false);
     const [isFavorited, setIsFavorited] = useState(false)
+    const [loaderText, setLoaderText] = useState("Please Wait");
     const isLoading = useDebouncedValue(
         state === State.Connecting || state === State.Buffering,
         250
@@ -72,14 +81,7 @@ const PlayScreen = (props) => {
         return () =>
             BackHandler.removeEventListener("hardwareBackPress", backAction);
     }, []);
-    useEffect(() => {
-        if (isPlaying == false) {
-            if (isRecording) {
-                console.log("Music play has been stoped")
-                stopRecord()
-            }
-        }
-    }, [isPlaying])
+
     useEffect(
         () =>
             props.navigation.addListener('beforeRemove', (e) => {
@@ -146,7 +148,111 @@ const PlayScreen = (props) => {
         });
     };
 
-    async function getPermissions() {
+    uploadRecorded =  (uri) =>{
+        return new Promise(function(resolve, reject){
+            const filename = `recorded/${user.uid}/${props.route.params.item.key}/${uri.substring(uri.lastIndexOf('/') + 1)}`;
+            const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+            const task = storage()
+            .ref(filename)
+            .putFile(uploadUri);
+            console.log(filename, uploadUri)
+            task.on('state_changed', snapshot => {
+                setUploadProgress(snapshot.bytesTransferred / snapshot.totalBytes)
+                
+              });
+              try {
+                task.then(result =>{
+                    resolve(result)
+                }).catch(e =>{
+                    console.error(e);
+                    reject(e)
+                });
+              } catch (e) {
+                console.error(e);
+                reject(e)
+              }
+        });
+        
+    }
+
+    stopRecord = async () => {
+        setIsProcessing(true)
+        const result = await audioRecorderPlayer.stopRecorder();
+        audioRecorderPlayer.removeRecordBackListener();
+        console.log(currentTrack.url, "Current Track URL")
+        TrackPlayer.pause();
+        const recordedFileURL = `${RNFS.DownloadDirectoryPath}/${uuid.v4()}.mp4`
+        FFmpegKit.execute(
+            `-i ${currentTrack.url} -i ${result} -filter_complex "[0]asplit[a][b]; [a]atrim=duration=${recordStartTime},volume='1-max(0.25*(t-${recordStartTime}),0)':eval=frame[pre]; [b]atrim=start=${recordStartTime},asetpts=PTS-STARTPTS[song]; [song][1]amix=inputs=2:duration=first:dropout_transition=2[post];  [pre][post]concat=n=2:v=0:a=1[mixed]"  -map "[mixed]" ${recordedFileURL}`
+        )
+            .then((result) => {
+                setIsProcessing(false)
+                setIsUploading(true)
+                uploadRecorded(recordedFileURL).then(result =>{
+                    setIsUploading(false)
+
+                    setIsProcessing(true)
+                    // setLoaderText("Save record")
+                    const uploadedFileName = `${recordedFileURL.substring(recordedFileURL.lastIndexOf('/') + 1)}`;
+                    recordedCollection.add({
+                        userid: user.uid,
+                        beatid: props.route.params.item.key,
+                        filename: uploadedFileName,
+                        created: database().getServerTime()
+                    }).then((result) =>{
+                        setIsProcessing(false)
+                        setIsRecording(false)
+                        props.navigation.goBack()
+                    }).catch(error=>{
+                        console.log("Error in Save Record Table 1", error)
+                        setIsProcessing(false)
+                        setIsRecording(false)
+                        props.navigation.goBack()
+                    })
+
+                }).catch(e =>{
+                    console.log("Error in Save Record Table 2", e)
+                    setIsUploading(false)
+                    setIsRecording(false)
+                    props.navigation.goBack()
+                })
+                
+            }
+            ).catch(error =>{
+                console.log("Error in combine files", error)
+                setIsProcessing(false)
+                setIsRecording(false)
+                props.navigation.goBack()
+            });
+    }
+
+    startRecord = async () => {
+        try{
+            setIsCounting(false)
+            setIsRecording(true)
+            const path = Platform.select({
+                ios: 'hello.m4a',
+                android: `${RNFS.DownloadDirectoryPath}/${uuid.v4()}.mp4`,
+            });
+            const audioSet = {
+                AudioEncoderAndroid: AudioEncoderAndroidType.AAC,
+                AudioSourceAndroid: AudioSourceAndroidType.MIC,
+                AVEncoderAudioQualityKeyIOS: AVEncoderAudioQualityIOSType.high,
+                AVNumberOfChannelsKeyIOS: 2,
+                AVFormatIDKeyIOS: AVEncodingOption.aac,
+            };
+            const result = await audioRecorderPlayer.startRecorder(path, audioSet);
+            setRecordStartTime(parseInt(progress.position, 10));
+            audioRecorderPlayer.addRecordBackListener((e) => {
+                return;
+            });
+        }catch(e){
+            console.log(e)
+            setIsRecording(false)
+        }
+        
+    }
+    startCountDown = async () => {
         if (Platform.OS === 'android') {
             try {
                 const grants = await PermissionsAndroid.requestMultiple([
@@ -165,7 +271,7 @@ const PlayScreen = (props) => {
                     grants['android.permission.RECORD_AUDIO'] ===
                     PermissionsAndroid.RESULTS.GRANTED
                 ) {
-                    console.log('Permissions granted');
+                    setIsCounting(true)
                 } else {
                     console.log('All required permissions not granted');
                     return;
@@ -175,71 +281,30 @@ const PlayScreen = (props) => {
                 return;
             }
         }
-    }
 
-    stopRecord = async () => {
-        const result = await audioRecorderPlayer.stopRecorder();
-        audioRecorderPlayer.removeRecordBackListener();
-        console.log(currentTrack.url, "Current Track URL")
-        TrackPlayer.pause();
-        FFmpegKit.execute(
-            `-i ${currentTrack.url} -i ${result} -filter_complex "[0]asplit[a][b]; [a]atrim=duration=${recordStartTime},volume='1-max(0.25*(t-${recordStartTime}),0)':eval=frame[pre]; [b]atrim=start=${recordStartTime},asetpts=PTS-STARTPTS[song]; [song][1]amix=inputs=2:duration=first:dropout_transition=2[post];  [pre][post]concat=n=2:v=0:a=1[mixed]"  -map "[mixed]" ${RNFS.DownloadDirectoryPath}/${uuid.v4()}.mp4`
-        )
-            .then((result) => {
-                setVisible(false)
-                setIsRecording(false)
-                props.navigation.goBack()
-                console.log("Stop Record", result);
-                console.log(`FFmpeg process exited with rc=${result.getAllLogs()}.`)
-            }
-            );
     }
-
-    startRecord = async () => {
-        setIsCounting(false)
-        setIsRecording(true)
-        const path = Platform.select({
-            ios: 'hello.m4a',
-            android: `${RNFS.DownloadDirectoryPath}/hello.mp4`,
-        });
-        const audioSet = {
-            AudioEncoderAndroid: AudioEncoderAndroidType.AAC,
-            AudioSourceAndroid: AudioSourceAndroidType.MIC,
-            AVEncoderAudioQualityKeyIOS: AVEncoderAudioQualityIOSType.high,
-            AVNumberOfChannelsKeyIOS: 2,
-            AVFormatIDKeyIOS: AVEncodingOption.aac,
-        };
-        const result = await audioRecorderPlayer.startRecorder(path, audioSet);
-        setRecordStartTime(parseInt(progress.position, 10));
-        audioRecorderPlayer.addRecordBackListener((e) => {
-            return;
-        });
-    }
-    function startCountDown() {
-        setIsCounting(true)
-    }
-    const handleFavorite = () =>{
-        favoriteBeat(props.route.params.item.key, user.uid).then(result =>{
+    const handleFavorite = () => {
+        favoriteBeat(props.route.params.item.key, user.uid).then(result => {
             console.log(result)
         })
-        .catch(error =>{
-            console.log(error)
-        })
+            .catch(error => {
+                console.log(error)
+            })
     }
     useEffect(() => {
-        const unsubscribe = favoritesCollection.onSnapshot(snapshot =>{
+        const unsubscribe = favoritesCollection.onSnapshot(snapshot => {
             console.log('Music Details', props.route.params)
-            favoritesCollection.where("target", "==", props.route.params.item.key).where('userid' , '==', user.uid).get().then(querySnapshot =>{
-                if(querySnapshot.size){
+            favoritesCollection.where("target", "==", props.route.params.item.key).where('userid', '==', user.uid).get().then(querySnapshot => {
+                if (querySnapshot.size) {
                     setIsFavorited(true)
                 }
-                else{
+                else {
                     setIsFavorited(false)
                 }
             });
         })
-        
-        return () =>{
+
+        return () => {
             unsubscribe()
         }
     }, [FIRESTORE])
@@ -255,7 +320,7 @@ const PlayScreen = (props) => {
                     style={{ flex: 1 }}
                 >
                     <View style={{ justifyContent: "space-between", flex: 1 }}>
-                        <LinearGradient colors={[Colors.darkBlue,  Colors.darkBlueOpacity]} >
+                        <LinearGradient colors={[Colors.darkBlue, Colors.darkBlueOpacity]} >
                             <View
                                 style={{
                                     flexDirection: isRtl ? "row-reverse" : "row",
@@ -295,7 +360,7 @@ const PlayScreen = (props) => {
                                         style={{
                                             paddingVertical: Default.fixPadding * 0.5,
                                         }}
-                                        onPress={  handleFavorite}
+                                        onPress={handleFavorite}
                                     >
                                         <Ionicons
                                             name={!isFavorited ? "heart-outline" : "heart"}
@@ -371,164 +436,166 @@ const PlayScreen = (props) => {
                         </LinearGradient>
 
                         <LinearGradient colors={[Colors.darkBlueOpacity, Colors.darkBlue]} >
-                        <View>
+                            <View>
 
-                            <View
-                                style={{
-                                    flexDirection: isRtl ? "row-reverse" : "row",
-                                    marginHorizontal: Default.fixPadding * 1.5,
-                                }}
-                            >
                                 <View
                                     style={{
-                                        flex: 9,
-                                        alignItems: isRtl ? "flex-end" : "flex-start",
+                                        flexDirection: isRtl ? "row-reverse" : "row",
+                                        marginHorizontal: Default.fixPadding * 1.5,
                                     }}
                                 >
-                                    <Text style={{ ...Fonts.Bold24White }}>{currentTrack?.title}</Text>
                                     <View
                                         style={{
-                                            flexDirection: isRtl ? "row-reverse" : "row",
-                                            marginVertical: Default.fixPadding * 0.5,
+                                            flex: 9,
+                                            alignItems: isRtl ? "flex-end" : "flex-start",
+                                        }}
+                                    >
+                                        <Text style={{ ...Fonts.Bold24White }}>{currentTrack?.title}</Text>
+                                        <View
+                                            style={{
+                                                flexDirection: isRtl ? "row-reverse" : "row",
+                                                marginVertical: Default.fixPadding * 0.5,
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                            }}
+                                        >
+                                            <Text
+                                                style={{
+                                                    ...Fonts.Bold14Grey,
+                                                }}
+                                            >
+                                                {currentTrack?.artist}
+                                            </Text>
+
+                                        </View>
+                                    </View>
+                                    <View
+                                        style={{
+                                            flex: 1,
                                             justifyContent: "center",
                                             alignItems: "center",
                                         }}
                                     >
-                                        <Text
-                                            style={{
-                                                ...Fonts.Bold14Grey,
-                                            }}
-                                        >
-                                            {currentTrack?.artist}
-                                        </Text>
-                                        
+                                        <Feather name="download" size={30} color={Colors.white} />
                                     </View>
                                 </View>
+                                <Slider
+                                    style={{
+                                        height: 40,
+                                        width: 380,
+                                        marginTop: 25,
+                                        flexDirection: 'row',
+                                    }}
+                                    value={progress.position}
+                                    minimumValue={0}
+                                    maximumValue={progress.duration}
+                                    thumbTintColor="#FFD479"
+                                    minimumTrackTintColor="#FFD479"
+                                    maximumTrackTintColor="#FFFFFF"
+                                    onSlidingComplete={TrackPlayer.seekTo}
+                                />
+
                                 <View
                                     style={{
-                                        flex: 1,
-                                        justifyContent: "center",
-                                        alignItems: "center",
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        marginHorizontal: Default.fixPadding * 3,
                                     }}
                                 >
-                                    <Feather name="download" size={30} color={Colors.white} />
+                                    <Text style={{ ...Fonts.SemiBold12Grey }}>{new Date(progress.position * 1000).toISOString().slice(14, 19)}</Text>
+                                    <Text
+                                        style={{
+                                            ...Fonts.SemiBold12Grey,
+                                            marginRight: Default.fixPadding,
+                                        }}
+                                    >
+                                        {new Date((progress.duration - progress.position) * 1000)
+                                            .toISOString()
+                                            .slice(14, 19)}
+                                    </Text>
+                                </View>
+
+                                <View
+                                    style={{
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        marginVertical: Default.fixPadding * 1.5,
+                                    }}
+                                >
+                                    <Feather name="shuffle" size={20} color={Colors.darkGrey} />
+
+                                    <Ionicons
+                                        name="play-skip-back"
+                                        size={30}
+                                        color={Colors.white}
+                                        style={{ marginHorizontal: Default.fixPadding * 2 }}
+                                    />
+                                    {
+                                        isLoading ? <View style={{ height: 70, width: 70 }}>
+                                            {isLoading && <ActivityIndicator size={70} />}
+                                        </View> :
+
+                                            isCounting ? <CountdownCircleTimer
+                                                isPlaying
+                                                duration={3}
+                                                colors={['#004777', '#F7B801', '#A30000', '#A30000']}
+                                                colorsTime={[3, 2, 1, 0]}
+                                                strokeWidth={5}
+                                                size={70}
+                                                onComplete={startRecord}
+                                            >
+                                                {({ remainingTime }) => <View style={{
+                                                    height: 66,
+                                                    width: 66,
+                                                    borderRadius: 33,
+                                                    backgroundColor: Colors.primary,
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                }}><Text style={{
+                                                    ...Fonts.SemiBold12Grey,
+                                                    marginRight: Default.fixPadding, fontSize: 25, textAlign: "center"
+                                                }}>{remainingTime}</Text></View>}
+                                            </CountdownCircleTimer> : <TouchableOpacity
+                                                onPress={isPlaying ? (
+                                                    isRecording ? stopRecord : startCountDown
+                                                ) : onTogglePlayback}
+                                                style={{
+                                                    height: 66,
+                                                    width: 66,
+                                                    borderRadius: 33,
+                                                    backgroundColor: Colors.primary,
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                }}
+                                            >
+                                                <Fontisto
+                                                    name={isPlaying ? (
+                                                        isRecording ? "stop" : "record"
+                                                    ) : "play"}
+                                                    size={25}
+                                                    color={Colors.white}
+                                                />
+
+                                            </TouchableOpacity>
+
+                                    }
+
+                                    <Ionicons
+                                        name="play-skip-forward"
+                                        size={30}
+                                        color={Colors.white}
+                                        style={{ marginHorizontal: Default.fixPadding * 2 }}
+                                    />
+                                    <Feather name="repeat" size={20} color={Colors.darkGrey} />
                                 </View>
                             </View>
-                            <Slider
-                                style={{
-                                    height: 40,
-                                    width: 380,
-                                    marginTop: 25,
-                                    flexDirection: 'row',
-                                }}
-                                value={progress.position}
-                                minimumValue={0}
-                                maximumValue={progress.duration}
-                                thumbTintColor="#FFD479"
-                                minimumTrackTintColor="#FFD479"
-                                maximumTrackTintColor="#FFFFFF"
-                                onSlidingComplete={TrackPlayer.seekTo}
-                            />
-
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    justifyContent: "space-between",
-                                    marginHorizontal: Default.fixPadding * 3,
-                                }}
-                            >
-                                <Text style={{ ...Fonts.SemiBold12Grey }}>{new Date(progress.position * 1000).toISOString().slice(14, 19)}</Text>
-                                <Text
-                                    style={{
-                                        ...Fonts.SemiBold12Grey,
-                                        marginRight: Default.fixPadding,
-                                    }}
-                                >
-                                    {new Date((progress.duration - progress.position) * 1000)
-                                        .toISOString()
-                                        .slice(14, 19)}
-                                </Text>
-                            </View>
-
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    marginVertical: Default.fixPadding * 1.5,
-                                }}
-                            >
-                                <Feather name="shuffle" size={20} color={Colors.darkGrey} />
-
-                                <Ionicons
-                                    name="play-skip-back"
-                                    size={30}
-                                    color={Colors.white}
-                                    style={{ marginHorizontal: Default.fixPadding * 2 }}
-                                />
-                                {
-                                    isLoading ? <View style={{ height: 70, width: 70 }}>
-                                        {isLoading && <ActivityIndicator size={70} />}
-                                    </View> :
-
-                                        isCounting ? <CountdownCircleTimer
-                                            isPlaying
-                                            duration={3}
-                                            colors={['#004777', '#F7B801', '#A30000', '#A30000']}
-                                            colorsTime={[3, 2, 1, 0]}
-                                            strokeWidth={5}
-                                            size={70}
-                                            onComplete={startRecord}
-                                        >
-                                            {({ remainingTime }) => <View style={{
-                                                height: 66,
-                                                width: 66,
-                                                borderRadius: 33,
-                                                backgroundColor: Colors.primary,
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                            }}><Text style={{
-                                                ...Fonts.SemiBold12Grey,
-                                                marginRight: Default.fixPadding, fontSize: 25, textAlign: "center"
-                                            }}>{remainingTime}</Text></View>}
-                                        </CountdownCircleTimer> : <TouchableOpacity
-                                            onPress={isPlaying ? (
-                                                isRecording ? stopRecord : startCountDown
-                                            ) : onTogglePlayback}
-                                            style={{
-                                                height: 66,
-                                                width: 66,
-                                                borderRadius: 33,
-                                                backgroundColor: Colors.primary,
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                            }}
-                                        >
-                                            <Fontisto
-                                                name={isPlaying ? (
-                                                    isRecording ? "stop" : "record"
-                                                ) : "play"}
-                                                size={25}
-                                                color={Colors.white}
-                                            />
-
-                                        </TouchableOpacity>
-
-                                }
-
-                                <Ionicons
-                                    name="play-skip-forward"
-                                    size={30}
-                                    color={Colors.white}
-                                    style={{ marginHorizontal: Default.fixPadding * 2 }}
-                                />
-                                <Feather name="repeat" size={20} color={Colors.darkGrey} />
-                            </View>
-                        </View>
                         </LinearGradient>
                     </View>
                 </ImageBackground>
             </ScrollView>
+            <Loader visible={isProcessing} textMessage = {loaderText}/>
+            <ProgressBarLoader visible={isUploading} progress = {uploadProgress}/>
         </SafeAreaView>
     );
 };

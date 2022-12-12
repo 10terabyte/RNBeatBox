@@ -31,6 +31,7 @@ export const savePlayLog = (beatID, userID) => {
 }
 
 export const playBeat = async (musicItem, userID) => {
+    console.log("Play Beat Function", userID, musicItem.key)
     return new Promise(function (resolve, reject) {
         savePlayLog(musicItem.key, userID).then(result => {
             var track = {

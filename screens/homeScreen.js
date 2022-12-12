@@ -134,7 +134,7 @@ const HomeScreen = (props) => {
         
     }
      
-    const renderItemMostlyPlayed = ({ item, index }) => {
+    const renderBeatItem = ({ item, index }) => {
         const isFirst = index === 0;
         return (
             <TouchableOpacity
@@ -327,7 +327,7 @@ const HomeScreen = (props) => {
           horizontal
           nestedScrollEnabled
           data={mostlyPlayed}
-          renderItem={renderItemMostlyPlayed}
+          renderItem={renderBeatItem}
           keyExtractor={(item) => item.key}
           showsHorizontalScrollIndicator={false}
         /> 
@@ -353,7 +353,7 @@ const HomeScreen = (props) => {
           horizontal
           nestedScrollEnabled
           data={weeklyTrendings}
-          renderItem={renderItemMostlyPlayed}
+          renderItem={renderBeatItem}
           keyExtractor={(item) => item.key}
           showsHorizontalScrollIndicator={false}
         /> 

@@ -1813,6 +1813,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/functions/-/functions-16.4.6.tgz#d3c03c60a9c46745d974a1fda6f50b5076870846"
   integrity sha512-NrJhk4WYGU1o+WMu2hAUpkSxAocm7NFKccE5E80WQqx5kZRyGgPto7dYJykiVLKUFXxDnEHxs/N/MkVNPU7W9g==
 
+"@react-native-firebase/storage@^16.4.6":
+  version "16.4.6"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-16.4.6.tgz#b0e6f32949ee5617f7faed561c4a2ae1286a44e4"
+  integrity sha512-m5WYVAooTbe3p4E5ZQvsxMOsBf/ViJfD1uksKfM6cTtXuFo13zSfQkS08t69//5H+MtC7qN1hMpWaoN0UuOwbg==
+
 "@react-native-google-signin/google-signin@^9.0.0":
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-9.0.0.tgz#f6f7810f74594520ae3f8e97c69e4eb7e546d126"
@@ -6771,6 +6776,13 @@ react-native-permissions@^3.6.1:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-3.6.1.tgz#73adcc1cef8cd57a9ef167b4507405f4ff5749c4"
   integrity sha512-fzPpPQXeD34inUccqtoResSwYubfrwUguP4qrVUUv8+KSMjYSaHGoS5HaIJLZHlN9gO+TvLJZ2L5ZljTsb6qnQ==
+
+react-native-progress@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-5.0.0.tgz#f5ac6ceaeee27f184c660b00f29419e82a9d0ab0"
+  integrity sha512-KjnGIt3r9i5Kn2biOD9fXLJocf0bwxPRxOyAgXEnZTJQU2O+HyzgGFRCbM5h3izm9kKIkSc1txh8aGmMafCD9A==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-native-radio-buttons-group@^2.2.11:
   version "2.2.11"
