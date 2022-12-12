@@ -34,12 +34,16 @@ import { FFmpegKit } from 'ffmpeg-kit-react-native'
 import RNFS from "react-native-fs"
 import uuid from 'react-native-uuid';
 import LinearGradient from 'react-native-linear-gradient';
+import { favoriteBeat} from '../controllers/beat'
+import firestore from "@react-native-firebase/firestore";
 const audioRecorderPlayer = new AudioRecorderPlayer();
+const FIRESTORE = firestore()
+const favoritesCollection = FIRESTORE.collection('beatFavorites')
 const PlayScreen = (props) => {
     const { setMusic, music } = useAppContext();
     const { t, i18n } = useTranslation();
     const [isLoaded, setIsLoaded] = useState(false);
-
+    const { user } = useAppContext();
     const isRtl = i18n.dir() === "rtl";
 
     function tr(key) {
@@ -56,7 +60,7 @@ const PlayScreen = (props) => {
     const isPlaying = state === State.Playing;
     const [isRecording, setIsRecording] = useState(false);
     const [isCounting, setIsCounting] = useState(false);
-    const { countDownNumber, setCountDownNumber } = useState(3);
+    const [isFavorited, setIsFavorited] = useState(false)
     const isLoading = useDebouncedValue(
         state === State.Connecting || state === State.Buffering,
         250
@@ -214,6 +218,31 @@ const PlayScreen = (props) => {
     function startCountDown() {
         setIsCounting(true)
     }
+    const handleFavorite = () =>{
+        favoriteBeat(props.route.params.item.key, user.uid).then(result =>{
+            console.log(result)
+        })
+        .catch(error =>{
+            console.log(error)
+        })
+    }
+    useEffect(() => {
+        const unsubscribe = favoritesCollection.onSnapshot(snapshot =>{
+            console.log('Music Details', props.route.params)
+            favoritesCollection.where("target", "==", props.route.params.item.key).where('userid' , '==', user.uid).get().then(querySnapshot =>{
+                if(querySnapshot.size){
+                    setIsFavorited(true)
+                }
+                else{
+                    setIsFavorited(false)
+                }
+            });
+        })
+        
+        return () =>{
+            unsubscribe()
+        }
+    }, [FIRESTORE])
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
             <ScrollView
@@ -266,14 +295,14 @@ const PlayScreen = (props) => {
                                         style={{
                                             paddingVertical: Default.fixPadding * 0.5,
                                         }}
-                                        onPress={() => setIsVisible((preState) => !preState)}
+                                        onPress={  handleFavorite}
                                     >
                                         <Ionicons
-                                            name={isVisible ? "heart-outline" : "heart"}
+                                            name={!isFavorited ? "heart-outline" : "heart"}
                                             size={24}
-                                            color={Colors.white}
+                                            color={!isFavorited ? Colors.white : Colors.red}
                                             style={{
-                                                color: Colors.white,
+                                                color: !isFavorited ? Colors.white : Colors.red,
                                                 marginHorizontal: Default.fixPadding,
                                             }}
                                         />
@@ -372,23 +401,7 @@ const PlayScreen = (props) => {
                                         >
                                             {currentTrack?.artist}
                                         </Text>
-                                        <View
-                                            style={{
-                                                backgroundColor: Colors.extraBlack,
-                                                borderRadius: 5,
-                                                marginHorizontal: Default.fixPadding,
-                                                paddingVertical: Default.fixPadding * 0.5,
-                                            }}
-                                        >
-                                            <Text
-                                                style={{
-                                                    ...Fonts.Bold14White,
-                                                    paddingHorizontal: Default.fixPadding,
-                                                }}
-                                            >
-                                                {tr("follow")}
-                                            </Text>
-                                        </View>
+                                        
                                     </View>
                                 </View>
                                 <View

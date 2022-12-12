@@ -16,7 +16,6 @@ import { AppWrapper,useAppContext } from "./context";
 const Stack = createStackNavigator();
 import TrackPlayer, { State } from 'react-native-track-player';
 import { QueueInitialTracksService, SetupService } from './services';
-import firestore from '@react-native-firebase/firestore';
 const MainNavigation = (props) => {
   const [initializing, setInitializing] = useState(true);
   const { user, setUser } = useAppContext();
@@ -41,7 +40,15 @@ const MainNavigation = (props) => {
     </NavigationContainer>
   );
 };
-
+// import firestore from '@react-native-firebase/firestore';
+// const FIRESTORE = firestore()
+// const artistCollection = FIRESTORE.collection('artists')
+// const beatCollection = FIRESTORE.collection('beats')
+// const beats = require('./beatbox_database.json').beats
+// const artists = require('./beatbox_database.json').artists
+//             Object.keys(beats).map(beatKey => {
+//               beatCollection.doc(beatKey).set({...beats[beatKey], playCount: 0})
+//             });
 const ReloadAppOnLanguageChange = withTranslation("translation", {
   bindI18n: "languageChanged",
   bindStore: false,

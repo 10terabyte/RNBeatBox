@@ -22,6 +22,7 @@ import BottomMusic from "../components/bottomMusic";
 import { useAppContext } from "../context";
 import { playBeat} from '../controllers/beat'
 import firestore from '@react-native-firebase/firestore';
+import functions from '@react-native-firebase/functions';
 const { width } = Dimensions.get("window");
 // const DB = getDatabase();
 const FIRESTORE = firestore()
@@ -39,9 +40,17 @@ const HomeScreen = (props) => {
     const [followChangeEvent, setFollowChangeEvent] = useState(0)
     const [followDocChanges, setFollowDocChanges] = useState([])
     const [isLoading, setIsLoading] = useState(false);
+    const [weeklyTrendings, setWeeklyTrendings] = useState([])
     function tr(key) {
         return t(`homeScreen:${key}`);
     }
+    useEffect(() => {
+        functions()
+          .httpsCallable('getWeeklyTrending')()
+          .then(response => {
+            setWeeklyTrendings(response.data)
+          });
+      }, []);
     useEffect(() => {
         setUserData(user);
         if(!user.emailVerified ){
@@ -117,7 +126,7 @@ const HomeScreen = (props) => {
     async function loadSoundAndPlay(musicItem) {
         setIsLoading(true)
         playBeat(musicItem, user.uid).then(result =>{
-            props.navigation.navigate("playScreen");
+            props.navigation.navigate("playScreen", { item: musicItem });
             setIsLoading(false)
         }).catch(error =>{
             setIsLoading(false)
@@ -321,8 +330,33 @@ const HomeScreen = (props) => {
           renderItem={renderItemMostlyPlayed}
           keyExtractor={(item) => item.key}
           showsHorizontalScrollIndicator={false}
-        />  
-
+        /> 
+        
+         
+        <View
+          style={{
+            flexDirection: isRtl ? "row-reverse" : "row",
+            justifyContent: "space-between",
+            marginHorizontal: Default.fixPadding * 1.5,
+            marginBottom: Default.fixPadding,
+            marginTop: Default.fixPadding,
+          }}
+        >
+          <Text style={{ ...Fonts.Bold18White }}>{tr("weekly_trendings")}</Text>
+          <TouchableOpacity
+            onPress={() => {}}
+          >
+            <Text style={{ ...Fonts.Bold14Primary }}>{tr("seeAll")}</Text>
+          </TouchableOpacity>
+        </View>  
+                  <FlatList
+          horizontal
+          nestedScrollEnabled
+          data={weeklyTrendings}
+          renderItem={renderItemMostlyPlayed}
+          keyExtractor={(item) => item.key}
+          showsHorizontalScrollIndicator={false}
+        /> 
                 {playlistForYou.length > 0 && (<View
                     style={{
                         flexDirection: isRtl ? "row-reverse" : "row",
@@ -419,7 +453,7 @@ const HomeScreen = (props) => {
           showsHorizontalScrollIndicator={false}
         /> */}
             </ScrollView>
-            <BottomMusic onSelect={() => props.navigation.navigate("playScreen")} />
+            <BottomMusic   />
             <Loader visible={isLoading} />
         </SafeAreaView>
     );
