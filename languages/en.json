@@ -213,7 +213,9 @@
         "playlist":"Playlist",
         "10playlist":"10 playlist",
         "podcast":"Podcast",
-        "4podcast":"4 podcast"
+        "4podcast":"4 podcast",
+        "myFollowers" : "My Followers",
+        "myRecords" : "My Records"
     },
     "libraryMyLikeScreen":{
         "myLikes":"My Likes",

@@ -36,7 +36,7 @@ const LyricsScreen = (props) => {
   }, []);
   const [value, setValue] = useState(0);
 
-  const sound = React.useRef(new Audio.Sound());
+  // const sound = React.useRef(new Audio.Sound());
   const [Status, SetStatus] = React.useState(false);
 
   React.useEffect(() => {

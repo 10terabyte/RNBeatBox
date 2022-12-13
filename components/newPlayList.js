@@ -9,12 +9,12 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Colors, Fonts, Default } from "../constants/style";
 import { BottomSheet } from "react-native-btr";
-import { useAuthentication } from "../utils/hooks/useAuthentication";
+import { useAppContext } from "../context";
 import { getDatabase, ref, query, push, update, onValue, equalTo, get } from "firebase/database";
 const DB = getDatabase();
 const NewPlayList = (props) => {
   const { t, i18n } = useTranslation();
-  const {user} = useAuthentication();
+  const { user } = useAppContext();
   const isRtl = i18n.dir() === "rtl";
 
   function tr(key) {
@@ -29,7 +29,7 @@ const NewPlayList = (props) => {
       description:description,
       user:user.uid,
       amount:1,
-      image:props.beat.track_thumbnail,
+      // image:props.beat.track_thumbnail,
     })
     props.cancel();
   }

@@ -28,7 +28,7 @@ import { useAppContext } from "../context";
 import Loader from "../components/loader";
 import { useOnTogglePlayback, useCurrentTrack } from '../hooks';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
-import TrackPlayer, { State, usePlaybackState, useProgress } from 'react-native-track-player';
+import TrackPlayer, { State, usePlaybackState, useProgress, Event, useTrackPlayerEvents } from 'react-native-track-player';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import AudioRecorderPlayer, { AudioEncoderAndroidType, AudioSourceAndroidType, AVEncoderAudioQualityIOSType, AVEncodingOption } from 'react-native-audio-recorder-player';
 import { FFmpegKit } from 'ffmpeg-kit-react-native'
@@ -41,10 +41,16 @@ import firestore from "@react-native-firebase/firestore";
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage'
 import ProgressBarLoader from "../components/progressbarloader";
+import Toast from "react-native-root-toast";
 const audioRecorderPlayer = new AudioRecorderPlayer();
 const FIRESTORE = firestore()
 const favoritesCollection = FIRESTORE.collection('beatFavorites')
 const recordedCollection = FIRESTORE.collection('records')
+const events = [
+    Event.PlaybackState,
+    Event.PlaybackError,
+];
+
 const PlayScreen = (props) => {
     const { setMusic, music } = useAppContext();
     const { t, i18n } = useTranslation();
@@ -70,6 +76,21 @@ const PlayScreen = (props) => {
     const [isCounting, setIsCounting] = useState(false);
     const [isFavorited, setIsFavorited] = useState(false)
     const [loaderText, setLoaderText] = useState("Please Wait");
+    useTrackPlayerEvents(events, (event) => {
+        if (event.type === Event.PlaybackError) {
+            console.warn('An error occured while playing the current track.');
+        }
+        if (event.state == State.Stopped) {
+            if (isRecording) {
+                stopRecord()
+            }
+            else {
+                props.navigation.goBack()
+            }
+
+        }
+        // console.log(event.type, event, "Track Play Events")
+    });
     const isLoading = useDebouncedValue(
         state === State.Connecting || state === State.Buffering,
         250
@@ -85,7 +106,7 @@ const PlayScreen = (props) => {
     useEffect(
         () =>
             props.navigation.addListener('beforeRemove', (e) => {
-
+                console.log('checkIsRecord', isRecording)
                 if (isRecording) {
                     e.preventDefault();
 
@@ -148,34 +169,34 @@ const PlayScreen = (props) => {
         });
     };
 
-    uploadRecorded =  (uri) =>{
-        return new Promise(function(resolve, reject){
+    uploadRecorded = (uri) => {
+        return new Promise(function (resolve, reject) {
             const filename = `recorded/${user.uid}/${props.route.params.item.key}/${uri.substring(uri.lastIndexOf('/') + 1)}`;
             const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
             const task = storage()
-            .ref(filename)
-            .putFile(uploadUri);
+                .ref(filename)
+                .putFile(uploadUri);
             console.log(filename, uploadUri)
             task.on('state_changed', snapshot => {
                 setUploadProgress(snapshot.bytesTransferred / snapshot.totalBytes)
-                
-              });
-              try {
-                task.then(result =>{
+
+            });
+            try {
+                task.then(result => {
                     resolve(result)
-                }).catch(e =>{
+                }).catch(e => {
                     console.error(e);
                     reject(e)
                 });
-              } catch (e) {
+            } catch (e) {
                 console.error(e);
                 reject(e)
-              }
+            }
         });
-        
+
     }
 
-    stopRecord = async () => {
+    const stopRecord = async () => {
         setIsProcessing(true)
         const result = await audioRecorderPlayer.stopRecorder();
         audioRecorderPlayer.removeRecordBackListener();
@@ -188,7 +209,7 @@ const PlayScreen = (props) => {
             .then((result) => {
                 setIsProcessing(false)
                 setIsUploading(true)
-                uploadRecorded(recordedFileURL).then(result =>{
+                uploadRecorded(recordedFileURL).then(result => {
                     setIsUploading(false)
 
                     setIsProcessing(true)
@@ -199,26 +220,26 @@ const PlayScreen = (props) => {
                         beatid: props.route.params.item.key,
                         filename: uploadedFileName,
                         created: database().getServerTime()
-                    }).then((result) =>{
+                    }).then((result) => {
                         setIsProcessing(false)
                         setIsRecording(false)
                         props.navigation.goBack()
-                    }).catch(error=>{
+                    }).catch(error => {
                         console.log("Error in Save Record Table 1", error)
                         setIsProcessing(false)
                         setIsRecording(false)
                         props.navigation.goBack()
                     })
 
-                }).catch(e =>{
+                }).catch(e => {
                     console.log("Error in Save Record Table 2", e)
                     setIsUploading(false)
                     setIsRecording(false)
                     props.navigation.goBack()
                 })
-                
+
             }
-            ).catch(error =>{
+            ).catch(error => {
                 console.log("Error in combine files", error)
                 setIsProcessing(false)
                 setIsRecording(false)
@@ -227,9 +248,10 @@ const PlayScreen = (props) => {
     }
 
     startRecord = async () => {
-        try{
+        try {
             setIsCounting(false)
             setIsRecording(true)
+            console.log('checkIsRecord', isRecording, 1)
             const path = Platform.select({
                 ios: 'hello.m4a',
                 android: `${RNFS.DownloadDirectoryPath}/${uuid.v4()}.mp4`,
@@ -241,18 +263,29 @@ const PlayScreen = (props) => {
                 AVNumberOfChannelsKeyIOS: 2,
                 AVFormatIDKeyIOS: AVEncodingOption.aac,
             };
-            const result = await audioRecorderPlayer.startRecorder(path, audioSet);
-            setRecordStartTime(parseInt(progress.position, 10));
-            audioRecorderPlayer.addRecordBackListener((e) => {
-                return;
-            });
-        }catch(e){
-            console.log(e)
+            console.log(path, "Record Path")
+            console.log('checkIsRecord', isRecording, 2)
+            //const result = await 
+            audioRecorderPlayer.startRecorder(path, audioSet).then(result =>{
+                console.log('checkIsRecord', isRecording, 3)
+                setRecordStartTime(parseInt(progress.position, 10));
+    
+                console.log('checkIsRecord', isRecording, 4)
+            }).catch(error =>{
+                setIsRecording(false)
+                setIsCounting(false)
+                console.log(error)
+                Toast.show("Error when start record",{ duration: Toast.durations.LONG})
+            })
+            
+
+        } catch (e) {
+            console.log(e, "Record Error")
             setIsRecording(false)
         }
-        
+
     }
-    startCountDown = async () => {
+    const startCountDown = async () => {
         if (Platform.OS === 'android') {
             try {
                 const grants = await PermissionsAndroid.requestMultiple([
@@ -287,9 +320,9 @@ const PlayScreen = (props) => {
         favoriteBeat(props.route.params.item.key, user.uid).then(result => {
             console.log(result)
         })
-            .catch(error => {
-                console.log(error)
-            })
+        .catch(error => {
+            console.log(error)
+        })
     }
     useEffect(() => {
         const unsubscribe = favoritesCollection.onSnapshot(snapshot => {
@@ -492,7 +525,7 @@ const PlayScreen = (props) => {
                                     thumbTintColor="#FFD479"
                                     minimumTrackTintColor="#FFD479"
                                     maximumTrackTintColor="#FFFFFF"
-                                    onSlidingComplete={TrackPlayer.seekTo}
+                                // onSlidingComplete={isRecording ? stopRecord : () => { }}
                                 />
 
                                 <View
@@ -523,14 +556,14 @@ const PlayScreen = (props) => {
                                         marginVertical: Default.fixPadding * 1.5,
                                     }}
                                 >
-                                    <Feather name="shuffle" size={20} color={Colors.darkGrey} />
+                                    {/* <Feather name="shuffle" size={20} color={Colors.darkGrey} /> */}
 
-                                    <Ionicons
+                                    {/* <Ionicons
                                         name="play-skip-back"
                                         size={30}
                                         color={Colors.white}
                                         style={{ marginHorizontal: Default.fixPadding * 2 }}
-                                    />
+                                    /> */}
                                     {
                                         isLoading ? <View style={{ height: 70, width: 70 }}>
                                             {isLoading && <ActivityIndicator size={70} />}
@@ -581,21 +614,21 @@ const PlayScreen = (props) => {
 
                                     }
 
-                                    <Ionicons
+                                    {/* <Ionicons
                                         name="play-skip-forward"
                                         size={30}
                                         color={Colors.white}
                                         style={{ marginHorizontal: Default.fixPadding * 2 }}
-                                    />
-                                    <Feather name="repeat" size={20} color={Colors.darkGrey} />
+                                    /> */}
+                                    {/* <Feather name="repeat" size={20} color={Colors.darkGrey} /> */}
                                 </View>
                             </View>
                         </LinearGradient>
                     </View>
                 </ImageBackground>
             </ScrollView>
-            <Loader visible={isProcessing} textMessage = {loaderText}/>
-            <ProgressBarLoader visible={isUploading} progress = {uploadProgress}/>
+            <Loader visible={isProcessing} textMessage={loaderText} />
+            <ProgressBarLoader visible={isUploading} progress={uploadProgress} />
         </SafeAreaView>
     );
 };
