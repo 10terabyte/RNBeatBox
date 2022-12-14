@@ -1,3 +1,7 @@
+$RNFirebaseAsStaticFramework = true
+  
+  
+  
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
@@ -5,6 +9,9 @@ platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
 
 target 'RNBeatBox' do
+  use_frameworks! :linkage => :static
+
+
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -26,10 +33,13 @@ target 'RNBeatBox' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  
+  
   target 'RNBeatBoxTests' do
     inherit! :complete
     # Pods for testing
   end
+
 
   post_install do |installer|
     react_native_post_install(
