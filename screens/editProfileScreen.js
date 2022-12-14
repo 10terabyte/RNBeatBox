@@ -13,6 +13,7 @@ import {
   BackHandler,
   Dimensions,
   Platform,
+  Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -21,14 +22,14 @@ import { BottomSheet } from "react-native-btr";
 import Toast from "react-native-root-toast";
 import * as ImagePicker from "react-native-image-picker";
 import { useTranslation } from "react-i18next";
-// import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { useAppContext } from "../context";
-import { getAuth, updateProfile } from "firebase/auth";
+import auth from '@react-native-firebase/auth';
+import storage from "@react-native-firebase/storage";
 
 const ModalUpdate = ({ visibleUpdate, children }) => {
   const [showModal, setShowModal] = React.useState(visibleUpdate);
   const scaleValue = React.useRef(new Animated.Value(0)).current;
-
+  
   React.useEffect(() => {
     toggleModal();
   }, [visibleUpdate]);
@@ -65,13 +66,14 @@ const { width } = Dimensions.get("window");
 
 const EditProfileScreen = (props) => {
   const { t, i18n } = useTranslation();
-  const {user,setUser} = useAppContext();
+  const { user, setUser } = useAppContext();
+  const [transferred, setTransferred] = useState(0);
   const isRtl = i18n.dir() === "rtl";
   // console.log(user,"user")
   function tr(key) {
     return t(`editProfileScreen:${key}`);
   }
-  
+
   const backAction = () => {
     props.navigation.goBack();
     return true;
@@ -89,32 +91,43 @@ const EditProfileScreen = (props) => {
   const [textEmail, onChangeTextEmail] = useState("");
   const [textNo, onChangeTextNo] = useState("");
   const [visible, setVisible] = useState(false);
-  useEffect(()=>{
+  useEffect(() => {
     onChangeText(user.displayName);
     onChangeTextEmail(user.email);
     onChangeTextNo(user.phoneNumber);
-  },[user])
+    setPickedImage({uri:user.photoURL})
+  }, [user])
   const toggleClose = () => {
     setVisible(!visible);
   };
-  const UpdateUserProfile = ()=>{
-    const auth = getAuth();
-    console.log(text, textEmail, textNo)
-    updateProfile(auth.currentUser,{
-      displayName:text,
-      phoneNumber:textNo
-    }).then(()=>{
-      
-      
-      setUser({
-        ...user,
-        displayName:text,
-        phoneNumber:textNo
-      });
-      setVisibleUpdate(true);
-      
-    })
-    
+  const UpdateUserProfile = async() => {
+
+    console.log(auth(), text, textEmail, textNo);
+    const photoURL = await uploadImage();
+    console.log(photoURL,"uploaded url")
+    auth().currentUser.updateProfile(
+      {
+        displayName: text,
+        photoURL:photoURL
+      }
+    )
+    /*   updateProfile(auth.currentUser, {
+        displayName: text,
+        
+      }).then(() => {
+  
+  
+        setUser({
+          ...user,
+          displayName: text,
+          phoneNumber: textNo
+        });
+        setVisibleUpdate(true);
+  
+      }).catch(e=>{
+        console.log("error",e)
+      })
+   */
   }
   const toastRemoveImage = () => {
     Toast.show(tr("removeImage"), {
@@ -131,17 +144,22 @@ const EditProfileScreen = (props) => {
   const [pickedImage, setPickedImage] = useState();
 
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+    let result = await ImagePicker.launchImageLibrary({
+     
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+    },res=>{
+      if (res.didCancel || res.error || res.customeButton) {
+
+      } else {
+        toggleClose();
+      setPickedImage({uri:res.assets[0].uri})
+
+      }
     });
 
-    if (!result.cancelled) {
-      toggleClose();
-      setPickedImage(result.uri);
-    }
+   
   };
 
   const getPermissionAsync = async () => {
@@ -154,13 +172,51 @@ const EditProfileScreen = (props) => {
   useEffect(() => {
     getPermissionAsync();
   }, []);
+  const uploadImage = async () => {
+    const { uri } = pickedImage;
+    const tempURI = uri;
+    const filename = "/files/users/" + Date.now() + "." + tempURI.split(".").pop();
+    console.log(filename);
+    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+    const task = storage()
+      .ref(filename)
+      .putFile(uploadUri);
+      task.on('state_changed', snapshot =>{
+        setTransferred( Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000)
+      });
+      try {
+        await task;
 
+      }catch(e){
+        console.error(e)
+        return;
+      }
+      console.log(task,"upload task")
+      Alert.alert(
+        "Photo uploaded!",
+        "Your photo has been uploaded to server!"
+      );
+        console.log(filename,"filename")
+      const downloadURL =  await storage().ref().child(filename).getDownloadURL();
+       return downloadURL;
+
+  }
   const openCamera = async () => {
-    let result = await ImagePicker.launchCameraAsync({});
-    if (!result.cancelled) {
-      setVisible(false);
-      setPickedImage(result.uri);
-    }
+
+
+    ImagePicker.launchCamera({}, (res => {
+      console.log(res, "res")
+      if (res.didCancel || res.error || res.customeButton) {
+
+      } else {
+
+        const source = { uri: res.assets[0].uri };
+        setVisible(false);
+        setPickedImage(source);
+      }
+    }));
+
+
   };
 
   return (
@@ -289,7 +345,7 @@ const EditProfileScreen = (props) => {
               width: 120,
               borderRadius: 60,
             }}
-            source={{ uri: pickedImage }}
+            source={pickedImage}
           />
         )}
 
@@ -310,6 +366,38 @@ const EditProfileScreen = (props) => {
           <Ionicons style={{ color: Colors.white }} name="camera" size={20} />
         </TouchableOpacity>
 
+        <Text
+          style={{
+            ...Fonts.Bold16White,
+            marginHorizontal: Default.fixPadding * 1.5,
+          }}
+        >
+          {tr("email")}
+        </Text>
+        <View
+          style={{
+            ...Default.shadow,
+            borderRadius: 10,
+            backgroundColor: Colors.lightBlack,
+            margin: Default.fixPadding * 1.5,
+            padding: Default.fixPadding,
+          }}
+        >
+          <TextInput
+            onChangeText={onChangeTextEmail}
+            selectionColor={Colors.primary}
+            value={textEmail}
+            keyboardType={"email-address"}
+            editable={false}
+            style={{
+              ...Fonts.Medium15LightGrey,
+              textAlign: isRtl ? "right" : "left",
+            }}
+
+
+            placeholderTextColor={Colors.lightGrey}
+          />
+        </View>
         <Text
           style={{
             ...Fonts.Bold16White,
@@ -340,70 +428,8 @@ const EditProfileScreen = (props) => {
           />
         </View>
 
-        <Text
-          style={{
-            ...Fonts.Bold16White,
-            marginHorizontal: Default.fixPadding * 1.5,
-          }}
-        >
-          {tr("email")}
-        </Text>
-        <View
-          style={{
-            ...Default.shadow,
-            borderRadius: 10,
-            backgroundColor: Colors.lightBlack,
-            margin: Default.fixPadding * 1.5,
-            padding: Default.fixPadding,
-          }}
-        >
-          <TextInput
-            onChangeText={onChangeTextEmail}
-            selectionColor={Colors.primary}
-            value={textEmail}
-            keyboardType={"email-address"}
-            editable= {false}
-            style={{
-              ...Fonts.Medium15LightGrey,
-              textAlign: isRtl ? "right" : "left",
-            }}
-            
-           
-            placeholderTextColor={Colors.lightGrey}
-          />
-        </View>
 
-        <Text
-          style={{
-            ...Fonts.Bold16White,
-            marginHorizontal: Default.fixPadding * 1.5,
-          }}
-        >
-          {tr("mobile")}
-        </Text>
-        <View
-          style={{
-            ...Default.shadow,
-            borderRadius: 10,
-            backgroundColor: Colors.lightBlack,
-            margin: Default.fixPadding * 1.5,
-            padding: Default.fixPadding,
-          }}
-        >
-          <TextInput
-            onChangeText={onChangeTextNo}
-            selectionColor={Colors.primary}
-            value={textNo}
-            keyboardType={"phone-pad"}
-            maxLength={10}
-            style={{
-              ...Fonts.Medium15LightGrey,
-              textAlign: isRtl ? "right" : "left",
-            }}
-            placeholder={tr("EnterMobile")}
-            placeholderTextColor={Colors.lightGrey}
-          />
-        </View>
+  
       </ScrollView>
 
       <ModalUpdate visibleUpdate={visibleUpdate}>
@@ -430,8 +456,8 @@ const EditProfileScreen = (props) => {
           >
             <TouchableOpacity
               onPress={() => {
-               setVisible(false);
-               props.navigation.navigate("profileScreen");
+                setVisible(false);
+                props.navigation.navigate("profileScreen");
               }}
             >
               <Text
@@ -448,7 +474,7 @@ const EditProfileScreen = (props) => {
       </ModalUpdate>
 
       <TouchableOpacity
-        onPress={() =>UpdateUserProfile()}
+        onPress={() => UpdateUserProfile()}
         style={{
           ...Default.shadow,
           alignItems: "center",
