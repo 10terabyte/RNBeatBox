@@ -47,13 +47,13 @@ const ArtistScreen = (props) => {
         return t(`artistScreen:${key}`);
     }
     async function loadSoundAndPlay(musicItem) {
-        setIsLoading(true)
+        // setIsLoading(true)
         playBeat(musicItem, user.uid).then(result =>{
-            setIsLoading(false)
+            // setIsLoading(false)
             props.navigation.navigate("playScreen", {item: musicItem});
             
         }).catch(error =>{
-            setIsLoading(false)
+            // setIsLoading(false)
         })
     }
     const backAction = () => {
