@@ -1,5 +1,25 @@
 $RNFirebaseAsStaticFramework = true
 $FirebaseSDKVersion = '10.2.0'
+
+
+use_frameworks!
+
+# Convert all permission pods into static libraries
+pre_install do |installer|
+  Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+
+  installer.pod_targets.each do |pod|
+    if pod.name.eql?('RNPermissions') || pod.name.start_with?('Permission-')
+      def pod.build_type;
+        # Uncomment the line corresponding to your CocoaPods version
+         Pod::BuildType.static_library # >= 1.9
+        # Pod::Target::BuildType.static_library # < 1.9
+      end
+    end
+  end
+end
+
+
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
@@ -8,6 +28,7 @@ install! 'cocoapods', :deterministic_uuids => false
 
 target 'RNBeatBox' do
   use_frameworks! :linkage => :static
+  # Convert all permission pods into static libraries
   
 
 
@@ -32,7 +53,10 @@ target 'RNBeatBox' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
   
   
   

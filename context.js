@@ -19,13 +19,13 @@ export function AppWrapper({ children }) {
         console.log("Setup Track Player,")
         const isSetup = await SetupService();
         setIsPlayerReady(isSetup);
-  
+
         const queue = await TrackPlayer.getQueue();
         if (isSetup && queue.length <= 0) {
           await QueueInitialTracksService();
         }
       }
-  
+
       run();
       return subscriber; // unsubscribe on unmount
     }, []);
@@ -33,9 +33,13 @@ export function AppWrapper({ children }) {
       const subscriber = auth().onUserChanged(onAuthStateChanged);
       return subscriber; // unsubscribe on unmount
     }, []);
+
+
+
     const context = {
 		user, setUser,
         music, setMusic,
+        track
 	}
 	return (
 		<AppContext.Provider value={context}>

@@ -2,10 +2,6 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "assets/font/ionicons.ttf",
-      "sha1": "0f178b4b286fe6dcbb453d725a81628c472f268d"
-    },
-    {
       "path": "assets/font/Mulish-Bold.ttf",
       "sha1": "17352fd4b1929910ad99ec6b9d1e04cb40662147"
     },
@@ -24,6 +20,10 @@
     {
       "path": "assets/font/Mulish-SemiBold.ttf",
       "sha1": "acaafc30e6e58676eae869901793e156afc22b63"
+    },
+    {
+      "path": "assets/font/ionicons.ttf",
+      "sha1": "0f178b4b286fe6dcbb453d725a81628c472f268d"
     }
   ]
 }

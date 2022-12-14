@@ -47,11 +47,11 @@ const ArtistScreen = (props) => {
         return t(`artistScreen:${key}`);
     }
     async function loadSoundAndPlay(musicItem) {
-        // setIsLoading(true)
+        setIsLoading(true)
         playBeat(musicItem, user.uid).then(result =>{
-            // setIsLoading(false)
+            setIsLoading(false)
             props.navigation.navigate("playScreen", {item: musicItem});
-            
+
         }).catch(error =>{
             // setIsLoading(false)
         })
@@ -100,7 +100,7 @@ const ArtistScreen = (props) => {
         //     setBeatList(_beatData);
         // })
     }, [props.route.params.item.key])
-    
+
     const [visible, setVisible] = useState(false);
     const toggleClose = () => {
         setVisible(!visible);
@@ -124,7 +124,7 @@ const ArtistScreen = (props) => {
         const unsubscribe = artistCollection.onSnapshot(snpShot =>{
             artistCollection.doc(props.route.params.item.key).get().then(snapshot=>{
                 setFollowers(snapshot.data().follows)
-            }) 
+            })
         })
         return () =>{
             unsubscribe()
@@ -142,7 +142,7 @@ const ArtistScreen = (props) => {
                 }
             });
         })
-        
+
         return () =>{
             unsubscribe()
         }
@@ -157,9 +157,9 @@ const ArtistScreen = (props) => {
                 })
                 setBeatList(_beatData)
             })
-            
+
         })
-        
+
         return () =>{
             unsubscribe()
         }

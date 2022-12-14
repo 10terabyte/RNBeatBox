@@ -37,6 +37,7 @@ import uuid from 'react-native-uuid';
 import LinearGradient from 'react-native-linear-gradient';
 import { favoriteBeat } from '../controllers/beat'
 import firestore from "@react-native-firebase/firestore";
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage'
@@ -140,7 +141,8 @@ const PlayScreen = (props) => {
         [props.navigate]
     );
 
-    const currentTrack = useCurrentTrack();
+    const { track  } = useAppContext();
+    const currentTrack = track
     const [isVisible, setIsVisible] = useState(false);
     const [value, setValue] = useState(0);
     const [recordStartTime, setRecordStartTime] = useState(0);
@@ -178,7 +180,9 @@ const PlayScreen = (props) => {
                 .putFile(uploadUri);
             console.log(filename, uploadUri)
             task.on('state_changed', snapshot => {
-                setUploadProgress(snapshot.bytesTransferred / snapshot.totalBytes)
+              console.log((snapshot.bytesTransferred / snapshot.totalBytes) || 0, "UploadProgress")
+                setUploadProgress((snapshot.bytesTransferred / snapshot.totalBytes) || 0)
+                //setUploadMaxValue(snapshot.totalBytes)
 
             });
             try {
@@ -197,12 +201,19 @@ const PlayScreen = (props) => {
     }
 
     const stopRecord = async () => {
-        setIsProcessing(true)
+      setIsProcessing(true)
+      try{
+
         const result = await audioRecorderPlayer.stopRecorder();
         audioRecorderPlayer.removeRecordBackListener();
         console.log(currentTrack.url, "Current Track URL")
         TrackPlayer.pause();
-        const recordedFileURL = `${RNFS.DownloadDirectoryPath}/${uuid.v4()}.mp4`
+        console.log("RecordTempFile", result)
+        //const recordedFileURL = `${RNFS.DownloadDirectoryPath}/${uuid.v4()}.mp4`
+        const recordedFileURL = Platform.select({
+            ios: `${RNFS.LibraryDirectoryPath}/${uuid.v4()}.m4a`,
+            android: `${RNFS.DownloadDirectoryPath}/${uuid.v4()}.mp4`,
+        });
         FFmpegKit.execute(
             `-i ${currentTrack.url} -i ${result} -filter_complex "[0]asplit[a][b]; [a]atrim=duration=${recordStartTime},volume='1-max(0.25*(t-${recordStartTime}),0)':eval=frame[pre]; [b]atrim=start=${recordStartTime},asetpts=PTS-STARTPTS[song]; [song][1]amix=inputs=2:duration=first:dropout_transition=2[post];  [pre][post]concat=n=2:v=0:a=1[mixed]"  -map "[mixed]" ${recordedFileURL}`
         )
@@ -245,16 +256,22 @@ const PlayScreen = (props) => {
                 setIsRecording(false)
                 props.navigation.goBack()
             });
+      }
+      catch(error){
+        setIsProcessing(false)
+      }
+
     }
 
     startRecord = async () => {
+      console.log("Start Record")
         try {
             setIsCounting(false)
             setIsRecording(true)
             console.log('checkIsRecord', isRecording, 1)
             const path = Platform.select({
-                ios: 'hello.m4a',
-                android: `${RNFS.DownloadDirectoryPath}/${uuid.v4()}.mp4`,
+                ios: `record_temp.m4a`,
+                android: `${RNFS.DownloadDirectoryPath}/record_temp.mp4`,
             });
             const audioSet = {
                 AudioEncoderAndroid: AudioEncoderAndroidType.AAC,
@@ -265,11 +282,11 @@ const PlayScreen = (props) => {
             };
             console.log(path, "Record Path")
             console.log('checkIsRecord', isRecording, 2)
-            //const result = await 
+            //const result = await
             audioRecorderPlayer.startRecorder(path, audioSet).then(result =>{
                 console.log('checkIsRecord', isRecording, 3)
                 setRecordStartTime(parseInt(progress.position, 10));
-    
+
                 console.log('checkIsRecord', isRecording, 4)
             }).catch(error =>{
                 setIsRecording(false)
@@ -277,7 +294,7 @@ const PlayScreen = (props) => {
                 console.log(error)
                 Toast.show("Error when start record",{ duration: Toast.durations.LONG})
             })
-            
+
 
         } catch (e) {
             console.log(e, "Record Error")
@@ -313,6 +330,41 @@ const PlayScreen = (props) => {
                 console.warn(err);
                 return;
             }
+        }
+        else{
+          check(PERMISSIONS.IOS.MICROPHONE )
+            .then((result) => {
+              switch (result) {
+                case RESULTS.GRANTED:
+                  setIsCounting(true)
+                  break;
+
+                default:
+                  request(PERMISSIONS.IOS.MICROPHONE).then((result1) => {
+                    switch (result1) {
+                      case RESULTS.UNAVAILABLE:
+                        console.log('This feature is not available (on this device / in this context)');
+                        break;
+                      case RESULTS.DENIED:
+                        console.log('The permission has not been requested / is denied but requestable');
+                        break;
+                      case RESULTS.LIMITED:
+                        console.log('The permission is limited: some actions are possible');
+                        break;
+
+                      case RESULTS.BLOCKED:
+                        console.log('The permission is denied and not requestable anymore');
+                        break;
+
+                    }
+
+                  });
+              }
+            })
+            .catch((error) => {
+              // …
+            });
+
         }
 
     }

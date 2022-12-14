@@ -43,9 +43,9 @@ export const playBeat = async (musicItem, userID) => {
                 artwork: musicItem.track_thumbnail, // Load artwork from the network
             };
             TrackPlayer.add([track]).then(result => {
-            TrackPlayer.skipToNext()
-            TrackPlayer.play()
-            resolve({status: 'success'})
+              TrackPlayer.skipToNext()
+              TrackPlayer.play()
+              resolve({status: 'success'})
             }).catch(error => {
                 reject(error)
             })
@@ -83,11 +83,11 @@ export const favoriteBeat = (beatID, userID) => {
                             message: "You unfollowed this beat successfully."
                         })
                     }
-                    
+
                 }).catch(error =>{
                     reject(error)
                 })
-                
+
             }
             else {
                 beatFavoriteCollection.add(
@@ -107,7 +107,7 @@ export const favoriteBeat = (beatID, userID) => {
                     }).catch(error =>{
                         reject(error)
                     })
-                    
+
                 });
             }
         }).catch(error => {
