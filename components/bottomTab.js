@@ -83,7 +83,7 @@ const BottomTab = (props) => {
             alignItems: "center",
           },
           tabBarLabelStyle: {
-            fontFamily: "Medium",
+            fontFamily: "Mulish-Medium",
             fontSize: 14,
             paddingBottom: Default.fixPadding * 0.5,
           },

@@ -16,6 +16,9 @@ import { AppWrapper,useAppContext } from "./context";
 const Stack = createStackNavigator();
 import TrackPlayer, { State } from 'react-native-track-player';
 import { QueueInitialTracksService, SetupService } from './services';
+
+import Icon from 'react-native-vector-icons/Ionicons'
+Icon.loadFont();
 const MainNavigation = (props) => {
   const [initializing, setInitializing] = useState(true);
   const { user, setUser } = useAppContext();
@@ -24,10 +27,10 @@ const MainNavigation = (props) => {
     setUser(_user);
     if (initializing) setInitializing(false);
   }
-  
+
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    
+
     return subscriber; // unsubscribe on unmount
   }, []);
   return (
@@ -57,7 +60,7 @@ const ReloadAppOnLanguageChange = withTranslation("translation", {
 
 export default  function App() {
   // const [loaded] = useFonts({
-    
+
   //   Regular: require("./assets/font/Mulish-Regular.ttf"),
   //   Medium: require("./assets/font/Mulish-Medium.ttf"),
   //   SemiBold: require("./assets/font/Mulish-SemiBold.ttf"),
@@ -68,7 +71,7 @@ export default  function App() {
   // if (!loaded) {
   //   return null;
   // }
-  
+
 
   return <AppWrapper><ReloadAppOnLanguageChange /></AppWrapper>;
 }
