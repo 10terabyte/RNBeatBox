@@ -40,7 +40,6 @@ const MainNavigation = (props) => {
     </NavigationContainer>
   );
 };
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 // import firestore from '@react-native-firebase/firestore';
 // const FIRESTORE = firestore()
 // const artistCollection = FIRESTORE.collection('artists')
@@ -71,7 +70,5 @@ export default  function App() {
   // }
   
 
-  return <GestureHandlerRootView style={{ flex: 1 }}>
-  <AppWrapper><ReloadAppOnLanguageChange /></AppWrapper>
-</GestureHandlerRootView>;
+  return <AppWrapper><ReloadAppOnLanguageChange /></AppWrapper>;
 }
