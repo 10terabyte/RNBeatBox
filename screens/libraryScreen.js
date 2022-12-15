@@ -307,7 +307,7 @@ const LibraryScreen = (props) => {
         >
           <Text style={{ ...Fonts.Bold18White }}>{tr("myRecords")}</Text>
           <TouchableOpacity
-            onPress={() => props.navigation.navigate("topArtistsScreen")}
+            onPress={() => props.navigation.navigate("myRecordScreen")}
           >
             <Text style={{ ...Fonts.Bold14Primary }}>{tr("seeAll")}</Text>
           </TouchableOpacity>

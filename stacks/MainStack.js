@@ -43,6 +43,7 @@ import CreditCardScreen from "../screens/creditCardScreen";
 import SuccessScreen from "../screens/successScreen";
 import SimilarArtistScreen from "../screens/similarArtistScreen";
 import PlaySongScreen from "../screens/playSongScreen";
+import MyRecordScreen from "../screens/myRecordScreen";
 
 import TrackPlayer, { State } from 'react-native-track-player';
 
@@ -87,6 +88,11 @@ export default function MainStack() {
           component={PlayListScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="myRecordScreen"
+          component = {MyRecordScreen}
+          options = {{headerShown:false}}
+          />
         <Stack.Screen
           name="freshMusicScreen"
           component={FreshMusicScreen}

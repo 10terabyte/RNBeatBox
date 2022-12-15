@@ -1874,8 +1874,7 @@
   "version" "1.1.0"
 
 "@react-native-async-storage/async-storage@react-native-async-storage/async-storage":
-  "integrity" "sha512-GpqK/uNdhBl91lVN2fkPmuoMNyFNlsjCfhVszRbqgh1lP5oWPD4X14x3AOVCitx7f4qsdWLRFCOiwAyU0sqBcA=="
-  "resolved" "https://codeload.github.com/react-native-async-storage/async-storage/tar.gz/e2cb42899c4d4ddeb0f880407764d5499d2f11bf"
+  "resolved" "git+ssh://git@github.com/react-native-async-storage/async-storage.git#c1469cbac8d02aac56a52fe02866f3f198cf5c4a"
   "version" "1.17.11"
   dependencies:
     "merge-options" "^3.0.4"
@@ -7125,22 +7124,15 @@
   "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-6.0.1.tgz"
   "version" "6.0.1"
 
-<<<<<<< HEAD
+"react-native-permissions@^3.6.1":
+  "integrity" "sha512-fzPpPQXeD34inUccqtoResSwYubfrwUguP4qrVUUv8+KSMjYSaHGoS5HaIJLZHlN9gO+TvLJZ2L5ZljTsb6qnQ=="
+  "resolved" "https://registry.npmjs.org/react-native-permissions/-/react-native-permissions-3.6.1.tgz"
+  "version" "3.6.1"
+
 "react-native-progress@^5.0.0":
   "integrity" "sha512-KjnGIt3r9i5Kn2biOD9fXLJocf0bwxPRxOyAgXEnZTJQU2O+HyzgGFRCbM5h3izm9kKIkSc1txh8aGmMafCD9A=="
   "resolved" "https://registry.npmjs.org/react-native-progress/-/react-native-progress-5.0.0.tgz"
   "version" "5.0.0"
-=======
-react-native-permissions@^3.6.1:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-3.6.1.tgz#73adcc1cef8cd57a9ef167b4507405f4ff5749c4"
-  integrity sha512-fzPpPQXeD34inUccqtoResSwYubfrwUguP4qrVUUv8+KSMjYSaHGoS5HaIJLZHlN9gO+TvLJZ2L5ZljTsb6qnQ==
-
-react-native-progress@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-5.0.0.tgz#f5ac6ceaeee27f184c660b00f29419e82a9d0ab0"
-  integrity sha512-KjnGIt3r9i5Kn2biOD9fXLJocf0bwxPRxOyAgXEnZTJQU2O+HyzgGFRCbM5h3izm9kKIkSc1txh8aGmMafCD9A==
->>>>>>> 89cdf37aabc85e38fab655f1ad8a19d6d52c6ec5
   dependencies:
     "prop-types" "^15.7.2"
 
@@ -7254,7 +7246,7 @@ react-native-progress@^5.0.0:
     "postcss-value-parser" "^4.2.0"
     "styleq" "^0.1.2"
 
-"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.71 || 1000.0.0", "react-native@>=0.20.0", "react-native@>=0.23.1", "react-native@>=0.47.0", "react-native@>=0.47.1", "react-native@>=0.50.0", "react-native@>=0.60.0-rc.2", "react-native@>=0.65.0", "react-native@0.70.6":
+"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.71 || 1000.0.0", "react-native@>=0.20.0", "react-native@>=0.23.1", "react-native@>=0.47.0", "react-native@>=0.47.1", "react-native@>=0.50.0", "react-native@>=0.60.0-rc.2", "react-native@>=0.63.3", "react-native@>=0.65.0", "react-native@0.70.6":
   "integrity" "sha512-xtQdImPHnwgraEx3HIZFOF+D1hJ9bC5mfpIdUGoMHRws6OmvHAjmFpO6qfdnaQ29vwbmZRq7yf14sbury74R/w=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.70.6.tgz"
   "version" "0.70.6"
@@ -7322,7 +7314,7 @@ react-native-progress@^5.0.0:
     "react-shallow-renderer" "^16.15.0"
     "scheduler" "^0.22.0"
 
-"react@*", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18.0.0", "react@^18.1.0", "react@>= 16.8.0", "react@>=0.14.8", "react@>=16.8.0", "react@>=16.8.6", "react@>=17.0.0", "react@18.1.0":
+"react@*", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18.0.0", "react@^18.1.0", "react@>= 16.8.0", "react@>=0.14.8", "react@>=16.13.1", "react@>=16.8.0", "react@>=16.8.6", "react@>=17.0.0", "react@18.1.0":
   "integrity" "sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.1.0.tgz"
   "version" "18.1.0"
