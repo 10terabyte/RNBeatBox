@@ -34,7 +34,6 @@ const HomeScreen = (props) => {
     // followsCollection.orderBy()
     const { t, i18n } = useTranslation();
     const { user } = useAppContext();
-    console.log(user, "homeUser")
     const [userData, setUserData] = useState({});
     const isRtl = i18n.dir() === "rtl";
     const [followChangeEvent, setFollowChangeEvent] = useState(0)

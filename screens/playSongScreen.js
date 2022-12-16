@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     BackHandler,
     ImageBackground,
+    ActivityIndicator,
     Share,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -18,8 +19,12 @@ import MainBottomSheet from "../components/mainBottomSheet";
 import AddToPlayList from "../components/addToPlayList";
 import NewPlayList from "../components/newPlayList";
 import LinearGradient from 'react-native-linear-gradient';
-
+import { useOnTogglePlayback, useCurrentTrack } from '../hooks';
+import { useAppContext } from "../context";
+import TrackPlayer, { State, usePlaybackState, useProgress, Event, useTrackPlayerEvents } from 'react-native-track-player';
 const PlaySongScreen = (props) => {
+    const { track, music } = useAppContext();
+    const currentTrack = useCurrentTrack()
     const { t, i18n } = useTranslation();
 
     const isRtl = i18n.dir() === "rtl";
@@ -27,7 +32,7 @@ const PlaySongScreen = (props) => {
     function tr(key) {
         return t(`playScreen:${key}`);
     }
-
+    const onTogglePlayback = useOnTogglePlayback();
     const backAction = () => {
         props.navigation.goBack();
         return true;
@@ -43,7 +48,9 @@ const PlaySongScreen = (props) => {
     const [value, setValue] = useState(0);
 
     const [visible, setVisible] = useState(false);
-
+    const progress = useProgress();
+    const state = usePlaybackState();
+    const isPlaying = state === State.Playing;
     const toggleClose = () => {
         setVisible(!visible);
     };
@@ -82,15 +89,16 @@ const PlaySongScreen = (props) => {
     const PauseAudio = async () => {
 
     };
-
+    console.log("IsPlaying", state);
     return (
+
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.boldBlack }}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ flexGrow: 1 }}
             >
                 <ImageBackground
-                    source={require("../assets/image/music.png")}
+                    source={currentTrack && currentTrack.artwork ? { uri: currentTrack.artwork } : require("../assets/image/music.png")}
                     style={{ flex: 1 }}
                 >
                     <View style={{ justifyContent: "space-between", flex: 1 }}>
@@ -129,7 +137,7 @@ const PlaySongScreen = (props) => {
                                         marginVertical: Default.fixPadding,
                                     }}
                                 >
-                                   
+
                                     <TouchableOpacity
                                         onPress={() => setVisible(true)}
                                         style={{
@@ -194,7 +202,7 @@ const PlaySongScreen = (props) => {
                         </LinearGradient>
                         <LinearGradient colors={[Colors.darkBlueOpacity, Colors.darkBlue]} >
                             <View>
-                               
+
                                 <View
                                     style={{
                                         flexDirection: isRtl ? "row-reverse" : "row",
@@ -207,7 +215,7 @@ const PlaySongScreen = (props) => {
                                             alignItems: isRtl ? "flex-end" : "flex-start",
                                         }}
                                     >
-                                        <Text style={{ ...Fonts.Bold24White }}>Let Somebody Go</Text>
+                                        <Text style={{ ...Fonts.Bold24White }}>{currentTrack.title}</Text>
                                         <View
                                             style={{
                                                 flexDirection: isRtl ? "row-reverse" : "row",
@@ -221,9 +229,9 @@ const PlaySongScreen = (props) => {
                                                     ...Fonts.Bold14Grey,
                                                 }}
                                             >
-                                                Selena Gomez
+                                                {currentTrack.artist}
                                             </Text>
-                                            
+
                                         </View>
                                     </View>
                                     <View
@@ -244,12 +252,21 @@ const PlaySongScreen = (props) => {
                                         marginTop: 25,
                                         flexDirection: 'row',
                                     }}
-                                    value={12}
+                                    value={progress.position}
                                     minimumValue={0}
-                                    maximumValue={100}
+                                    maximumValue={progress.duration}
                                     thumbTintColor="#FFD479"
                                     minimumTrackTintColor="#FFD479"
                                     maximumTrackTintColor="#FFFFFF"
+                                    // onValueChange = {(value) =>{
+                                    //     console.log(value)
+                                    // }}
+                                    onSlidingComplete={value => {
+                                        console.log("Seek To", value)
+                                        if (isPlaying) {
+                                            TrackPlayer.seekTo(value)
+                                        }
+                                    }}
                                 // onSlidingComplete={TrackPlayer.seekTo}
                                 />
                                 <View
@@ -259,14 +276,16 @@ const PlaySongScreen = (props) => {
                                         marginHorizontal: Default.fixPadding * 3,
                                     }}
                                 >
-                                    <Text style={{ ...Fonts.SemiBold12Grey }}>15 : 20</Text>
+                                    <Text style={{ ...Fonts.SemiBold12Grey }}>{new Date(progress.position * 1000).toISOString().slice(14, 19)}</Text>
                                     <Text
                                         style={{
                                             ...Fonts.SemiBold12Grey,
                                             marginRight: Default.fixPadding,
                                         }}
                                     >
-                                        22 : 45
+                                        {new Date((progress.duration - progress.position) * 1000)
+                                            .toISOString()
+                                            .slice(14, 19)}
                                     </Text>
                                 </View>
 
@@ -279,14 +298,25 @@ const PlaySongScreen = (props) => {
                                     }}
                                 >
                                     <Feather name="shuffle" size={20} color={Colors.darkGrey} />
-                                    <Ionicons
-                                        name="play-skip-back"
-                                        size={30}
-                                        color={Colors.white}
-                                        style={{ marginHorizontal: Default.fixPadding * 2 }}
-                                    />
                                     <TouchableOpacity
-                                        onPress={Status === false ? PlayAudio : PauseAudio}
+                                        onPress={() => {
+                                            TrackPlayer.skipToPrevious().then(value => {
+                                                TrackPlayer.play()
+                                            })
+
+                                        }}
+
+                                    >
+                                        <Ionicons
+                                            name="play-skip-back"
+                                            size={30}
+                                            color={Colors.white}
+                                            style={{ marginHorizontal: Default.fixPadding * 2 }}
+                                        />
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity
+                                        onPress={onTogglePlayback}
                                         style={{
                                             height: 66,
                                             width: 66,
@@ -296,19 +326,49 @@ const PlaySongScreen = (props) => {
                                             justifyContent: "center",
                                         }}
                                     >
+                                        {
+                                            state == State.Buffering ?
+
+                                                <View style={{ height: 70, width: 70 }}>
+                                                    <ActivityIndicator size={70} />
+                                                </View>
+                                                :
+                                                <Ionicons
+                                                    name={isPlaying === false ? "play" : "pause"}
+                                                    size={25}
+                                                    color={Colors.white}
+                                                />
+
+                                        }
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => {
+
+                                            TrackPlayer.skipToNext().then(value => {
+                                                TrackPlayer.play()
+                                            })
+
+                                        }}
+
+                                    >
                                         <Ionicons
-                                            name={Status === false ? "play" : "pause"}
-                                            size={25}
+                                            name="play-skip-forward"
+                                            size={30}
                                             color={Colors.white}
+                                            style={{ marginHorizontal: Default.fixPadding * 2 }}
                                         />
                                     </TouchableOpacity>
-                                    <Ionicons
-                                        name="play-skip-forward"
-                                        size={30}
-                                        color={Colors.white}
-                                        style={{ marginHorizontal: Default.fixPadding * 2 }}
-                                    />
-                                    <Feather name="repeat" size={20} color={Colors.darkGrey} />
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            TrackPlayer.skipToNext().then(value => {
+                                                TrackPlayer.play()
+                                            })
+
+                                        }}
+
+                                    >
+                                        <Feather name="repeat" size={20} color={Colors.darkGrey} />
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </LinearGradient>

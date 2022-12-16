@@ -56,7 +56,7 @@ const LibraryScreen = (props) => {
     const unsubscribe = recordsCollection.onSnapshot(snapshot => {
        recordsCollection.where('userid', '==', user.uid).get().then(  async ( qSnapshot )=> {
           
-        let beatList = qSnapshot.docs.map(doc => doc.data())
+        let beatList = qSnapshot.docs.map(doc => { return {...doc.data(), key: doc.id}})
         console.log(qSnapshot.size, "RecordCollectionSize")
         console.log(beatList)
         let recordList = []

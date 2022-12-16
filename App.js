@@ -1,5 +1,5 @@
 import i18n from "./languages/index"; //don't remove this line
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "react-native-gesture-handler";
 // import { useFonts, loadAsync } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
@@ -12,10 +12,11 @@ import firebaseApp from './config/firebase'
 import auth from '@react-native-firebase/auth';
 import AuthStack from "./stacks/AuthStack";
 import MainStack from "./stacks/MainStack";
-import { AppWrapper,useAppContext } from "./context";
+import { AppWrapper, useAppContext } from "./context";
 const Stack = createStackNavigator();
 import TrackPlayer, { State } from 'react-native-track-player';
 import { QueueInitialTracksService, SetupService } from './services';
+import { StripeProvider } from '@stripe/stripe-react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons'
 Icon.loadFont();
@@ -37,9 +38,9 @@ const MainNavigation = (props) => {
     <NavigationContainer>
       {user ? <MainStack screenOptions={{
         ...TransitionPresets.SlideFromRightIOS,
-      }}/> : <AuthStack screenOptions={{
+      }} /> : <AuthStack screenOptions={{
         ...TransitionPresets.SlideFromRightIOS,
-      }}/>}
+      }} />}
     </NavigationContainer>
   );
 };
@@ -58,7 +59,7 @@ const ReloadAppOnLanguageChange = withTranslation("translation", {
 })(MainNavigation);
 
 
-export default  function App() {
+export default function App() {
   // const [loaded] = useFonts({
 
   //   Regular: require("./assets/font/Mulish-Regular.ttf"),
@@ -73,5 +74,11 @@ export default  function App() {
   // }
 
 
-  return <AppWrapper><ReloadAppOnLanguageChange /></AppWrapper>;
+  return <StripeProvider
+    publishableKey="pk_test_lu92xAGpRFayRW3ZgFYKvwB7"
+    urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+    merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}" // required for Apple Pay
+  >
+    <AppWrapper><ReloadAppOnLanguageChange /></AppWrapper>
+  </StripeProvider>;
 }

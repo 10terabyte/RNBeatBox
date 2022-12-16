@@ -142,7 +142,7 @@ const PlayScreen = (props) => {
     );
 
     const { track  } = useAppContext();
-    const currentTrack = track
+    const currentTrack = useCurrentTrack()
     const [isVisible, setIsVisible] = useState(false);
     const [value, setValue] = useState(0);
     const [recordStartTime, setRecordStartTime] = useState(0);
@@ -378,7 +378,6 @@ const PlayScreen = (props) => {
     }
     useEffect(() => {
         const unsubscribe = favoritesCollection.onSnapshot(snapshot => {
-            console.log('Music Details', props.route.params)
             favoritesCollection.where("target", "==", props.route.params.item.key).where('userid', '==', user.uid).get().then(querySnapshot => {
                 if (querySnapshot.size) {
                     setIsFavorited(true)
@@ -616,6 +615,7 @@ const PlayScreen = (props) => {
                                         color={Colors.white}
                                         style={{ marginHorizontal: Default.fixPadding * 2 }}
                                     /> */}
+
                                     {
                                         isLoading ? <View style={{ height: 70, width: 70 }}>
                                             {isLoading && <ActivityIndicator size={70} />}

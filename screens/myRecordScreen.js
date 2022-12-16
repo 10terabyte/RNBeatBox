@@ -14,6 +14,7 @@ import {
     ToastAndroid
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import { useOnTogglePlayback, useCurrentTrack } from '../hooks';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Colors, Default, Fonts } from "../constants/style";
 import BottomMusic from "../components/bottomMusic";
@@ -23,38 +24,70 @@ import Loader from "../components/loader";
 import firestore from '@react-native-firebase/firestore';
 import { playBeat } from '../controllers/beat'
 import sotrage from "@react-native-firebase/storage"
-
+import TrackPlayer, { State, usePlaybackState, useProgress } from 'react-native-track-player';
 const { width } = Dimensions.get("window");
 const FIRESTORE = firestore()
 const MyRecordScreen = (props) => {
-    const { user } = useAppContext();
+    const { user, track } = useAppContext();
+    const currentTrack = useCurrentTrack()
     const [recodList, setRecordList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const recordCollection = FIRESTORE.collection("records")
     const beatCollection = FIRESTORE.collection("beats")
     const artistCollection = FIRESTORE.collection("artists")
-    console.log(user, "user")
+    const state = usePlaybackState();
+    const isPlaying = state === State.Playing;
     async function loadSoundAndPlay(musicItem) {
-        setIsLoading(true)
-        playBeat(musicItem, user.uid).then(result => {
-            setIsLoading(false)
-            props.navigation.navigate("playScreen", { item: musicItem });
-
-        }).catch(error => {
-            // setIsLoading(false)
+        //recodList;
+        let trackList = recodList.map(item => {
+            return {
+                url: item.url, // Load media from the network
+                title: item.track_name,
+                artist: item.artist,
+                artwork: item.track_thumbnail, // Load artwork from the network
+                isRecorded: true,
+                key: item.key
+            };
         })
+
+        setIsLoading(true)
+        TrackPlayer.reset();
+        await TrackPlayer.add(trackList);
+        if(trackList.length){
+            await TrackPlayer.skip(0)
+            TrackPlayer.play()
+            const tracks = await TrackPlayer.getQueue();
+            console.log(`Track Length: ${tracks.length}`);
+        }
+       
+        setIsLoading(false)
+        
     }
     const backAction = () => {
         props.navigation.goBack();
         return true;
     };
+
+    const onPressedTogglePlay = async (item, index) => {
+        if (currentTrack && currentTrack.url == item.url) {
+            onTogglePlayback()
+        }
+        else {
+            console.log(index)
+            setIsLoading(true)
+            await TrackPlayer.skip(index)
+            TrackPlayer.play()
+            setIsLoading(false)
+
+        }
+    }
     useEffect(() => {
         BackHandler.addEventListener("hardwareBackPress", backAction);
 
         return () =>
             BackHandler.removeEventListener("hardwareBackPress", backAction);
     }, []);
-
+    const onTogglePlayback = useOnTogglePlayback();
     useEffect(() => {
         let _recordData = [];
         let promises = [];
@@ -62,10 +95,10 @@ const MyRecordScreen = (props) => {
         if (user && user.uid)
             recordCollection
                 .where('userid', "==", user.uid)
-                .onSnapshot(async(querySnap) => {
+                .onSnapshot(async (querySnap) => {
                     querySnap.forEach(async (doc) => {
                         // console.log(doc.id,"id++++")
-                        _recordData.push({...doc.data(), key: doc.id});
+                        _recordData.push({ ...doc.data(), key: doc.id });
                         const index = _recordData.length - 1;
                         // console.log(_recordData[index],"recordData")
                         promises.push(new Promise(async (resolve, reject) => {
@@ -73,6 +106,7 @@ const MyRecordScreen = (props) => {
                             try {
                                 const recordedFileName = `/recorded/${user.uid}/${doc.data().beatid}/${doc.data().filename}`;
                                 _recordData[index].url = await sotrage().ref().child(recordedFileName).getDownloadURL();
+                                _recordData[index].key = doc.id
                                 const beatData = await beatCollection.doc(doc.data().beatid).get();
                                 // console.log(beatData.data(),"beatdata")
                                 _recordData[index].track_name = beatData.data().track_name;
@@ -88,15 +122,16 @@ const MyRecordScreen = (props) => {
                         }))
 
                     });
-                    try{
+                    try {
 
                         await Promise.all(promises);
-                    }catch(e){
+                    } catch (e) {
                         console.log("error", e)
                     }
                     // console.log(_recordData,"recordList");
                     setRecordList(_recordData);
                     setIsLoading(false)
+                    loadSoundAndPlay()
                 })
     }, [user])
     return (
@@ -171,7 +206,7 @@ const MyRecordScreen = (props) => {
                                             ...(isFirst
                                                 ? Fonts.SemiBold16Primary
                                                 : Fonts.SemiBold16White),
-                                                width:200
+                                            width: 200
                                         }}
                                     >
                                         {item.track_name}
@@ -186,7 +221,7 @@ const MyRecordScreen = (props) => {
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                // onPress={() => { setVisible(true); setSelectedBeat(item); }}
+                                onPress={() => onPressedTogglePlay(item, index)}
                                 style={{
                                     flex: 1,
                                     justifyContent: "center",
@@ -194,7 +229,7 @@ const MyRecordScreen = (props) => {
                                 }}
                             >
                                 <Ionicons
-                                    name="play-circle"
+                                    name={currentTrack && currentTrack.url == item.url ? (isPlaying ? "pause-circle" : "play-circle") : "play-circle"}
                                     color={Colors.white}
                                     size={24}
                                     style={{

@@ -7,7 +7,7 @@ const AppContext = createContext();
 export function AppWrapper({ children }) {
     const [user, setUser] = useState({});
     const [music, setMusic] = useState({});
-    const track = useCurrentTrack();
+    
     const [isPlayerReady, setIsPlayerReady] = useState(false);
     function onAuthStateChanged(user){
       setUser(user);
@@ -39,7 +39,7 @@ export function AppWrapper({ children }) {
     const context = {
 		user, setUser,
         music, setMusic,
-        track
+        
 	}
 	return (
 		<AppContext.Provider value={context}>

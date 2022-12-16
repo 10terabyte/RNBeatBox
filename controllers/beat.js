@@ -34,21 +34,24 @@ export const playBeat = async (musicItem, userID) => {
     console.log("Play Beat Function", userID, musicItem.key)
     return new Promise(function (resolve, reject) {
         savePlayLog(musicItem.key, userID).then(result => {
-            var track = {
-                url: musicItem.track_file, // Load media from the network
-                title: musicItem.track_name,
-                artist: musicItem.singer,
-                album: musicItem.genre,
-                genre: musicItem.genre,
-                artwork: musicItem.track_thumbnail, // Load artwork from the network
-            };
-            TrackPlayer.add([track]).then(result => {
-              TrackPlayer.skipToNext()
-              TrackPlayer.play()
-              resolve({status: 'success'})
-            }).catch(error => {
-                reject(error)
+            TrackPlayer.reset().then(() =>{
+                var track = {
+                    url: musicItem.track_file, // Load media from the network
+                    title: musicItem.track_name,
+                    artist: musicItem.singer,
+                    album: musicItem.genre,
+                    genre: musicItem.genre,
+                    artwork: musicItem.track_thumbnail, // Load artwork from the network
+                };
+                TrackPlayer.add([track]).then(result => {
+                //   TrackPlayer.skipToNext()
+                  TrackPlayer.play()
+                  resolve({status: 'success'})
+                }).catch(error => {
+                    reject(error)
+                })
             })
+            
             // console.log(music, "MUSIC")
 
         }).catch(error => {

@@ -6,20 +6,27 @@ import TrackPlayer, {
 import type { Track } from 'react-native-track-player';
 
 export const useCurrentTrack = (): Track | undefined => {
-  const [index, setIndex] = useState<number | undefined>();
+  const [trackIndex, setTrackIndex] = useState<number | undefined>();
   const [track, setTrack] = useState<Track | undefined>();
 
   useTrackPlayerEvents([Event.PlaybackTrackChanged], async ({ nextTrack }) => {
-    setIndex(nextTrack);
+    console.log("SetTrackIndex", nextTrack)
+    setTrackIndex(nextTrack);
   });
-
   useEffect(() => {
-    if (index === undefined) return;
+    console.log("Current Track", trackIndex)
+    if (trackIndex === undefined) return;
     (async () => {
-      const track = await TrackPlayer.getTrack(index);
-      setTrack(track || undefined);
+      
+      TrackPlayer.getTrack(trackIndex).then(track =>{
+        console.log("Current Track")
+        setTrack(track || undefined);
+      }).catch(error =>{
+        console.log(error, "Track Set")
+      });
+      
     })();
-  }, [index]);
+  }, [trackIndex]);
 
   return track;
 };

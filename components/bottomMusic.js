@@ -9,7 +9,9 @@ import { useOnTogglePlayback, useCurrentTrack } from '../hooks';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
 import TrackPlayer, { State, usePlaybackState, useProgress } from 'react-native-track-player';
 const BottomMusic = (props) => {
-    const { music } = useAppContext();
+    const { music , track} = useAppContext();
+    const currentTrack = useCurrentTrack()
+
     const [isVisible, setVisible] = useState(false);
     const navigation = useNavigation();
     // const sound = React.useRef(new Audio.Sound());
@@ -22,13 +24,14 @@ const BottomMusic = (props) => {
         state === State.Connecting || state === State.Buffering,
         250
     );
-    const currentTrack = useCurrentTrack();
-    
     return (
 
         currentTrack?.url ? <TouchableOpacity
             onPress={() => {
-                currentTrack ? navigation.navigate("playScreen") : ""
+                if(currentTrack && currentTrack.isRecorded){
+                    currentTrack ? navigation.navigate("playSongScreen") : ""    
+                }
+                
             }}
             style={{
                 paddingVertical: Default.fixPadding,

@@ -19,7 +19,6 @@ const AddToPlayList = (props) => {
     return t(`addToPlayList:${key}`);
   }
   useEffect(() => {
-    console.log(user, "User Data")
     if (user.uid) {
       const playListCollection = query(ref(DB, "playlists"), orderByChild("user"), equalTo(user.uid));
       onValue(playListCollection, snapshot => {
