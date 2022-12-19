@@ -141,7 +141,6 @@ const PlayScreen = (props) => {
         [props.navigate]
     );
 
-    const { track  } = useAppContext();
     const currentTrack = useCurrentTrack()
     const [isVisible, setIsVisible] = useState(false);
     const [value, setValue] = useState(0);

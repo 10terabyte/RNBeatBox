@@ -7,6 +7,7 @@ import {
   BackHandler,
   StatusBar,
   Platform,
+  ActivityIndicator,
   Image
 } from "react-native";
 import React, { useState, useEffect } from "react";
@@ -15,13 +16,20 @@ import { Colors, Fonts, Default } from "../constants/style";
 import { useTranslation } from "react-i18next";
 import DashedLine from "react-native-dashed-line";
 import Loader from "../components/loader";
-import { getDatabase, onValue, orderByChild, query, ref,limitToFirst } from "firebase/database";
+import { getDatabase, onValue, orderByChild, query, ref, limitToFirst } from "firebase/database";
+import functions, { FirebaseFunctionsTypes } from '@react-native-firebase/functions';
+import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
+import { useAppContext } from "../context";
+import firestore from '@react-native-firebase/firestore';
+import database from '@react-native-firebase/database';
+const FIRESTORE = firestore()
 const DB = getDatabase();
 const PremiumScreen = (props) => {
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const { t, i18n } = useTranslation();
-
+  const customerCollection = FIRESTORE.collection('customers')
   const isRtl = i18n.dir() === "rtl";
-
+  const [subscriptionData, setSubscriptionData] = useState({})
   function tr(key) {
     return t(`premiumScreen:${key}`);
   }
@@ -37,34 +45,84 @@ const PremiumScreen = (props) => {
     return () =>
       BackHandler.removeEventListener("hardwareBackPress", backAction);
   }, []);
-  useEffect(()=>{
+  useEffect(() => {
     const collection = ref(DB, "/subscriptions");
     const orderCollection = query(collection, orderByChild("charge_amount"));
-    console.log(orderCollection,"orderCollection")
-    onValue(orderCollection, snapshot=>{
+    console.log(orderCollection, "orderCollection")
+    onValue(orderCollection, snapshot => {
       const data = snapshot.val();
       let premiumData = [];
-      if(data == null){
+      if (data == null) {
         setOptionCategory([]);
       }
-      Object.keys(data).map(key=>{
+      Object.keys(data).map(key => {
         premiumData.push({
           ...data[key],
           key
         })
       });
-  
+
       setOptionCategory(premiumData);
     })
-  },[])
+  }, [])
 
+  useEffect(() => {
+    const unsubscribe = customerCollection.doc(user.uid).onSnapshot(snpShot => {
+      console.log("Subscription changed", snpShot.data())
+      let subscription = {
+        subscriptionStarted: snpShot.data().subscriptionStarted,
+        subscriptionEnded: snpShot.data().subscriptionEnded,
+        subscriptionProductID: snpShot.data().subscriptionProductID,
+        subscriptionProductName: snpShot.data().subscriptionProductName
+      }
+      setSubscriptionData(subscription)
+    })
+    return () => {
+      unsubscribe()
+    }
+  }, [FIRESTORE])
   const [visible, setVisible] = useState(false);
+  const [workingWithStripe, setWorkingWithStripe] = useState(false)
+  const { user } = useAppContext();
+  const [selectedCategory, setSelectedCategory] = useState({});
 
+  const continuePremium = () => {
 
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const category = (key) => {
-    setSelectedCategory(key);
-  };
+    if (selectedCategory?.stripe_product_details) {
+      initializeStripePayment(selectedCategory)
+    }
+    else {
+      console.log("Please select a plan to continue.")
+    }
+  }
+  const initializeStripePayment = async (item) => {
+    setWorkingWithStripe(true)
+    console.log({ ...item })
+    functions().httpsCallable('initStripePayment')(
+      { stripe_price_id: item.stripe_product_details.price_id, userid: user.uid }
+    ).then(async (response) => {
+      console.log(response)
+      const { setupIntent, ephemeralKey, customer } = response.data;
+      setWorkingWithStripe(false)
+      const { error } = await initPaymentSheet({
+        merchantDisplayName: "Subscription",
+        customerId: customer,
+        customerEphemeralKeySecret: ephemeralKey,
+        paymentIntentClientSecret: setupIntent,
+        // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+        //methods that complete payment after a delay, like SEPA Debit and Sofort.
+        allowsDelayedPaymentMethods: true,
+        defaultBillingDetails: {
+          name: 'Jane Doe',
+        }
+      });
+      const { error1 } = await presentPaymentSheet();
+    }).catch(error => {
+      setWorkingWithStripe(false)
+      console.log("Function Error", error)
+    })
+
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
@@ -104,6 +162,8 @@ const PremiumScreen = (props) => {
           </Text>
 
           {optionsCategory.map((item, index) => {
+            console.log("Server Time",  database().getServerTime(), subscriptionData?.subscriptionEnded?.toDate())
+            const isCurrentPlan = subscriptionData?.subscriptionProductID == item?.stripe_product_details?.product_id && database().getServerTime() < subscriptionData?.subscriptionEnded.toDate()
             return (
               <TouchableOpacity
                 key={item.key}
@@ -114,14 +174,15 @@ const PremiumScreen = (props) => {
                   borderRadius: 10,
                   paddingVertical: Default.fixPadding * 1.5,
                   paddingHorizontal: Default.fixPadding,
-                  backgroundColor: item.color,
+                  backgroundColor: isCurrentPlan ? Colors.grey : item.color,
                   marginVertical: Default.fixPadding,
                   borderColor:
-                    selectedCategory === item.key ? Colors.yellow : null,
-                  borderWidth: selectedCategory === item.key ? 2 : 0,
+                    selectedCategory === item ? Colors.yellow : null,
+                  borderWidth: selectedCategory === item ? 2 : 0,
                 }}
+                disabled={isCurrentPlan}
                 onPress={() => {
-                  category(item.key);
+                  setSelectedCategory(item)
                 }}
               >
                 <View
@@ -129,19 +190,27 @@ const PremiumScreen = (props) => {
                     flexDirection: isRtl ? "row-reverse" : "row",
                   }}
                 >
-                   <View
+                  <View
                     style={{
-                      
+
                       justifyContent: "center",
                       alignItems: "center",
                     }}
                   >
-                    <Image source={{uri: item.icon_path}} style={{width: 50, height: 50}}/>
+                    {
+                      selectedCategory == item ?
+                        <Ionicons
+                          name={"play-circle"}
+                          size={28}
+                          color={Colors.white}
+                        />
+                        : <View></View>
+                    }
                   </View>
                   <View style={{ flex: 8, marginLeft: 10 }}>
                     <Text
                       style={
-                        selectedCategory === item.text
+                        selectedCategory === item
                           ? Fonts.Bold16Yellow
                           : Fonts.Bold16White
                       }
@@ -151,6 +220,11 @@ const PremiumScreen = (props) => {
                     <Text style={{ ...Fonts.Bold14LightGrey }}>
                       Amount: {item.charge_amount}
                     </Text>
+                    {
+                      isCurrentPlan ? <Text style={{ ...Fonts.Bold14LightGrey }}>
+                        Your current plan will finish at {new Date( subscriptionData?.subscriptionEnded?.toDate() ).toDateString()}
+                      </Text> : <View></View>
+                    }
                   </View>
                   <View
                     style={{
@@ -179,88 +253,37 @@ const PremiumScreen = (props) => {
               marginTop: Default.fixPadding,
             }}
           >
-            <Ionicons
-              name="ellipse"
-              size={7}
-              color={Colors.lightGrey}
-              style={{
-                alignSelf: "center",
-              }}
-            />
             <Text
               style={{
                 ...Fonts.Medium16LightGrey,
                 marginHorizontal: Default.fixPadding * 0.5,
               }}
             >
-              {tr("hdMusic")}
+              {selectedCategory?.description}
             </Text>
+
           </View>
 
-          <View
-            style={{
-              flexDirection: isRtl ? "row-reverse" : "row",
-              marginTop: Default.fixPadding,
-            }}
-          >
-            <Ionicons
-              name="ellipse"
-              size={7}
-              color={Colors.lightGrey}
-              style={{
-                alignSelf: "center",
-              }}
-            />
-            <Text
-              style={{
-                ...Fonts.Medium16LightGrey,
-                marginHorizontal: Default.fixPadding * 0.5,
-              }}
-            >
-              {tr("experience")}
-            </Text>
-          </View>
 
-          <View
-            style={{
-              flexDirection: isRtl ? "row-reverse" : "row",
-              marginTop: Default.fixPadding,
-            }}
-          >
-            <Ionicons
-              name="ellipse"
-              size={7}
-              color={Colors.lightGrey}
-              style={{
-                alignSelf: "center",
-              }}
-            />
-            <Text
-              style={{
-                ...Fonts.Medium16LightGrey,
-                marginHorizontal: Default.fixPadding * 0.5,
-              }}
-            >
-              {tr("unlimited")}
-            </Text>
-          </View>
         </View>
       </ScrollView>
       <Loader visible={visible} />
       <TouchableOpacity
-        onPress={() => props.navigation.navigate("creditCardScreen")}
+        onPress={continuePremium}
+        disabled={!selectedCategory?.stripe_product_details}
         style={{
           ...Default.shadow,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: Colors.primary,
+          backgroundColor: selectedCategory?.stripe_product_details ? Colors.primary : Colors.grey,
           marginHorizontal: Default.fixPadding * 1.5,
           marginVertical: Default.fixPadding * 1.5,
           paddingVertical: Default.fixPadding * 1.5,
           borderRadius: 25,
         }}
       >
-        <Text style={{ ...Fonts.ExtraBold20White }}>{tr("continue")}</Text>
+        {workingWithStripe ? <ActivityIndicator size={30} /> : <Text style={{ ...Fonts.ExtraBold20White }}>{tr("continue")}</Text>}
+
       </TouchableOpacity>
     </SafeAreaView>
   );
