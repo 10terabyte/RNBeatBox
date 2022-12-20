@@ -28,8 +28,7 @@ import TrackPlayer, { State, usePlaybackState, useProgress } from 'react-native-
 const { width } = Dimensions.get("window");
 const FIRESTORE = firestore()
 const MyRecordScreen = (props) => {
-    const { user, track } = useAppContext();
-    const currentTrack = useCurrentTrack()
+    const { user, currentTrack} = useAppContext();
     const [recodList, setRecordList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const recordCollection = FIRESTORE.collection("records")
@@ -37,9 +36,9 @@ const MyRecordScreen = (props) => {
     const artistCollection = FIRESTORE.collection("artists")
     const state = usePlaybackState();
     const isPlaying = state === State.Playing;
-    async function loadSoundAndPlay(musicItem) {
+    async function loadSoundAndPlay(recordedList) {
         //recodList;
-        let trackList = recodList.map(item => {
+        let trackList = recordedList.map(item => {
             return {
                 url: item.url, // Load media from the network
                 title: item.track_name,
@@ -60,13 +59,14 @@ const MyRecordScreen = (props) => {
             console.log(`Track Length: ${tracks.length}`);
         }
        
-        setIsLoading(false)
         
+        setIsLoading(false)
     }
     const backAction = () => {
         props.navigation.goBack();
         return true;
     };
+ 
 
     const onPressedTogglePlay = async (item, index) => {
         if (currentTrack && currentTrack.url == item.url) {
@@ -129,9 +129,11 @@ const MyRecordScreen = (props) => {
                         console.log("error", e)
                     }
                     // console.log(_recordData,"recordList");
+                    
                     setRecordList(_recordData);
+                    loadSoundAndPlay(_recordData)
                     setIsLoading(false)
-                    loadSoundAndPlay()
+                    
                 })
     }, [user])
     return (

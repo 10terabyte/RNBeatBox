@@ -29,6 +29,7 @@ import MainBottomSheet from "../components/mainBottomSheet";
 import LyricsScreen from "../screens/lyricsScreen";
 import SongInformation from "../screens/songInformation";
 import NotificationScreen from "../screens/notificationScreen";
+import WalletsScreen from '../screens/walletsScreen';
 import PartySongScreen from "../screens/partySongScreen";
 import LibraryMyLikeScreen from "../screens/libraryMyLikeScreen";
 import LibraryArtistScreen from "../screens/libraryArtistScreen";
@@ -186,6 +187,11 @@ export default function MainStack() {
         <Stack.Screen
           name="notificationScreen"
           component={NotificationScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="walletsScreen"
+          component={WalletsScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

@@ -53,7 +53,6 @@ const events = [
 ];
 
 const PlayScreen = (props) => {
-    const { setMusic, music } = useAppContext();
     const { t, i18n } = useTranslation();
     const [isProcessing, setIsProcessing] = useState(false);
     const { user } = useAppContext();
@@ -124,6 +123,7 @@ const PlayScreen = (props) => {
                                 // This will continue the action that had triggered the removal of the screen
                                 onPress: () => {
                                     TrackPlayer.reset()
+                                    setEmptyTrack()
                                     props.navigation.dispatch(e.data.action)
                                 },
                             },
@@ -133,6 +133,7 @@ const PlayScreen = (props) => {
 
                 else {
                     TrackPlayer.reset()
+                    setEmptyTrack()
                     props.navigation.dispatch(e.data.action)
                 }
                 // Prevent default behavior of leaving the screen
@@ -141,7 +142,7 @@ const PlayScreen = (props) => {
         [props.navigate]
     );
 
-    const currentTrack = useCurrentTrack()
+    const { currentTrack, setEmptyTrack} = useAppContext();
     const [isVisible, setIsVisible] = useState(false);
     const [value, setValue] = useState(0);
     const [recordStartTime, setRecordStartTime] = useState(0);
@@ -559,7 +560,6 @@ const PlayScreen = (props) => {
                                             alignItems: "center",
                                         }}
                                     >
-                                        <Feather name="download" size={30} color={Colors.white} />
                                     </View>
                                 </View>
                                 <Slider

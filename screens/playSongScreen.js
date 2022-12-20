@@ -23,8 +23,7 @@ import { useOnTogglePlayback, useCurrentTrack } from '../hooks';
 import { useAppContext } from "../context";
 import TrackPlayer, { State, usePlaybackState, useProgress, Event, useTrackPlayerEvents } from 'react-native-track-player';
 const PlaySongScreen = (props) => {
-    const { track, music } = useAppContext();
-    const currentTrack = useCurrentTrack()
+    const { user, currentTrack} = useAppContext();
     const { t, i18n } = useTranslation();
 
     const isRtl = i18n.dir() === "rtl";
@@ -215,7 +214,7 @@ const PlaySongScreen = (props) => {
                                             alignItems: isRtl ? "flex-end" : "flex-start",
                                         }}
                                     >
-                                        <Text style={{ ...Fonts.Bold24White }}>{currentTrack.title}</Text>
+                                        <Text style={{ ...Fonts.Bold24White }}>{currentTrack?.title}</Text>
                                         <View
                                             style={{
                                                 flexDirection: isRtl ? "row-reverse" : "row",
@@ -229,7 +228,7 @@ const PlaySongScreen = (props) => {
                                                     ...Fonts.Bold14Grey,
                                                 }}
                                             >
-                                                {currentTrack.artist}
+                                                {currentTrack?.artist}
                                             </Text>
 
                                         </View>

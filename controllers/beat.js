@@ -34,6 +34,7 @@ export const playBeat = async (musicItem, userID) => {
     console.log("Play Beat Function", userID, musicItem.key)
     return new Promise(function (resolve, reject) {
         savePlayLog(musicItem.key, userID).then(result => {
+            // setCurrentTrack(undefined)
             TrackPlayer.reset().then(() =>{
                 var track = {
                     url: musicItem.track_file, // Load media from the network

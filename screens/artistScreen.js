@@ -26,16 +26,17 @@ import Loader from "../components/loader";
 // import { useAuthentication } from '../utils/hooks/useAuthentication';
 import firestore from '@react-native-firebase/firestore';
 import database from '@react-native-firebase/database';
-
+import Toast from "react-native-root-toast";
 import {handleFollow as handleArtistFollow} from '../controllers/artist'
 import { playBeat} from '../controllers/beat'
 const { width } = Dimensions.get("window");
+import RNFetchBlob from "rn-fetch-blob";
 const FIRESTORE = firestore()
 const ArtistScreen = (props) => {
     const followsCollection = FIRESTORE.collection('follows');
     const artistCollection = FIRESTORE.collection('artists')
     const beatCollection = FIRESTORE.collection('beats');
-    const { user, setUser } = useAppContext();
+    const { user, customerData } = useAppContext();
     const [followers, setFollowers] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [isFollowed, setIsFollowed] = useState(false);
@@ -208,7 +209,51 @@ const ArtistScreen = (props) => {
             </TouchableOpacity>
         );
     };
-
+    const downloadBeat = () =>{
+        if(customerData.credits < selectedBeat.amount_of_credits){
+            Toast.show("You have no credits to download this beat", {
+                duration: Toast.durations.SHORT,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+              });
+        }
+        else{
+            const downloadURL = selectedBeat.track_file
+            setIsLoading(true)
+            RNFetchBlob.config({
+                fileCache: true,
+              })
+                .fetch("GET", downloadURL, {
+                })
+                .then((res) => {
+                  // the temp file path
+                //   console.log("The file saved to ", res.path());
+                const newCreditAmounts = customerData.credits - selectedBeat.amount_of_credits
+                firestore().collection('customers').doc(user.uid).update({
+                    credits: newCreditAmounts
+                });
+                Toast.show(`The file saved to ${res.path()}`, {
+                    duration: Toast.durations.SHORT,
+                    position: Toast.positions.BOTTOM,
+                    shadow: true,
+                    animation: true,
+                    hideOnPress: true,
+                    delay: 0,
+                    backgroundColor: Colors.white,
+                    textColor: Colors.black,
+                  });
+                  setIsLoading(false)
+                }).catch(error =>{
+                    setIsLoading(false)
+                });
+        }
+        console.log(selectedBeat.amount_of_credits)
+    }
     const artistData = [];
     const renderItemArtist = ({ item, index }) => {
         const isFirst = index === 0;
@@ -451,7 +496,8 @@ const ArtistScreen = (props) => {
                     close={toggleClose}
                     onDownload={() => {
                         toggleClose();
-                        props.navigation.navigate("premiumScreen");
+                        downloadBeat()
+                        // props.navigation.navigate("premiumScreen");
                     }}
                     shareMessage={() => {
                         shareMessage();

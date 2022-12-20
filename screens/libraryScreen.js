@@ -28,7 +28,7 @@ const LibraryScreen = (props) => {
   const followsCollection = FIRESTORE.collection('follows')
   const recordsCollection = FIRESTORE.collection('records')
   const beatCollection = FIRESTORE.collection('beats')
-  
+
   const { t, i18n } = useTranslation();
 
   const isRtl = i18n.dir() === "rtl";
@@ -50,37 +50,44 @@ const LibraryScreen = (props) => {
       setIsLoading(false)
     })
   }
-  
+
   useEffect(() => {
 
-    const unsubscribe = recordsCollection.onSnapshot(snapshot => {
-       recordsCollection.where('userid', '==', user.uid).get().then(  async ( qSnapshot )=> {
-          
-        let beatList = qSnapshot.docs.map(doc => { return {...doc.data(), key: doc.id}})
-        console.log(qSnapshot.size, "RecordCollectionSize")
-        console.log(beatList)
+    const unsubscribe = recordsCollection.onSnapshot(async (snapshot) => {
+      try{
+        const qSnapshot = await recordsCollection.where('userid', '==', user.uid).get()
+        console.log('Step 1 => getRecord List')
+        let beatList = qSnapshot.docs.map(doc => { return { ...doc.data(), key: doc.id } })
         let recordList = []
-        for( var i = 0 ; i < qSnapshot.size ; i ++){
-          
+        for (var i = 0; i < qSnapshot.size; i++) {
+
           // console.log(qSnapshot.docs.at(i))
           const beatID = beatList[i].beatid
-          console.log(beatID, "RecordCollectionSize+++")
-          const beatData = await beatCollection.doc(beatID).get() 
+          console.log('Step 2 => getRecord List')
+          const beatData = await beatCollection.doc(beatID).get()
+          console.log('Step 3 => getRecord List')
           const recordedFileName = `/recorded/${user.uid}/${beatID}/${beatList[i].filename}`
-          console.log(recordedFileName)
+          console.log('Step 3-1 => getRecord List', recordedFileName)
           const storageRef = storage().ref().child(recordedFileName)
+          console.log('Step 4 => getRecord List')
           const downloadURL = await storageRef.getDownloadURL()
-          
+          console.log('Step 5 => getRecord List', downloadURL)
           recordList.push({
-            ...beatList[i],...beatData.data(),
+            ...beatList[i], ...beatData.data(),
             recordUrl: downloadURL
           })
-          
-        }
-        console.log("RecordList", recordList)
-        setMyRecords(recordList)
 
-      })
+        }
+        console.log('Step 11 => getRecord List')
+        setMyRecords(recordList)
+      }
+      catch(error){
+        console.log('Step 12 => Error in get record list', error)
+      }
+      // .then(async (qSnapshot) => {
+        
+
+      // })
     })
 
     return () => {
@@ -197,10 +204,10 @@ const LibraryScreen = (props) => {
       </TouchableOpacity>
     );
   };
-  const loadRecordAndPlay = ({item, index}) =>{
+  const loadRecordAndPlay = ({ item, index }) => {
     props.navigation.navigate("playSongScreen")
   }
-  const renderRecordItem= ({ item, index }) => {
+  const renderRecordItem = ({ item, index }) => {
     const isFirst = index === 0;
     return (
       <TouchableOpacity
@@ -296,7 +303,7 @@ const LibraryScreen = (props) => {
           showsHorizontalScrollIndicator={false}
         />
 
-<View
+        <View
           style={{
             flexDirection: isRtl ? "row-reverse" : "row",
             justifyContent: "space-between",

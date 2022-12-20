@@ -58,7 +58,7 @@ const MainBottomSheet = (props) => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={props.shareMessage}
           style={{
             flexDirection: isRtl ? "row-reverse" : "row",
@@ -75,7 +75,7 @@ const MainBottomSheet = (props) => {
           >
             {tr("share")}
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity
           onPress={props.onPlaylist}
@@ -96,7 +96,7 @@ const MainBottomSheet = (props) => {
           </Text>
         </TouchableOpacity>
  
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={props.onInformation}
           style={{
             flexDirection: isRtl ? "row-reverse" : "row",
@@ -113,7 +113,7 @@ const MainBottomSheet = (props) => {
           >
             {tr("information")}
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </BottomSheet>
   );

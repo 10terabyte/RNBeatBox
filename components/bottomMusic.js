@@ -5,13 +5,13 @@ import { Colors, Fonts, Default } from "../constants/style";
 // import { Audio } from "expo-av";
 import { useAppContext } from "../context";
 import { useNavigation } from '@react-navigation/native';
-import { useOnTogglePlayback, useCurrentTrack } from '../hooks';
+import { useOnTogglePlayback} from '../hooks';
+//currentTrack
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
 import TrackPlayer, { State, usePlaybackState, useProgress } from 'react-native-track-player';
 const BottomMusic = (props) => {
-    const { music , track} = useAppContext();
-    const currentTrack = useCurrentTrack()
-
+    // const {currentTrack, setEmptyTrack} = useState({})
+    const { user, currentTrack} = useAppContext();
     const [isVisible, setVisible] = useState(false);
     const navigation = useNavigation();
     // const sound = React.useRef(new Audio.Sound());
@@ -20,13 +20,14 @@ const BottomMusic = (props) => {
     const progress = useProgress();
     const state = usePlaybackState();
     const isPlaying = state === State.Playing;
+    const isStoped = state === State.Stopped;
     const isLoading = useDebouncedValue(
         state === State.Connecting || state === State.Buffering,
         250
     );
     return (
 
-        currentTrack?.url ? <TouchableOpacity
+        !isStoped && currentTrack != undefined && currentTrack != null && currentTrack?.url ? <TouchableOpacity
             onPress={() => {
                 if(currentTrack && currentTrack.isRecorded){
                     currentTrack ? navigation.navigate("playSongScreen") : ""    

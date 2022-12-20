@@ -10,6 +10,7 @@ import ProfileScreen from "../screens/profileScreen";
 import { Colors, Default } from "../constants/style";
 import { BackHandler, Dimensions } from "react-native";
 import Toast from "react-native-root-toast";
+import BottomMusic from "./bottomMusic";
 
 export const Tab = createBottomTabNavigator();
 
@@ -153,8 +154,8 @@ const BottomTab = (props) => {
             ),
           }}
         />
+       
       </Tab.Navigator>
-
       <BackHandlerExitApp />
     </>
   );

@@ -242,7 +242,7 @@ const HomeScreen = (props) => {
                     <Text style={{ ...Fonts.SemiBold14Grey }}>{tr("hearToday")}</Text>
                 </View>
                 <TouchableOpacity
-                    onPress={() => props.navigation.navigate("notificationScreen")}
+                    onPress={() => props.navigation.navigate("walletsScreen")}
                     style={{
                         flex: 1,
                         alignItems: "center",
@@ -250,7 +250,7 @@ const HomeScreen = (props) => {
                     }}
                 >
                     <Ionicons
-                        name="notifications-outline"
+                        name="wallet-outline"
                         size={25}
                         color={Colors.white}
                     />
