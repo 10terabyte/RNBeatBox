@@ -7,16 +7,19 @@ import {
     Dimensions,
     SafeAreaView,
     StyleSheet,
+    ScrollView,
+    Image,
+    FlatList
   } from "react-native";
   import React, { useState, useEffect } from "react";
   import { useTranslation } from "react-i18next";
   import { Colors, Fonts, Default } from "../constants/style";
   import Ionicons from "react-native-vector-icons/Ionicons";
   import { SwipeListView } from "react-native-swipe-list-view";
-  
+  import { AppWrapper, useAppContext } from "../context";
   const WalletsScreen = (props) => {
     const { t, i18n } = useTranslation();
-  
+    const { user, customerData } = useAppContext();
     const isRtl = i18n.dir() === "rtl";
   
     function tr(key) {
@@ -34,111 +37,72 @@ import {
         BackHandler.removeEventListener("hardwareBackPress", backAction);
     }, []);
   
-    const notificationList = [
-      {
-        key: "1",
-        title: tr("success"),
-        description: tr("description"),
-        status: tr("2min"),
-      },
-      {
-        key: "2",
-        title: tr("success"),
-        description: tr("description"),
-        status: tr("2min"),
-      },
-      {
-        key: "3",
-        title: tr("active"),
-        description: tr("secondDescription"),
-        status: tr("2min"),
-      },
-      {
-        key: "4",
-        title: tr("offer"),
-        description: tr("secondDescription"),
-        status: tr("2min"),
-      },
-      {
-        key: "5",
-        title: tr("success"),
-        description: tr("description"),
-        status: tr("2min"),
-      },
-      {
-        key: "6",
-        title: tr("offer"),
-        description: tr("secondDescription"),
-        status: tr("2min"),
-      },
-    ];
-    const rowTranslateAnimatedValues = {};
-    notificationList.forEach((_, i) => {
-      rowTranslateAnimatedValues[`${i}`] = new Animated.Value(1);
-    });
-  
-    const [listData, setListData] = useState(
-      notificationList.map((NotificationItem, i) => ({
-        key: `${i}`,
-        title: NotificationItem.title,
-        description: NotificationItem.description,
-        status: NotificationItem.status,
-      }))
-    );
-  
-    const onSwipeValueChange = (swipeData) => {
-      const { key, value } = swipeData;
-      if (value < -Dimensions.get("window").width) {
-        Animated.timing(rowTranslateAnimatedValues[key], {
-          toValue: 0,
-          duration: 200,
-          useNativeDriver: false,
-        }).start(() => {
-          const newData = [...listData];
-          const prevIndex = listData.findIndex((item) => item.key === key);
-          newData.splice(prevIndex, 1);
-          setListData(newData);
-        });
-      }
-    };
-  
-    const renderItem = (data) => {
-      return (
-        <Animated.View
-          style={[
-            style.mainView,
-            {
-              height: rowTranslateAnimatedValues[data.item.key].interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 100],
-              }),
-            },
-          ]}
-        >
-          <Text
+    const singerData = [
+        {
+          key: "1",
+          name: "Pritam",
+          image: require("../assets/image/img1.png"),
+        },
+        {
+          key: "2",
+          name: "Atif",
+          image: require("../assets/image/img2.png"),
+        },
+        {
+          key: "3",
+          name: "Kamil",
+          image: require("../assets/image/img3.png"),
+        },
+      ];
+    
+      const renderItemSinger = ({ item, index }) => {
+        const isFirst = index === 0;
+    
+        return (
+          <View
             style={{
-              ...Fonts.Bold18White,
-              marginBottom: Default.fixPadding * 0.5,
+              marginLeft: isFirst ? Default.fixPadding * 1.5 : 0,
+              marginRight: Default.fixPadding * 1.5,
+              marginTop: Default.fixPadding * 1.5,
+              marginBottom: Default.fixPadding * 2,
+              alignItems: "center",
             }}
           >
-            {data.item.title}
-          </Text>
-          <Text style={Fonts.Bold14Grey}>{data.item.description}</Text>
-          <Text
-            style={{
-              ...Fonts.Bold12Grey,
-              marginBottom: Default.fixPadding * 0.5,
-            }}
-          >
-            {data.item.status}
-          </Text>
-        </Animated.View>
-      );
-    };
-  
-    const renderHiddenItem = () => (
-      <View style={{ backgroundColor: Colors.darkBlue, flex: 1 }}></View>
-    );
+            <Image source={item.image} />
+    
+            <Text
+              style={{
+                ...Fonts.SemiBold14White,
+                marginTop: Default.fixPadding * 0.5,
+                textAlign: "center",
+              }}
+            >
+              {item.name}
+            </Text>
+          </View>
+        );
+      };
+    
+      const albumData = [
+        {
+          key: "1",
+          title: tr("album"),
+          name: "Tiger Zinda Hai",
+          image: require("../assets/image/img4.png"),
+        },
+        {
+          key: "2",
+          title: tr("lyricist"),
+          name: "Irshad Kamil",
+          image: require("../assets/image/img5.png"),
+        },
+        {
+          key: "3",
+          title: tr("composer"),
+          name: "Vishal-Shekhar",
+          image: require("../assets/image/img6.png"),
+        },
+      ];
   
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: Colors.darkBlue }}>
@@ -160,37 +124,49 @@ import {
               color={Colors.white}
             />
           </TouchableOpacity>
-          <Text style={Fonts.Bold20White}>{tr("notification")}</Text>
+          <Text style={Fonts.Bold20White}>My Wallets</Text>
         </View>
-  
-        {listData.length === 0 ? (
+        <ScrollView showsVerticalScrollIndicator={false}>
+        <View
+          style={{
+            ...Default.shadow,
+            backgroundColor: Colors.lightBlack,
+            justifyContent: "center",
+            paddingVertical: Default.fixPadding * 1.5,
+            marginBottom: Default.fixPadding * 1.5,
+          }}
+        >
           <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+            style={{
+              marginHorizontal: Default.fixPadding * 1.5,
+              flexDirection: isRtl ? "row-reverse" : "row",
+              alignItems: "center",
+            }}
           >
             <Ionicons
-              name="notifications-outline"
-              size={32}
-              color={Colors.lightGrey}
-            />
-            <Text style={{ ...Fonts.SemiBold18LightGrey }}>
-              {tr("noNotification")}
-            </Text>
-          </View>
-        ) : (
-          <SwipeListView
-            disableRightSwipe
-            data={listData}
-            renderItem={renderItem}
-            renderHiddenItem={renderHiddenItem}
-            rightOpenValue={-Dimensions.get("window").width}
-            previewRowKey={"0"}
-            previewOpenValue={-40}
-            previewOpenDelay={3000}
-            onSwipeValueChange={onSwipeValueChange}
-            useNativeDriver={false}
-            showsVerticalScrollIndicator={false}
+            name={isRtl ? "chevron-back" : "chevron-forward-outline"}
+            size={20}
+            color={Colors.white}
+            style={{
+              flex: 1,
+              justifyContent: "flex-end",
+            }}
           />
-        )}
+            <View
+              style={{
+                marginHorizontal: Default.fixPadding,
+                alignItems: isRtl ? "flex-end" : "flex-start",
+              }}
+            >
+              <Text style={{ ...Fonts.SemiBold16White }}>{customerData?.credits} Credits remaining</Text>
+              <Text style={{ ...Fonts.SemiBold14LightGrey, flexWrap: 'wrap' }}>
+                Your current plan will finish at {new Date( customerData?.subscriptionEnded?.toDate() ).toDateString()}
+              </Text>
+            </View>
+          </View>
+        </View>
+        
+      </ScrollView>
       </SafeAreaView>
     );
   };

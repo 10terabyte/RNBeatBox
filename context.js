@@ -70,13 +70,16 @@ export function AppWrapper({ children }) {
   }, []);
 
   useEffect(() => {
-    const unsubscribe = firebase.firestore().collection('customers').doc(user.uid).onSnapshot(snpShot => {
-      // console.log(snpShot.data(), "customer details")
-      setCustomerData(snpShot.data())
-    })
-    return () => {
-      unsubscribe()
+    if(user && user?.uid){
+      const unsubscribe = firebase.firestore().collection('customers').doc(user.uid).onSnapshot(snpShot => {
+        // console.log(snpShot.data(), "customer details")
+        setCustomerData(snpShot.data())
+      })
+      return () => {
+        unsubscribe()
+      }
     }
+    
   }, [user])
 
   const context = {

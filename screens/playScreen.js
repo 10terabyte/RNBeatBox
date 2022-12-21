@@ -38,7 +38,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { favoriteBeat } from '../controllers/beat'
 import firestore from "@react-native-firebase/firestore";
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
-
+import RNFetchBlob from "rn-fetch-blob";
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage'
 import ProgressBarLoader from "../components/progressbarloader";
@@ -55,9 +55,8 @@ const events = [
 const PlayScreen = (props) => {
     const { t, i18n } = useTranslation();
     const [isProcessing, setIsProcessing] = useState(false);
-    const { user } = useAppContext();
     const isRtl = i18n.dir() === "rtl";
-
+    const { user, customerData } = useAppContext();
     function tr(key) {
         return t(`playScreen:${key}`);
     }
@@ -141,7 +140,50 @@ const PlayScreen = (props) => {
             }),
         [props.navigate]
     );
-
+    const downloadBeat = () =>{
+        if(customerData.credits < currentTrack?.amount_of_credits){
+            Toast.show("You have no credits to download this beat", {
+                duration: Toast.durations.SHORT,
+                position: Toast.positions.BOTTOM,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+              });
+        }
+        else{
+            const downloadURL = currentTrack?.url
+            setIsProcessing(true)
+            RNFetchBlob.config({
+                fileCache: true,
+              })
+                .fetch("GET", downloadURL, {
+                })
+                .then((res) => {
+                  // the temp file path
+                //   console.log("The file saved to ", res.path());
+                const newCreditAmounts = customerData.credits - currentTrack?.amount_of_credits
+                firestore().collection('customers').doc(user.uid).update({
+                    credits: newCreditAmounts
+                });
+                Toast.show(`The file saved to ${res.path()}`, {
+                    duration: Toast.durations.SHORT,
+                    position: Toast.positions.BOTTOM,
+                    shadow: true,
+                    animation: true,
+                    hideOnPress: true,
+                    delay: 0,
+                    backgroundColor: Colors.white,
+                    textColor: Colors.black,
+                  });
+                  setIsProcessing(false)
+                }).catch(error =>{
+                    setIsProcessing(false)
+                });
+        }
+    }
     const { currentTrack, setEmptyTrack} = useAppContext();
     const [isVisible, setIsVisible] = useState(false);
     const [value, setValue] = useState(0);
@@ -479,7 +521,7 @@ const PlayScreen = (props) => {
                                         close={toggleClose}
                                         onDownload={() => {
                                             toggleClose();
-                                            props.navigation.navigate("premiumScreen");
+                                            downloadBeat()
                                         }}
                                         shareMessage={() => {
                                             shareMessage();

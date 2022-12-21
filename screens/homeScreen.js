@@ -291,11 +291,11 @@ const HomeScreen = (props) => {
                     }}
                 >
                     <Text style={{ ...Fonts.Bold18White }}>{tr("topArtists")}</Text>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         onPress={() => props.navigation.navigate("topArtistsScreen")}
                     >
                         <Text style={{ ...Fonts.Bold14Primary }}>{tr("seeAll")}</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
                 <FlatList
                     horizontal
@@ -316,11 +316,11 @@ const HomeScreen = (props) => {
           }}
         >
           <Text style={{ ...Fonts.Bold18White }}>{tr("mostly_played")}</Text>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => props.navigation.navigate("recentlyPlayScreen")}
           >
             <Text style={{ ...Fonts.Bold14Primary }}>{tr("seeAll")}</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>  
                   <FlatList
           horizontal
@@ -342,11 +342,11 @@ const HomeScreen = (props) => {
           }}
         >
           <Text style={{ ...Fonts.Bold18White }}>{tr("weekly_trendings")}</Text>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => {}}
           >
             <Text style={{ ...Fonts.Bold14Primary }}>{tr("seeAll")}</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>  
                   <FlatList
           horizontal

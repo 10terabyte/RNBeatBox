@@ -43,6 +43,7 @@ export const playBeat = async (musicItem, userID) => {
                     album: musicItem.genre,
                     genre: musicItem.genre,
                     artwork: musicItem.track_thumbnail, // Load artwork from the network
+                    amount_of_credits: musicItem.amount_of_credits
                 };
                 TrackPlayer.add([track]).then(result => {
                 //   TrackPlayer.skipToNext()

@@ -14,7 +14,8 @@ import Feather from "react-native-vector-icons/Feather";
 import { useTranslation } from "react-i18next";
 import { Colors, Fonts, Default } from "../constants/style";
 import { SwipeListView } from "react-native-swipe-list-view";
-
+import { useAppContext } from "../context";
+import firestore from "@react-native-firebase/firestore";
 const LibraryArtistScreen = (props) => {
   const { t, i18n } = useTranslation();
 
@@ -23,7 +24,7 @@ const LibraryArtistScreen = (props) => {
   function tr(key) {
     return t(`libraryArtistScreen:${key}`);
   }
-
+  const { user } = useAppContext();
   const backAction = () => {
     props.navigation.goBack();
     return true;
@@ -35,62 +36,39 @@ const LibraryArtistScreen = (props) => {
       BackHandler.removeEventListener("hardwareBackPress", backAction);
   }, []);
 
-  const dataList = [
-    {
-      key: "1",
-      image: require("../assets/image/a1.png"),
-      title: "Sonu Nigam",
-      name: tr("artist"),
-    },
-    {
-      key: "2",
-      title: "Badshah  ",
-      image: require("../assets/image/a2.png"),
-      name: tr("artist"),
-    },
-    {
-      key: "3",
-      image: require("../assets/image/a3.png"),
-      title: "Shakira",
-      name: tr("artist"),
-    },
-    {
-      key: "4",
-      image: require("../assets/image/a4.png"),
-      title: "Lady Gaga",
-      name: tr("artist"),
-    },
-    {
-      key: "5",
-      image: require("../assets/image/a5.png"),
-      title: "Justin Bieber",
-      name: tr("artist"),
-    },
-    {
-      key: "6",
-      image: require("../assets/image/a6.png"),
-      title: "Darshan raval",
-      name: tr("artist"),
-    },
-  ];
 
-  const [listData, setListData] = useState(
-    dataList.map((favoriteItem, index) => ({
-      key: `${index}`,
-      title: favoriteItem.title,
-      image: favoriteItem.image,
-      name: favoriteItem.name,
-    }))
-  );
+  const [follows, setFollows] = useState([])
+  const getFollows = () =>{
+    firestore().collection('follows').where("follower" , '==', user.uid).get().then(snapShot =>{
+      let targetArray = []
+      let follows = []
+      snapShot.forEach(result =>{ targetArray.push(result.data().target)})
+      console.log(targetArray, "Target Array")
+      firestore().collection('artists').get().then(result =>{
+        result.forEach(artResultt =>{
+          if(targetArray.includes(artResultt.id)){
+            follows.push({...artResultt.data(), key: artResultt.id})
+          } 
+        })
+        setFollows(follows)
+      })
+    })
+  }
+  useEffect(()=>{
+    getFollows()
+  }, [user])
+
+ 
 
   const deleteRow = (rowMap, rowKey) => {
-    const newData = [...listData];
-    const prevIndex = listData.findIndex((item) => item.key === rowKey);
+    const newData = [...follows];
+    const prevIndex = follows.findIndex((item) => item.key === rowKey);
     newData.splice(prevIndex, 1);
-    setListData(newData);
+    setFollows(newData);
   };
 
   const renderItem = (data, rowMap) => {
+    console.log(data)
     return (
       <View
         style={{
@@ -112,7 +90,7 @@ const LibraryArtistScreen = (props) => {
               flexDirection: isRtl ? "row-reverse" : "row",
             }}
           >
-            <Image source={data.item.image} />
+            <Image source={{uri: data.item.ImageURL}} style = {{width: 50, height: 50}}  />
             <View
               style={{
                 marginHorizontal: Default.fixPadding,
@@ -120,15 +98,20 @@ const LibraryArtistScreen = (props) => {
               }}
             >
               <Text style={{ ...Fonts.SemiBold16White }}>
-                {data.item.title}
+                {data.item.name}
               </Text>
               <Text style={{ ...Fonts.SemiBold14LightGrey }}>
-                {data.item.name}
+                {data.item.description}
               </Text>
             </View>
           </View>
           <TouchableOpacity
             onPress={() => {
+              firestore().collection('follows').where('follower', '==', user.uid).where('target', '==', data.item.key).get().then(snapShot =>{
+                snapShot.forEach(dSnap =>{
+                  dSnap.ref.delete()
+                })
+              })
               deleteRow(rowMap, data.item.key);
             }}
             style={{ flex: 2, justifyContent: "center", alignItems: "center" }}
@@ -169,7 +152,7 @@ const LibraryArtistScreen = (props) => {
         <Text style={Fonts.Bold20White}>{tr("artist")}</Text>
       </View>
 
-      {listData.length === 0 ? (
+      {follows.length === 0 ? (
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
@@ -185,7 +168,7 @@ const LibraryArtistScreen = (props) => {
         </View>
       ) : (
         <SwipeListView
-          data={listData}
+          data={follows}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
         />

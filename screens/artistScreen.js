@@ -396,7 +396,7 @@ const ArtistScreen = (props) => {
                                 alignItems: "center",
                             }}
                         >
-                            <Text
+                            {/* <Text
                                 numberOfLines={1}
                                 style={{
                                     ...Fonts.Bold16White,
@@ -405,7 +405,7 @@ const ArtistScreen = (props) => {
                                 }}
                             >
                                 {tr("playAll")}
-                            </Text>
+                            </Text> */}
                         </View>
                     </View>
                 </View>
