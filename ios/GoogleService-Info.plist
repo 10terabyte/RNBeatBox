@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>821225767067-9q42f1536kjh8fstglq3vabuuf8p04fo.apps.googleusercontent.com</string>
+	<string>821225767067-068l426u9a28n27in0epdc7ie33bu879.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.821225767067-9q42f1536kjh8fstglq3vabuuf8p04fo</string>
+	<string>com.googleusercontent.apps.821225767067-068l426u9a28n27in0epdc7ie33bu879</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDF3bvwl58lYnZmMVBuh5X0nmY7cUJBRhc</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.beatbox.music</string>
+	<string>com.beatbox.app</string>
 	<key>PROJECT_ID</key>
 	<string>beatbox-eb2b7</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:821225767067:ios:d8549a8c1ec6413dfac63e</string>
+	<string>1:821225767067:ios:1f9ce0617b989d13fac63e</string>
 	<key>DATABASE_URL</key>
 	<string>https://beatbox-eb2b7-default-rtdb.firebaseio.com</string>
 </dict>
