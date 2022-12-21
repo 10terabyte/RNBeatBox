@@ -1,4 +1,4 @@
-package com.beatbox.music.newarchitecture;
+package com.beatbox.app.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.beatbox.music.BuildConfig;
-import com.beatbox.music.newarchitecture.components.MainComponentsRegistry;
-import com.beatbox.music.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.beatbox.app.BuildConfig;
+import com.beatbox.app.newarchitecture.components.MainComponentsRegistry;
+import com.beatbox.app.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

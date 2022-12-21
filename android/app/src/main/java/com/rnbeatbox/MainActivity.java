@@ -1,4 +1,4 @@
-package com.beatbox.music;
+package com.beatbox.app;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
