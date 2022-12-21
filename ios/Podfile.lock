@@ -1024,7 +1024,7 @@ PODS:
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
-  - react-native-slider (4.3.3):
+  - react-native-slider (4.4.0):
     - React-Core
   - react-native-track-player (3.2.0):
     - React-Core
@@ -1099,27 +1099,27 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.17.11):
     - React-Core
-  - RNFBApp (16.4.6):
+  - RNFBApp (16.5.0):
     - Firebase/CoreOnly (= 10.2.0)
     - React-Core
-  - RNFBAuth (16.4.6):
+  - RNFBAuth (16.5.0):
     - Firebase/Auth (= 10.2.0)
     - React-Core
     - RNFBApp
-  - RNFBDatabase (16.4.6):
+  - RNFBDatabase (16.5.0):
     - Firebase/Database (= 10.2.0)
     - React-Core
     - RNFBApp
-  - RNFBFirestore (16.4.6):
+  - RNFBFirestore (16.5.0):
     - Firebase/Firestore (= 10.2.0)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - React-Core
     - RNFBApp
-  - RNFBFunctions (16.4.6):
+  - RNFBFunctions (16.5.0):
     - Firebase/Functions (= 10.2.0)
     - React-Core
     - RNFBApp
-  - RNFBStorage (16.4.6):
+  - RNFBStorage (16.5.0):
     - Firebase/Storage (= 10.2.0)
     - React-Core
     - RNFBApp
@@ -1127,7 +1127,7 @@ PODS:
     - React-Core
   - RNGestureHandler (2.8.0):
     - React-Core
-  - RNGoogleSignin (9.0.0):
+  - RNGoogleSignin (9.0.2):
     - GoogleSignIn (~> 6.2)
     - React-Core
   - RNPermissions (3.6.1):
@@ -1166,6 +1166,42 @@ PODS:
     - React-Core
   - RNVectorIcons (9.2.0):
     - React-Core
+  - Stripe (23.3.1):
+    - StripeApplePay (= 23.3.1)
+    - StripeCore (= 23.3.1)
+    - StripePayments (= 23.3.1)
+    - StripePaymentsUI (= 23.3.1)
+    - StripeUICore (= 23.3.1)
+  - stripe-react-native (0.22.1):
+    - React-Core
+    - Stripe (~> 23.3.0)
+    - StripeApplePay (~> 23.3.0)
+    - StripeFinancialConnections (~> 23.3.0)
+    - StripePayments (~> 23.3.0)
+    - StripePaymentSheet (~> 23.3.0)
+    - StripePaymentsUI (~> 23.3.0)
+  - StripeApplePay (23.3.1):
+    - StripeCore (= 23.3.1)
+  - StripeCore (23.3.1)
+  - StripeFinancialConnections (23.3.1):
+    - StripeCore (= 23.3.1)
+    - StripeUICore (= 23.3.1)
+  - StripePayments (23.3.1):
+    - StripeCore (= 23.3.1)
+    - StripePayments/Stripe3DS2 (= 23.3.1)
+  - StripePayments/Stripe3DS2 (23.3.1):
+    - StripeCore (= 23.3.1)
+  - StripePaymentSheet (23.3.1):
+    - StripeApplePay (= 23.3.1)
+    - StripeCore (= 23.3.1)
+    - StripePayments (= 23.3.1)
+    - StripePaymentsUI (= 23.3.1)
+  - StripePaymentsUI (23.3.1):
+    - StripeCore (= 23.3.1)
+    - StripePayments (= 23.3.1)
+    - StripeUICore (= 23.3.1)
+  - StripeUICore (23.3.1):
+    - StripeCore (= 23.3.1)
   - SwiftAudioEx (0.15.3)
   - Yoga (1.14.0)
 
@@ -1230,6 +1266,7 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - "stripe-react-native (from `../node_modules/@stripe/stripe-react-native`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1263,6 +1300,14 @@ SPEC REPOS:
     - Libuv-gRPC
     - nanopb
     - PromisesObjC
+    - Stripe
+    - StripeApplePay
+    - StripeCore
+    - StripeFinancialConnections
+    - StripePayments
+    - StripePaymentSheet
+    - StripePaymentsUI
+    - StripeUICore
     - SwiftAudioEx
 
 EXTERNAL SOURCES:
@@ -1382,6 +1427,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  stripe-react-native:
+    :path: "../node_modules/@stripe/stripe-react-native"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1443,7 +1490,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: bf34f3f516d139ed3e24c5f5a381a91819e349ea
   react-native-pager-view: 3051346698a0ba0c4e13e40097cc11b00ee03cca
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
-  react-native-slider: 7d19220da2f2ae7cbb9aa80127cb73c597fa221f
+  react-native-slider: d2938a12c4e439a227c70eec65d119136eb4aeb5
   react-native-track-player: 0c26d981b5097910486cbbeb6d8f5352d41be069
   React-perflogger: 8c79399b0500a30ee8152d0f9f11beae7fc36595
   React-RCTActionSheet: 7316773acabb374642b926c19aef1c115df5c466
@@ -1459,23 +1506,32 @@ SPEC CHECKSUMS:
   ReactCommon: 349be31adeecffc7986a0de875d7fb0dcf4e251c
   RNAudioRecorderPlayer: 308940de4f9d1448a064874fd9d83479ae47c7a7
   RNCAsyncStorage: 8616bd5a58af409453ea4e1b246521bb76578d60
-  RNFBApp: a61f530d08a0f5996b1fbdcbd1b8bb077d5d61a1
-  RNFBAuth: 4ca816efc990ef69e9ca9fed57348a876470b821
-  RNFBDatabase: 21df41fb443ecfcb967ab92a2399a04cae931985
-  RNFBFirestore: adb3628074d1c2116e851257d999f0292ddb823a
-  RNFBFunctions: 44a3ceb8d1bde61e4cb0ec22d570039dc28caed5
-  RNFBStorage: c34d21bdfd6f3dd9560edaca5d5c7b6576bcf00d
+  RNFBApp: e487a4912cf3736f3ba0d9a2c7c03b5b4d9527f2
+  RNFBAuth: 7e9895669d4c7008f5d1576ff34a5102dc76e883
+  RNFBDatabase: 58167821ae1633e264eb337426332d49a95aadd2
+  RNFBFirestore: b66ef46ca25ba7e7a37400ef86d0f2f97cd86599
+  RNFBFunctions: 8c30ed14b09a7bf71be94b00a2a7f55e05efd126
+  RNFBStorage: ff9ee8d1889c852d29c29453f2bb2de057f07765
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
-  RNGoogleSignin: f9cb4c904c63dae74dc850aaabcf3fbdc9d16218
+  RNGoogleSignin: 22e468a9474dbcb8618d8847205ad4f0b2575d13
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNReanimated: ce445c233a6ff5600223484a88ad5704945d972a
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
+  Stripe: 56fe274a24c371670859c5f5ae8df6486b0030ba
+  stripe-react-native: 345fb31abf42374a8cb48a4e03d183647f89195d
+  StripeApplePay: 38c814ce593ca36a5cdb3f50c5a1dd0cbd74e475
+  StripeCore: 904b1ba69c2aff587d811d2f75fa9400b5b0fecf
+  StripeFinancialConnections: f555e47e4ea3e16c3e4cb1aa4c05157d6f828c22
+  StripePayments: a4a1a0091e3425f68a0a4cd18e63d06d3673df85
+  StripePaymentSheet: 65824ab423403846590fd346f12f94f288ff80b3
+  StripePaymentsUI: f40988eb257eac3888d27bcf7c2b8150805f98e2
+  StripeUICore: b20de7cd68197e4ff9fe7944f42a8fa71a48a34f
   SwiftAudioEx: 83eabba2940924fc1c0d5cb0896049921365229c
   Yoga: 99caf8d5ab45e9d637ee6e0174ec16fbbb01bcfc
 
-PODFILE CHECKSUM: 969fd54724e532e2180a708e5b01e006e4853a50
+PODFILE CHECKSUM: 19a17c805a08d928a9045fb8e6b6a71c87f27382
 
 COCOAPODS: 1.11.3
