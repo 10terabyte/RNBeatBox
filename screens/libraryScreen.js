@@ -85,7 +85,7 @@ const LibraryScreen = (props) => {
         console.log('Step 12 => Error in get record list', error)
       }
       // .then(async (qSnapshot) => {
-        
+
 
       // })
     })
@@ -127,7 +127,10 @@ const LibraryScreen = (props) => {
       functions()
         .httpsCallable(`getFavoriteBeats?userid=${user.uid}`)()
         .then(response => {
+          if(response)
           setMyFavorites(response.data)
+        }).catch(error =>{
+
         });
     })
 
