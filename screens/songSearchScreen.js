@@ -102,6 +102,7 @@ const AllSongScreen = (props) => {
             >
                 <TouchableOpacity
                     onPress={() => {
+                        
                         props.navigation.navigate("playScreen", { item })
                     }}
                     style={{
