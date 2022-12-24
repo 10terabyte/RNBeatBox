@@ -44,12 +44,21 @@ const HomeScreen = (props) => {
         return t(`homeScreen:${key}`);
     }
     useEffect(() => {
-        functions()
-          .httpsCallable('getWeeklyTrending')()
-          .then(response => {
-            setWeeklyTrendings(response.data)
-          });
-      }, []);
+        if(user.uid){
+
+            console.log(user.uid)
+            functions()
+            .httpsCallable('getWeeklyTrending')()
+            .then(response => {
+              console.log("GetWeeklyTrendings Error",response.data.length)
+              setWeeklyTrendings(response.data)
+            }).catch(error =>{
+              console.log("GetWeeklyTrendings Error", error)
+              
+            });
+        }
+        
+      }, [user]);
     useEffect(() => {
         setUserData(user);
         if(!user.emailVerified ){

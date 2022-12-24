@@ -15,48 +15,63 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import BottomMusic from "../components/bottomMusic";
 import MainBottomSheet from "../components/mainBottomSheet";
 import AddToPlayList from "../components/addToPlayList";
+import firestore from '@react-native-firebase/firestore';
 import NewPlayList from "../components/newPlayList";
-import { equalTo, getDatabase, onValue, orderByChild, query, ref } from "firebase/database";
+const FIRESTORE = firestore()
 // import { snapshotEqual } from "firebase/firestore";
-const DB = getDatabase();
 const ArtistSearchScreen = (props) => {
     const { t, i18n } = useTranslation();
-
+    const artistCollection = FIRESTORE.collection('artists')
     const isRtl = i18n.dir() === "rtl";
     const [visible, setVisible] = useState(false);
     const [search, setSearch] = useState("");
     const [artistList, setArtists] = useState([]);
     useEffect(()=>{
-        setArtists([])
+        handleFilter()
     },[props])
+    useEffect(() =>{
+        const unsubscribe = artistCollection.onSnapshot(snpShot =>{
+            artistCollection.where('follows', "desc").limit(5).get().then(snapshot =>{
+                let artData = [];
+                snapshot.forEach(result =>{
+                    console.log("ARTIST", result.data().follows)
+                    artData.push({...result.data(), key: result.id})
+                })
+                setArtists(artData)
+            }) 
+        })
+        return () =>{
+            unsubscribe()
+        }
+    }, [FIRESTORE])
     const handleFilter = () => {
-        console.log("filter")
-        if(search == "")return;
-        onValue(ref(DB, "artists"),  (snapshot)=>{
-            console.log("datadd")
-            if(snapshot.val()){
+        console.log('Search Event')
+        // console.log("filter")
+        // onValue(ref(DB, "artists"),  (snapshot)=>{
+        //     console.log("datadd")
+        //     if(snapshot.val()){
                 
-                let data = snapshot.val();
-                let artists = [];
-                let promises = [];
-                let index = 0;
+        //         let data = snapshot.val();
+        //         let artists = [];
+        //         let promises = [];
+        //         let index = 0;
                 
-                Object.keys(data).map(key=>{
+        //         Object.keys(data).map(key=>{
                   
-                    if(data[key].name.includes(search)){
+        //             if(data[key].name.includes(search)){
 
-                        artists.push({...data[key],key});
+        //                 artists.push({...data[key],key});
              
-                }   
-                });
-                console.log(artists,"artists");
+        //         }   
+        //         });
+        //         console.log(artists,"artists");
                
                
-                setArtists(artists);
-                return;
-            }
-            setArtists([]);
-        }, {onlyOnce:true})
+        //         setArtists(artists);
+        //         return;
+        //     }
+        //     setArtists([]);
+        // }, {onlyOnce:true})
     }
 
     const toggleClose = () => {
