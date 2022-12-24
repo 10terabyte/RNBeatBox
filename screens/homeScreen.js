@@ -47,7 +47,10 @@ const HomeScreen = (props) => {
         functions()
           .httpsCallable('getWeeklyTrending')()
           .then(response => {
+            if(response)
             setWeeklyTrendings(response.data)
+          }).catch(error =>{
+
           });
       }, []);
     useEffect(() => {
@@ -67,7 +70,7 @@ const HomeScreen = (props) => {
                     artData.push({...result.data(), key: result.id})
                 })
                 setArtistsData(artData)
-            }) 
+            })
         })
         return () =>{
             unsubscribe()
@@ -82,14 +85,14 @@ const HomeScreen = (props) => {
                     artData.push({...result.data(), key: result.id})
                 })
                 setMostlyPlayed(artData)
-            }) 
+            })
         })
         return () =>{
             unsubscribe()
         }
     }, [FIRESTORE])
     // refreshTopArtist()
-    
+
     const [bannerList, setBannerList] = useState([]);
     const renderItemArtists = ({ item, index }) => {
         const isFirst = index === 0;
@@ -130,9 +133,9 @@ const HomeScreen = (props) => {
         }).catch(error =>{
             setIsLoading(false)
         })
-        
+
     }
-     
+
     const renderBeatItem = ({ item, index }) => {
         const isFirst = index === 0;
         return (
@@ -163,9 +166,9 @@ const HomeScreen = (props) => {
                 >
                     {item.track_name}
                 </Text>
-               
+
                 </View>
-                
+
             </TouchableOpacity>
         );
     };
@@ -305,7 +308,7 @@ const HomeScreen = (props) => {
                     keyExtractor={(item) => item.key}
                     showsHorizontalScrollIndicator={false}
                 />
-   
+
                   <View
           style={{
             flexDirection: isRtl ? "row-reverse" : "row",
@@ -321,7 +324,7 @@ const HomeScreen = (props) => {
           >
             <Text style={{ ...Fonts.Bold14Primary }}>{tr("seeAll")}</Text>
           </TouchableOpacity> */}
-        </View>  
+        </View>
                   <FlatList
           horizontal
           nestedScrollEnabled
@@ -329,9 +332,9 @@ const HomeScreen = (props) => {
           renderItem={renderBeatItem}
           keyExtractor={(item) => item.key}
           showsHorizontalScrollIndicator={false}
-        /> 
-        
-         
+        />
+
+
         <View
           style={{
             flexDirection: isRtl ? "row-reverse" : "row",
@@ -347,7 +350,7 @@ const HomeScreen = (props) => {
           >
             <Text style={{ ...Fonts.Bold14Primary }}>{tr("seeAll")}</Text>
           </TouchableOpacity> */}
-        </View>  
+        </View>
                   <FlatList
           horizontal
           nestedScrollEnabled
@@ -355,7 +358,7 @@ const HomeScreen = (props) => {
           renderItem={renderBeatItem}
           keyExtractor={(item) => item.key}
           showsHorizontalScrollIndicator={false}
-        /> 
+        />
                 {playlistForYou.length > 0 && (<View
                     style={{
                         flexDirection: isRtl ? "row-reverse" : "row",
