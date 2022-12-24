@@ -102,21 +102,24 @@ const PremiumScreen = (props) => {
       { stripe_price_id: item.stripe_product_details.price_id, userid: user.uid }
     ).then(async (response) => {
       console.log(response)
-      const { setupIntent, ephemeralKey, customer } = response.data;
-      setWorkingWithStripe(false)
-      const { error } = await initPaymentSheet({
-        merchantDisplayName: "Subscription",
-        customerId: customer,
-        customerEphemeralKeySecret: ephemeralKey,
-        paymentIntentClientSecret: setupIntent,
-        // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
-        //methods that complete payment after a delay, like SEPA Debit and Sofort.
-        allowsDelayedPaymentMethods: true,
-        defaultBillingDetails: {
-          name: 'Jane Doe',
-        }
-      });
-      const { error1 } = await presentPaymentSheet();
+      if(response){
+        const { setupIntent, ephemeralKey, customer } = response.data;
+        setWorkingWithStripe(false)
+        const { error } = await initPaymentSheet({
+          merchantDisplayName: "Subscription",
+          customerId: customer,
+          customerEphemeralKeySecret: ephemeralKey,
+          paymentIntentClientSecret: setupIntent,
+          // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+          //methods that complete payment after a delay, like SEPA Debit and Sofort.
+          allowsDelayedPaymentMethods: true,
+          defaultBillingDetails: {
+            name: 'Jane Doe',
+          }
+        });
+        const { error1 } = await presentPaymentSheet();
+      }
+
     }).catch(error => {
       setWorkingWithStripe(false)
       console.log("Function Error", error)
