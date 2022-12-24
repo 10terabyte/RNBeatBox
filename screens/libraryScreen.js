@@ -103,17 +103,20 @@ const LibraryScreen = (props) => {
           const artistID = result.data().target
           artistList.push(artistID)
         })
-        const refArr = artistList.map(id => FIRESTORE.collection("artists").doc(id));
-        FIRESTORE.collection('artists').where(firestore.FieldPath.documentId(), "in", refArr).get().then(rSnapshot => {
-          let artData = [];
-          rSnapshot.forEach(result => {
-            console.log("ARTIST", result.data().follows)
-            artData.push({ ...result.data(), key: result.id })
+        if(artistList.length){
+          const refArr = artistList.map(id => FIRESTORE.collection("artists").doc(id));
+          FIRESTORE.collection('artists').where(firestore.FieldPath.documentId(), "in", refArr).get().then(rSnapshot => {
+            let artData = [];
+            rSnapshot.forEach(result => {
+              console.log("ARTIST", result.data().follows)
+              artData.push({ ...result.data(), key: result.id })
+            })
+            setFollwsList(artData)
+          }).catch(error => {
+  
           })
-          setFollwsList(artData)
-        }).catch(error => {
-
-        })
+        }
+        
       })
     })
 

@@ -8,62 +8,59 @@ import {
     Image,
     Share,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Colors, Fonts, Default } from "../constants/style";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import BottomMusic from "../components/bottomMusic";
 import MainBottomSheet from "../components/mainBottomSheet";
 import AddToPlayList from "../components/addToPlayList";
+import firestore from '@react-native-firebase/firestore';
 import NewPlayList from "../components/newPlayList";
-import { equalTo, getDatabase, onValue, orderByChild, query, ref } from "firebase/database";
+const FIRESTORE = firestore()
 // import { snapshotEqual } from "firebase/firestore";
-const DB = getDatabase();
 const AllSongScreen = (props) => {
     const { t, i18n } = useTranslation();
-
+    const beatCollection = FIRESTORE.collection('beats')
     const isRtl = i18n.dir() === "rtl";
     const [selectedBeat, setSelectedBeat] = useState({});
     const [visible, setVisible] = useState(false);
     const [search, setSearch] = useState("");
+    const [allList, setAllList] = useState([])
     const [beatsList, setBeats] = useState([]);
+    useEffect(()=>{
+        handleFilter()
+    },[props])
+    useEffect(() =>{
+        const unsubscribe = beatCollection.onSnapshot(snpShot =>{
+            beatCollection.get().then(snapshot =>{
+                let artData = [];
+                snapshot.forEach(result =>{
+                    artData.push({...result.data(), key: result.id})
+                })
+                setAllList(artData)
+            }) 
+        })
+        return () =>{
+            unsubscribe()
+        }
+    }, [FIRESTORE])
+    useEffect(() =>{
+        handleFilter()
+    }, [allList])
     const handleFilter = () => {
-        if (search == "") return;
-        onValue(ref(DB, "beats"), async (snapshot) => {
-            if (snapshot.val()) {
-                let data = snapshot.val();
-                let beats = [];
-                let promises = [];
-                let index = 0;
-
-                Object.keys(data).map(key => {
-                    // console.log(key,"beatkeys")
-                    if (data[key].track_name.includes(search)) {
-
-                        beats.push({ ...data[key], key });
-
-                        promises.push(new Promise((resolve, reject) => {
-
-                            onValue(ref(DB, "artists/" + data[key].track_artist),
-                                snapshot => {
-
-                                    beats[index].singer = snapshot.val() ? snapshot.val().name : "";
-                                    resolve();
-                                },
-                                { onlyOnce: true });
-                        }));
-                        index++;
-                    }
-                });
-
-                if (promises.length > 0) {
-                    await Promise.all(promises);
-                }
-                setBeats(beats);
-                return;
+        console.log('Search Event')
+        let searchResult = []
+        allList.forEach(item =>{
+            
+            console.log(search.toLowerCase(), item?.track_name )
+            
+            if(item?.track_name?.toLowerCase().includes(search.toLowerCase()) ){
+                searchResult.push(item)
             }
-            setBeats([]);
-        }, { onlyOnce: true })
+        })
+        setBeats(searchResult)
+  
     }
     function tr(key) {
         return t(`searchMusicScreen:${key}`);

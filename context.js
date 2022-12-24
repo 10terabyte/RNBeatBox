@@ -71,6 +71,7 @@ export function AppWrapper({ children }) {
 
   useEffect(() => {
     if(user && user?.uid){
+      console.log("userID", user.uid)
       const unsubscribe = firebase.firestore().collection('customers').doc(user.uid).onSnapshot(snpShot => {
         // console.log(snpShot.data(), "customer details")
         setCustomerData(snpShot.data())

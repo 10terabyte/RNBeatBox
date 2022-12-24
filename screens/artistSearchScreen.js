@@ -25,27 +25,37 @@ const ArtistSearchScreen = (props) => {
     const isRtl = i18n.dir() === "rtl";
     const [visible, setVisible] = useState(false);
     const [search, setSearch] = useState("");
+    const [allList, setAllList] = useState([])
     const [artistList, setArtists] = useState([]);
     useEffect(()=>{
         handleFilter()
     },[props])
     useEffect(() =>{
+        
         const unsubscribe = artistCollection.onSnapshot(snpShot =>{
-            artistCollection.where('follows', "desc").limit(5).get().then(snapshot =>{
+            artistCollection.get().then(snapshot =>{
                 let artData = [];
                 snapshot.forEach(result =>{
-                    console.log("ARTIST", result.data().follows)
                     artData.push({...result.data(), key: result.id})
                 })
-                setArtists(artData)
+                setAllList(artData)
             }) 
         })
         return () =>{
             unsubscribe()
         }
     }, [FIRESTORE])
+    useEffect(() =>{
+        handleFilter()
+    }, [allList])
     const handleFilter = () => {
-        console.log('Search Event')
+        let searchResult = []
+        allList.forEach(item =>{
+            if(item?.name?.toLowerCase().includes(search.toLowerCase()) || item?.description?.toLowerCase().includes(search.toLowerCase())){
+                searchResult.push(item)
+            }
+        })
+        setArtists(searchResult)
         // console.log("filter")
         // onValue(ref(DB, "artists"),  (snapshot)=>{
         //     console.log("datadd")
